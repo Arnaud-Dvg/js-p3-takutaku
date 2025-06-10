@@ -3,28 +3,70 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
 
-/* ************************************************************************* */
-
 // Import the main app component
 import App from "./App";
+import About from "./pages/About";
+import Account from "./pages/Account";
+import Admin from "./pages/admin";
+import Anime from "./pages/anime";
+import Cgv from "./pages/cgv";
+import Favorite from "./pages/favorite";
+import Genre from "./pages/Genre";
+import Historic from "./pages/Historic";
+import Home from "./pages/home";
+import LegalNotices from "./pages/LegalNotices";
+import Watch from "./pages/Watch";
 
-// Import additional components for new routes
-// Try creating these components in the "pages" folder
-
-// import About from "./pages/About";
-// import Contact from "./pages/Contact";
-
-/* ************************************************************************* */
-
-// Create router configuration with routes
-// You can add more routes as you build out your app!
 const router = createBrowserRouter([
   {
-    path: "/", // The root path
-    element: <App />, // Renders the App component for the home page
+    element: <App />,
+    children: [
+  {
+    path: "/", 
+    element: <Home />, 
   },
-  // Try adding a new route! For example, "/about" with an About component
-]);
+  {
+    path: "/About", 
+    element: <About />, 
+  },
+  {
+    path: "/Account", 
+    element: <Account />, 
+  },
+  {
+    path: "/Admin", 
+    element: <Admin />, 
+  },
+  {
+    path: "/Anime", 
+    element: <Anime />, 
+  },
+  {
+    path: "/Cgv", 
+    element: <Cgv />, 
+  },
+  {
+    path: "/Favorite", 
+    element: <Favorite />, 
+  },
+  {
+    path: "/Genre", 
+    element: <Genre />, 
+  },
+  {
+    path: "/Historic", 
+    element: <Historic />, 
+  },
+  {
+    path: "/LegalNotices", 
+    element: <LegalNotices />, 
+  },
+  {
+    path: "/Watch", 
+    element: <Watch />, 
+  },
+
+  ]}]);
 
 /* ************************************************************************* */
 
@@ -40,28 +82,3 @@ createRoot(rootElement).render(
     <RouterProvider router={router} />
   </StrictMode>,
 );
-
-/**
- * Helpful Notes:
- *
- * 1. Adding More Routes:
- *    To add more pages to your app, first create a new component (e.g., About.tsx).
- *    Then, import that component above like this:
- *
- *    import About from "./pages/About";
- *
- *    Add a new route to the router:
- *
- *      {
- *        path: "/about",
- *        element: <About />,  // Renders the About component
- *      }
- *
- * 2. Try Nested Routes:
- *    For more complex applications, you can nest routes. This lets you have sub-pages within a main page.
- *    Documentation: https://reactrouter.com/en/main/start/tutorial#nested-routes
- *
- * 3. Experiment with Dynamic Routes:
- *    You can create routes that take parameters (e.g., /users/:id).
- *    Documentation: https://reactrouter.com/en/main/start/tutorial#url-params-in-loaders
- */
