@@ -1,9 +1,9 @@
-function Historic () {
-    return (
-        <>
-        <p>Historic</p>
-        </>
-    )
+function Historic() {
+  return (
+    <>
+      <p>Historic</p>
+    </>
+  );
 }
 
 export default Historic;

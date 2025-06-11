@@ -1,9 +1,9 @@
-function Account () {
-   return (
-      <>
+function Account() {
+  return (
+    <>
       <p>Account</p>
-      </>
-   );
+    </>
+  );
 }
 
-export default Account ;
+export default Account;

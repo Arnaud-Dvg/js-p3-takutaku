@@ -1,0 +1,81 @@
+import databaseClient from "../../../database/client";
+
+import type { Result, Rows } from "../../../database/client";
+
+type Anime = {
+  id: number;
+  title: string;
+  synopsis: string;
+  portrait: string;
+  date: string;
+  is_published: boolean;
+  genre_id: number;
+  users_created: number;
+  paysage: string;
+  video: string;
+};
+
+class AnimeRepository {
+  // Le C du CRUD - Create
+  async create(anime: Omit<Anime, "id">) {
+    // Création d'un nouvel animé
+    const [result] = await databaseClient.query<Result>(
+      "INSERT INTO Anime (title, synopsis, portrait, date, is_published, genre_id, users_created, paysage, video) values (?, ?)",
+      [
+        anime.title,
+        anime.synopsis,
+        anime.portrait,
+        anime.date,
+        anime.is_published,
+        anime.date,
+        anime.users_created,
+        anime.paysage,
+        anime.video,
+      ],
+    );
+    //Retourne l'ID du nouvel animé inséré
+    return result.insertId;
+  }
+  // Le R du CRUD - Read
+  async read(id: number) {
+    // Execute la requête SQL pour lire un item spécifique par son ID
+    const [rows] = await databaseClient.query<Rows>(
+      "select * from Anime where id = ?",
+      [id],
+    );
+    //Retourne la première ligne du résultat de la requête
+    return rows[0] as Anime;
+  }
+  async readAll() {
+    // Exécute la requête SQL pour lire tout le tableau de la table "Anime"
+    const [rows] = await databaseClient.query<Rows>("select * from Anime");
+
+    // Return the array of items
+    return rows as Anime[];
+  }
+
+  // Le U du CRUD - Update
+  async update(anime: Anime) {
+    // Exécute la requête SQL pour lire tout le tableau de la table "Anime"
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE Anime set title = ? WHERE id = ?",
+      [anime.title, anime.id],
+    );
+
+    // Retourne le tableau d'animés mis à jour
+
+    return result.affectedRows;
+  }
+  // Le D du CRUD - Delete
+  async delete(id: number) {
+    // Exécute la requête SQL pour supprimer un anime spécifique par son ID
+    const [result] = await databaseClient.query<Result>(
+      "DELETE FROM Anime WHERE id = ?",
+      [id],
+    );
+    // Retourne le nombre de lignes affectées par la suppression
+    return result.affectedRows;
+  }
+}
+
+export default new AnimeRepository();

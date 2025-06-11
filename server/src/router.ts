@@ -7,11 +7,13 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Define item-related routes
-import itemActions from "./modules/item/itemActions";
+import animeAction from "../src/modules/anime/animeAction";
 
-router.get("/api/items", itemActions.browse);
-router.get("/api/items/:id", itemActions.read);
-router.post("/api/items", itemActions.add);
+router.get("/api/anime", animeAction.browse);
+router.get("/api/anime/:id", animeAction.read);
+router.post("/api/anime", animeAction.add);
+router.put("/api/anime/:id", animeAction.edit);
+router.delete("/api/anime/:id", animeAction.destroy);
 
 /* ************************************************************************* */
 
