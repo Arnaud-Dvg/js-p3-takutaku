@@ -1,9 +1,9 @@
-function Watch () {
-    return (
-        <>
-        <p>Watch</p>
-        </>
-    )
+function Watch() {
+  return (
+    <>
+      <p>Watch</p>
+    </>
+  );
 }
 
 export default Watch;

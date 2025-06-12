@@ -1,10 +1,16 @@
 import "./App.css";
 import { Outlet } from "react-router-dom";
 
+import { AnimeProvider } from "../context/AnimeContext";
+
 function App() {
   return (
     <>
-    <Outlet />
+      <div>
+        <AnimeProvider>
+          <Outlet />
+        </AnimeProvider>
+      </div>
     </>
   );
 }

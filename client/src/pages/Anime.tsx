@@ -1,9 +1,9 @@
-function Anime () {
-    return (
-        <>
-        <p>anime</p>
-        </>
-    )
+function Anime() {
+  return (
+    <>
+      <p>anime</p>
+    </>
+  );
 }
 
 export default Anime;

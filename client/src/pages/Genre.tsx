@@ -1,9 +1,9 @@
-function Genre () {
-    return (
-        <>
-        <p>genre</p>
-        </>
-    )
+function Genre() {
+  return (
+    <>
+      <p>genre</p>
+    </>
+  );
 }
 
 export default Genre;

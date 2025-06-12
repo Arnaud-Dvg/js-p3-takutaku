@@ -7,13 +7,13 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 import App from "./App";
 import About from "./pages/About";
 import Account from "./pages/Account";
-import Admin from "./pages/admin";
-import Anime from "./pages/anime";
-import Cgv from "./pages/cgv";
-import Favorite from "./pages/favorite";
+import Admin from "./pages/Admin";
+import Anime from "./pages/Anime";
+import Cgv from "./pages/Cgv";
+import Favorite from "./pages/Favorite";
 import Genre from "./pages/Genre";
 import Historic from "./pages/Historic";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import LegalNotices from "./pages/LegalNotices";
 import Watch from "./pages/Watch";
 
@@ -21,52 +21,53 @@ const router = createBrowserRouter([
   {
     element: <App />,
     children: [
-  {
-    path: "/", 
-    element: <Home />, 
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/About",
+        element: <About />,
+      },
+      {
+        path: "/Account",
+        element: <Account />,
+      },
+      {
+        path: "/Admin",
+        element: <Admin />,
+      },
+      {
+        path: "/Anime",
+        element: <Anime />,
+      },
+      {
+        path: "/Cgv",
+        element: <Cgv />,
+      },
+      {
+        path: "/Favorite",
+        element: <Favorite />,
+      },
+      {
+        path: "/Genre",
+        element: <Genre />,
+      },
+      {
+        path: "/Historic",
+        element: <Historic />,
+      },
+      {
+        path: "/LegalNotices",
+        element: <LegalNotices />,
+      },
+      {
+        path: "/Watch",
+        element: <Watch />,
+      },
+    ],
   },
-  {
-    path: "/About", 
-    element: <About />, 
-  },
-  {
-    path: "/Account", 
-    element: <Account />, 
-  },
-  {
-    path: "/Admin", 
-    element: <Admin />, 
-  },
-  {
-    path: "/Anime", 
-    element: <Anime />, 
-  },
-  {
-    path: "/Cgv", 
-    element: <Cgv />, 
-  },
-  {
-    path: "/Favorite", 
-    element: <Favorite />, 
-  },
-  {
-    path: "/Genre", 
-    element: <Genre />, 
-  },
-  {
-    path: "/Historic", 
-    element: <Historic />, 
-  },
-  {
-    path: "/LegalNotices", 
-    element: <LegalNotices />, 
-  },
-  {
-    path: "/Watch", 
-    element: <Watch />, 
-  },
-
-  ]}]);
+]);
 
 /* ************************************************************************* */
 
