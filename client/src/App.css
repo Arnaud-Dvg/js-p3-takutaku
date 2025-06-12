@@ -9,6 +9,10 @@
   --color-tertiary: white;
 }
 
+body {
+  background-color: black;
+}
+
 p,
 button {
   font-family: "Poppins", sans-serif;
