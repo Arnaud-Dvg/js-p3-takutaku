@@ -39,11 +39,12 @@ function Carousel() {
       }}
     >
       {/* Calque de flou par-dessus l'image de fond */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-xs z-0" />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-xs z-0 scale-[1.2]" />
 
       {/* Contenu principal au-dessus du flou */}
       <div className="relative z-10 pt-8">
         <Swiper
+       loop={true}
           initialSlide={2}
           effect={"coverflow"}
           grabCursor={true}
