@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-type Anime = {
+// Typage des données du contexte
+export type Anime = {
   id: number;
   title: string;
   synopsis: string;
@@ -13,6 +14,7 @@ type Anime = {
   video: string;
 };
 
+// Typage de ce que l'on veut que le contexte réalise
 type AnimeContextType = {
   anime: Anime[];
   fetchAnime: () => Promise<void>;
@@ -52,6 +54,9 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
   const createAnime = (newAnime: Omit<Anime, "id">): Promise<number> => {
     return fetch("http://localhost:3310/api/anime", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(newAnime),
     })
       .then((res) => res.json())
@@ -67,6 +72,9 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
   ): Promise<void> => {
     return fetch(`http://localhost:3310/api/anime/${id}`, {
       method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(updateData),
     }).then(() => fetchAnime());
   };
@@ -93,6 +101,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+// Création du hook personnalisé
 export const useAnimeContext = () => {
   const context = useContext(AnimeContext);
   if (!context) {

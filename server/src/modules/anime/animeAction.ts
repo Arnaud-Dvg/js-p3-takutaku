@@ -53,7 +53,7 @@ const read: RequestHandler = async (req, res, next) => {
 // Le E de BREAD
 const edit: RequestHandler = async (req, res, next) => {
   try {
-    // Update a specific category based on the provided ID
+    // Mettre à jour une catégorie spécifique en fonction de l'identifiant fourni.
     const anime = {
       id: Number(req.params.id),
       title: req.body.title,
@@ -69,15 +69,15 @@ const edit: RequestHandler = async (req, res, next) => {
 
     const affectedRows = await animeRepository.update(anime);
 
-    // If the category is not found, respond with HTTP 404 (Not Found)
-    // Otherwise, respond with the category in JSON format
+    // Si la catégorie n’est pas trouvée, répondre avec un code HTTP 404 (Non trouvé)
+    // Sinon, répondre avec la catégorie au format JSON.
     if (affectedRows === 0) {
       res.sendStatus(404);
     } else {
       res.sendStatus(204);
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
+    // Transmettre toute erreur au middleware de gestion des erreurs.
     next(err);
   }
 };
