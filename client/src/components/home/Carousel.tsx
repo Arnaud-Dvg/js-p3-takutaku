@@ -44,7 +44,7 @@ function Carousel() {
       {/* Contenu principal au-dessus du flou */}
       <div className="relative z-10 pt-8">
         <Swiper
-       loop={true}
+          loop={true}
           initialSlide={2}
           effect={"coverflow"}
           grabCursor={true}
@@ -75,7 +75,7 @@ function Carousel() {
           modules={[EffectCoverflow]}
           className="w-full h-full"
           onSlideChange={(swiper) => {
-            setAnimeIndex(swiper.activeIndex);
+            setAnimeIndex(swiper.realIndex);
           }}
         >
           {selectAnime.length > 0 ? (
