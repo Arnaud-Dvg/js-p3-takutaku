@@ -20,7 +20,7 @@ class AnimeRepository {
   async create(anime: Omit<Anime, "id">) {
     // Création d'un nouvel animé
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO Anime (title, synopsis, portrait, date, is_published, genre_id, users_created, paysage, video) values (?, ?)",
+      "INSERT INTO Anime (title, synopsis, portrait, date, is_published, genre_id, users_created, paysage, video) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         anime.title,
         anime.synopsis,
