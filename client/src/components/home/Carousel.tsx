@@ -46,6 +46,16 @@ function Carousel() {
     swiperRef.current?.slidePrev();
   }
 
+  // Fonction des boutons
+
+  function setNextR() {
+    swiperRef.current?.slideNext();
+  }
+
+  function setNextL() {
+    swiperRef.current?.slidePrev();
+  }
+
   return (
     <section
       className="relative bg-cover bg-center transition-[background-image] duration-500"
@@ -135,13 +145,13 @@ function Carousel() {
         </div>
 
         {selectAnime[animeIndex] && (
-          <div className="relative z-10 text-center text-white p-4">
+          <div className="relative z-10 text-center text-white p-4">st
             <h2 className="text-sm uppercase">
               {selectAnime[animeIndex].title}
             </h2>
             <div className="mt-2 grid grid-cols-1 lg:grid-cols-[3fr_4fr_3fr] lg:items-center lg:gap-4 text-[8px] text-white">
-              <div className="hidden lg:block" />
 
+              <div className="hidden lg:block" />
               <div className="flex justify-center px-2">
                 <p className="text-center max-w-xl">
                   {selectAnime[animeIndex].synopsis}
