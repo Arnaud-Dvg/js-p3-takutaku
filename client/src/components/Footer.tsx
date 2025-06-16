@@ -1,7 +1,6 @@
-import { Link } from "react-router";
-import { useState } from "react";
 import emailjs from "emailjs-com";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { Link } from "react-router";
 
 function Footer() {
   const [open, setOpen] = useState(false);
@@ -93,7 +92,11 @@ function Footer() {
               Nous contacter
             </h2>
 
-            <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-2">
+            <form
+              ref={form}
+              onSubmit={sendEmail}
+              className="flex flex-col gap-2"
+            >
               {/* Nom / Prénom */}
               <section className="flex gap-4">
                 <input
@@ -144,7 +147,7 @@ function Footer() {
                 <img src="/favicon.ico" alt="Mascotte" className="h-15" />
                 <button
                   type="submit"
-                    disabled={loading}
+                  disabled={loading}
                   className="text-secondary font-bold text-lg hover:text-secondary pb-10 "
                 >
                   {loading ? "Envoi en cours..." : "Envoyer"}
