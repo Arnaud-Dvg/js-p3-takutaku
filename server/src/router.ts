@@ -16,5 +16,13 @@ router.put("/api/anime/:id", animeAction.edit);
 router.delete("/api/anime/:id", animeAction.destroy);
 
 /* ************************************************************************* */
+//Routes User//
+import userAction from "./modules/user/userAction";
+
+router.get("/api/user", userAction.browse);
+router.get("/api/user/:id", userAction.read);
+router.post("/api/user", userAction.add);
+router.put("api/user/:id", userAction.edit);
+router.delete("/api/user/:id", userAction.destroy);
 
 export default router;

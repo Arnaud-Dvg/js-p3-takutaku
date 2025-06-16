@@ -21,7 +21,8 @@ CREATE TABLE Type (
 -- Table Users (user est réservé, donc on peut nommer users)
 CREATE TABLE Users (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(150) NOT NULL,
+  firstname VARCHAR(150) NOT NULL,
+  lastname VARCHAR(150) NOT NULL,
   mail VARCHAR(150) NOT NULL UNIQUE,
   password VARCHAR(150) NOT NULL,
   is_admin BOOLEAN NOT NULL DEFAULT FALSE,
@@ -115,13 +116,13 @@ INSERT INTO Type (name) VALUES
 ('Thriller');
 
 -- Insertion des users
-INSERT INTO Users (name, mail, password, is_admin, is_actif) VALUES
-('Alexandra', 'pastoralex@free.fr', 'admin', TRUE, TRUE),
-('Thibaud', 'thibaud.guadagna@gmail.com', 'thibaud', TRUE, TRUE),
-('Nathan', 'durnerin.nathan01@gmail.com', 'nathan', TRUE, TRUE),
-('Arnaud', 'arnoo.54@hotmail.fr', 'arnaud', TRUE, TRUE),
-('Dara', 'daha69@hotmail.fr', 'dara', TRUE, TRUE),
-('Yavuz', 'yavuz@gmail.com', 'yavuz', FALSE, TRUE);
+INSERT INTO Users (firstname ,lastname, mail, password, is_admin, is_actif) VALUES
+('Alexandra', 'Pastor', 'pastoralex@free.fr', 'admin', TRUE, TRUE),
+('Thibaud', 'Guadagna', 'thibaud.guadagna@gmail.com', 'thibaud', TRUE, TRUE),
+('Nathan', 'Durnerin', 'durnerin.nathan01@gmail.com', 'nathan', TRUE, TRUE),
+('Arnaud', 'Devoge', 'arnoo.54@hotmail.fr', 'arnaud', TRUE, TRUE),
+('Dara', 'Som', 'daha69@hotmail.fr', 'dara', TRUE, TRUE),
+('Yavuz', 'Kutuk', 'yavuz@gmail.com', 'yavuz', FALSE, TRUE);
 
 -- Insertion des animes
 INSERT INTO Anime (title, synopsis, portrait, date, is_published, genre_id, users_created, paysage, video) VALUES
