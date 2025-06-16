@@ -1,3 +1,4 @@
+//Search Desktop
 function DesktopSearchBar() {
   return (
     <div className=" mb-3 xl:w-96 pt-3">

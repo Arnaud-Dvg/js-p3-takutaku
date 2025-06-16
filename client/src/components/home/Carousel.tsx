@@ -1,3 +1,4 @@
+//Ajustement margin searchbar en desktop
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import type { Swiper as SwiperType } from "swiper/types";

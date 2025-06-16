@@ -1,3 +1,4 @@
+//SearchBar Mobile
 import { type Dispatch, type SetStateAction, useEffect, useRef } from "react";
 
 type Props = {

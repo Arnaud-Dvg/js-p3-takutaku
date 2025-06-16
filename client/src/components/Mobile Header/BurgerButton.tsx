@@ -1,3 +1,4 @@
+//Bouton Burger avec animation
 type BurgerProps = {
   toggleMenu: () => void;
   isOpen: boolean;
