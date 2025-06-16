@@ -79,11 +79,11 @@ function Footer() {
         <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
           <section className="relative bg-black text-white rounded-lg w-full max-w-lg p-8">
             {/* Logo TakuTaku */}
-            <section className="text-center mb-6">
+            <section className="text-center mb-10">
               <img
-                src="/logo-taku.png"
+                src="/public/logo_taku.png"
                 alt="Logo TakuTaku"
-                className="mx-auto h-10"
+                className="mx-auto h-15"
               />
             </section>
 
