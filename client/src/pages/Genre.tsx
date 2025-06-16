@@ -1,9 +1,7 @@
+import CarouselGenre from "../components/genre/CarouselGenre";
+
 function Genre() {
-  return (
-    <>
-      <p>genre</p>
-    </>
-  );
+  return <CarouselGenre />;
 }
 
 export default Genre;
