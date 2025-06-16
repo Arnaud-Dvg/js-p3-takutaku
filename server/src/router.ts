@@ -15,6 +15,14 @@ router.post("/api/anime", animeAction.add);
 router.put("/api/anime/:id", animeAction.edit);
 router.delete("/api/anime/:id", animeAction.destroy);
 
+// Define abonnement routes
+import abonnementAction from "../src/modules/Abonnement/abonnementAction";
+router.get("/api/abonnement", abonnementAction.browse);
+router.get("/api/abonnement/:id", abonnementAction.read);
+router.post("/api/abonnement", abonnementAction.add);
+router.put("/api/abonnement/:id", abonnementAction.edit);
+router.delete("/api/abonnement/:id", abonnementAction.destroy);
+
 /* ************************************************************************* */
 
 export default router;
