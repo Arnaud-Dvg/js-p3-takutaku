@@ -14,8 +14,11 @@ type Episode = {
   season_id: number;
 };
 
-function SummaryEpisode({ episodeSelected, seasonSelected,}: { episodeSelected: Episode | null; seasonSelected: Season | null }) {
-const { animeSelected } = useAnimeContext();
+function SummaryEpisode({
+  episodeSelected,
+  seasonSelected,
+}: { episodeSelected: Episode | null; seasonSelected: Season | null }) {
+  const { animeSelected } = useAnimeContext();
 
   return (
     <section className="flex flex-col gap-4 p-4 md:w-2/3">
