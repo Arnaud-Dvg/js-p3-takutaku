@@ -12,6 +12,7 @@ import "swiper/css/effect-coverflow";
 import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
 import { Link } from "react-router";
 
+
 function Carousel() {
   const [selectAnime, setSelectAnime] = useState<Anime[]>([]);
   const { getAnimebyId, setAnimeSelected } = useAnimeContext();
@@ -35,6 +36,16 @@ function Carousel() {
       setSelectAnime(data.filter((anime): anime is Anime => anime !== null));
     });
   }, [getAnimebyId]);
+
+  // Fonction des boutons
+
+  function setNextR() {
+    swiperRef.current?.slideNext();
+  }
+
+  function setNextL() {
+    swiperRef.current?.slidePrev();
+  }
 
   // Fonction des boutons
 
@@ -136,6 +147,7 @@ function Carousel() {
 
         {selectAnime[animeIndex] && (
           <div className="relative z-10 text-center text-white p-4">
+
             <h2 className="text-sm uppercase">
               {selectAnime[animeIndex].title}
             </h2>
