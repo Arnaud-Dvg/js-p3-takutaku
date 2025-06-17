@@ -1,8 +1,10 @@
+//Ajustement margin searchbar en desktop
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import type { Swiper as SwiperType } from "swiper/types";
 import { useAnimeContext } from "../../../../client/context/AnimeContext";
 import type { Anime } from "../../../../client/context/AnimeContext";
+import DesktopSearchBar from "../Header/DesktopSearchBar";
 
 import { EffectCoverflow } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -63,12 +65,15 @@ function Carousel() {
         backgroundImage: `url(${selectAnime[animeIndex]?.paysage})`,
       }}
     >
+      <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 z-20 pb-2">
+        <DesktopSearchBar />
+      </div>
       {/* Calque de flou par-dessus l'image de fond */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-xs z-0 scale-[1.2]" />
+      <div className="absolute top-6 inset-0 bg-black/50 backdrop-blur-xs z-0 scale-[1.2]" />
 
       {/* Contenu principal au-dessus du flou */}
       <div className="relative z-10 pt-8">
-        <div className="relative ">
+        <div className="relative pt-5 ">
           {/* Bouton gauche */}
           <RxChevronLeft
             type="button"

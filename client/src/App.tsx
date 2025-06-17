@@ -1,7 +1,8 @@
+//Update Header
 import "./App.css";
 import { Outlet } from "react-router-dom";
-
 import { AnimeProvider } from "../context/AnimeContext";
+import Header from "./components/Header/DesktopNavBar";
 import Footer from "./components/Footer";
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
     <>
       <div>
         <AnimeProvider>
+          <Header />
           <Outlet />
         </AnimeProvider>
         <Footer />
