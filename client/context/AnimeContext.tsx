@@ -62,7 +62,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
       .then((res) => res.json())
       .then((data) => {
         fetchAnime();
-        return data.insertId; // à adapter selon réponse API
+        return data.insertId; // Retourne l'ID de l'anime créé
       });
   };
 
