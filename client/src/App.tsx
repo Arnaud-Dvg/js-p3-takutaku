@@ -2,6 +2,7 @@ import "./App.css";
 import { Outlet } from "react-router-dom";
 
 import { AnimeProvider } from "../context/AnimeContext";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <AnimeProvider>
           <Outlet />
         </AnimeProvider>
+        <Footer />
       </div>
     </>
   );
