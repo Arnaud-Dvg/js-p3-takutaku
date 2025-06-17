@@ -17,15 +17,23 @@ type Season = {
 
 type EpisodeListProps = {
   seasonSelected: Season | null;
+  onEpisodeSelect: (episode: Episode) => void;
+  episodeSelected?: Episode | null; // Épisode sélectionné
 };
 
-function EpisodeList({ seasonSelected }: EpisodeListProps) {
+function EpisodeList({
+  seasonSelected,
+  onEpisodeSelect,
+  episodeSelected,
+}: EpisodeListProps) {
   const { animeSelected } = useAnimeContext(); // Récupère l'anime sélectionné
-  const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [episodes, setEpisodes] = useState<Episode[]>([]); // État pour stocker les épisodes
+
   const filteredEpisodes = episodes.filter(
     (episode) => episode.season_id === seasonSelected?.id,
   ); // Filtre les épisodes pour la saison sélectionnée
 
+  // Récupère les épisodes depuis l'API
   useEffect(() => {
     const fetchEpisodes = async () => {
       try {
@@ -39,7 +47,18 @@ function EpisodeList({ seasonSelected }: EpisodeListProps) {
       }
     };
     fetchEpisodes();
-  }, []); // Récupère les épisodes depuis l'API
+  }, []);
+
+  // Mise à jour de l'état de l'épisode sélectionné
+  useEffect(() => {
+    if (
+      filteredEpisodes.length > 0 &&
+      seasonSelected &&
+      (!episodeSelected || episodeSelected.season_id !== seasonSelected.id)
+    ) {
+      onEpisodeSelect(filteredEpisodes[0]); // Sélectionne le premier épisode de la saison par défaut
+    }
+  }, [filteredEpisodes, seasonSelected, episodeSelected, onEpisodeSelect]);
 
   return (
     <section>
@@ -51,9 +70,21 @@ function EpisodeList({ seasonSelected }: EpisodeListProps) {
               alt={animeSelected?.title}
               className="mb-2 w-[200px]"
             />
-            <span className="text-tertiary">
-              S{seasonSelected?.number}E{episode.number} - {episode.title}
-            </span>
+
+            <button
+              type="button"
+              onClick={() => {
+                onEpisodeSelect(episode);
+              }}
+              className={`flex flex-col items-start justify-start text-left
+    ${episodeSelected?.id === episode.id ? "font-semibold text-secondary" : "hover:font-semibold text-tertiary"}
+  `}
+            >
+              <span className="block text-sm">
+                S0{seasonSelected?.number}E{episode.number} - {episode.title}
+              </span>
+            </button>
+
           </li>
         ))}
       </ul>

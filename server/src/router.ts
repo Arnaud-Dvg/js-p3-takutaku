@@ -48,7 +48,7 @@ router.post("/api/episode", episodeAction.add);
 router.put("/api/episode/:id", episodeAction.edit);
 router.delete("/api/episode/:id", episodeAction.destroy);
 
-// Import the abonnement module
+// Import the abonnement routes
 import abonnementAction from "../src/modules/Abonnement/abonnementAction";
 router.get("/api/abonnement", abonnementAction.browse);
 router.get("/api/abonnement/:id", abonnementAction.read);
