@@ -2,8 +2,8 @@
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import { AnimeProvider } from "../context/AnimeContext";
-import Header from "./components/Header/DesktopNavBar";
 import Footer from "./components/Footer";
+import Header from "./components/Header/DesktopNavBar";
 
 function App() {
   return (
