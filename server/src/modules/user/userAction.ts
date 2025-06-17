@@ -111,4 +111,14 @@ const destroy: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, edit, add, destroy };
+// Lire TOUS les users avec le type d'abonnement en plus
+const browseWithAbonnement: RequestHandler = async (req, res, next) => {
+  try {
+    const users = await userRepository.readAllWithAbonnement();
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { browse, read, edit, add, destroy, browseWithAbonnement };

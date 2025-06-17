@@ -63,7 +63,9 @@ import userAction from "./modules/user/userAction";
 router.get("/api/user", userAction.browse);
 router.get("/api/user/:id", userAction.read);
 router.post("/api/user", userAction.add);
-router.put("api/user/:id", userAction.edit);
+router.put("/api/user/:id", userAction.edit);
 router.delete("/api/user/:id", userAction.destroy);
+router.get("/api/users_abonnement", userAction.browse);
+router.get("/api/users-with-abonnement", userAction.browseWithAbonnement);
 
 export default router;

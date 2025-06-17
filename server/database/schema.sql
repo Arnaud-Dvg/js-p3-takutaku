@@ -26,7 +26,9 @@ CREATE TABLE Users (
   mail VARCHAR(150) NOT NULL UNIQUE,
   password VARCHAR(150) NOT NULL,
   is_admin BOOLEAN NOT NULL DEFAULT FALSE,
-  is_actif BOOLEAN NOT NULL DEFAULT TRUE
+  is_actif BOOLEAN NOT NULL DEFAULT TRUE,
+  abonnement_id INT NOT NULL,
+  FOREIGN KEY (abonnement_id) REFERENCES Abonnement(id)
 );
 
 -- Table Anime
@@ -72,15 +74,6 @@ CREATE TABLE Anime_type (
   FOREIGN KEY (anime_id) REFERENCES Anime(id) ON DELETE CASCADE
 );
 
--- Table abonnement_users
-CREATE TABLE abonnement_users (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  users_id INT NOT NULL,
-  abonnement_id INT NOT NULL,
-  FOREIGN KEY (users_id) REFERENCES Users(id) ON DELETE CASCADE,
-  FOREIGN KEY (abonnement_id) REFERENCES Abonnement(id) ON DELETE RESTRICT
-);
-
 -- Table users_anime
 CREATE TABLE users_anime (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -116,13 +109,13 @@ INSERT INTO Type (name) VALUES
 ('Thriller');
 
 -- Insertion des users
-INSERT INTO Users (firstname ,lastname, mail, password, is_admin, is_actif) VALUES
-('Alexandra', 'Pastor', 'pastoralex@free.fr', 'admin', TRUE, TRUE),
-('Thibaud', 'Guadagna', 'thibaud.guadagna@gmail.com', 'thibaud', TRUE, TRUE),
-('Nathan', 'Durnerin', 'durnerin.nathan01@gmail.com', 'nathan', TRUE, TRUE),
-('Arnaud', 'Devoge', 'arnoo.54@hotmail.fr', 'arnaud', TRUE, TRUE),
-('Dara', 'Som', 'daha69@hotmail.fr', 'dara', TRUE, TRUE),
-('Yavuz', 'Kutuk', 'yavuz@gmail.com', 'yavuz', FALSE, TRUE);
+INSERT INTO Users (firstname ,lastname, mail, password, is_admin, is_actif, abonnement_id) VALUES
+('Alexandra', 'Pastor', 'pastoralex@free.fr', 'admin', TRUE, TRUE, 1),
+('Thibaud', 'Guadagna', 'thibaud.guadagna@gmail.com', 'thibaud', TRUE, TRUE, 2),
+('Nathan', 'Durnerin', 'durnerin.nathan01@gmail.com', 'nathan', TRUE, TRUE, 2),
+('Arnaud', 'Devoge', 'arnoo.54@hotmail.fr', 'arnaud', TRUE, TRUE, 2),
+('Dara', 'Som', 'daha69@hotmail.fr', 'dara', TRUE, TRUE, 2),
+('Yavuz', 'Kutuk', 'yavuz@gmail.com', 'yavuz', FALSE, TRUE, 1);
 
 -- Insertion des animes
 INSERT INTO Anime (title, synopsis, portrait, date, is_published, genre_id, users_created, paysage, video) VALUES
@@ -563,11 +556,6 @@ INSERT INTO Anime_type (type_id, anime_id) VALUES
 (3, 18), (4, 18), (5, 18), (8, 18),
 (1, 19), (4, 19), (3, 19),
 (6, 20), (4, 20), (8, 20);
-
--- Insertion des abonnements_users
-INSERT INTO abonnement_users (users_id, abonnement_id) VALUES
-(4, 2),
-(6, 1);
 
 -- Insertion des users_anime
 INSERT INTO users_anime (is_favorite, anime_id, users_id) VALUES
