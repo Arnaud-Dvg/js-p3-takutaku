@@ -1,4 +1,20 @@
-const Abonnement = () => {
+import { useState } from "react";
+import SignupPopup from "../CreateAccount";
+
+function Abonnement() {
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState("");
+
+  const handleSubscribeClick = (plan: string) => {
+    setSelectedPlan(plan); // Met à jour l'offre choisie
+    setIsSignupOpen(true);
+  };
+
+  const handleCloseSignup = () => {
+    setIsSignupOpen(false);
+    setSelectedPlan(""); // Réinitialiser si nécessaire
+  };
+
   return (
     <section className="text-white py-12 px-4 lg:py-20 ">
       <h2 className="text-3xl font-bold text-center mb-10 lg:mb-20">
@@ -29,6 +45,7 @@ const Abonnement = () => {
             <section className="flex justify-center mt-6 ">
               <button
                 type="button"
+                onClick={() => handleSubscribeClick("Découverte")}
                 className="mt-4  bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
               >
                 S'abonner
@@ -73,6 +90,7 @@ const Abonnement = () => {
             <section className="flex justify-center mt-6 mb-3">
               <button
                 type="button"
+                onClick={() => handleSubscribeClick("Premium")}
                 className="mt-4 bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
               >
                 S'abonner
@@ -81,8 +99,15 @@ const Abonnement = () => {
           </section>
         </section>
       </section>
+      {/* Popup avec props complètes */}
+      <SignupPopup
+        isOpen={isSignupOpen}
+        onClose={handleCloseSignup}
+        selectedPlan={selectedPlan}
+        setSelectedPlan={setSelectedPlan}
+      />
     </section>
   );
-};
+}
 
 export default Abonnement;
