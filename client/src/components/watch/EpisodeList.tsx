@@ -70,6 +70,7 @@ function EpisodeList({
               alt={animeSelected?.title}
               className="mb-2 w-[200px]"
             />
+
             <button
               type="button"
               onClick={() => {
@@ -83,6 +84,7 @@ function EpisodeList({
                 S0{seasonSelected?.number}E{episode.number} - {episode.title}
               </span>
             </button>
+
           </li>
         ))}
       </ul>

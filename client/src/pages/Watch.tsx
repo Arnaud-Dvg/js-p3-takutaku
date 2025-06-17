@@ -4,6 +4,7 @@ import EpisodeList from "../components/watch/EpisodeList";
 import SeasonList from "../components/watch/SeasonList";
 import SummaryEpisode from "../components/watch/SummaryEpisode";
 
+
 type Season = {
   id: number;
   number: number;
@@ -25,6 +26,7 @@ function Watch() {
     const savedEpisode = localStorage.getItem("episodeSelected");
     return savedEpisode ? JSON.parse(savedEpisode) : null;
   });
+
   const { setAnimeSelected } = useAnimeContext();
 
   // Récupération de l'ensemble des données de l'animé sélectionné depuis le localStorage

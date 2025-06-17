@@ -16,6 +16,22 @@ router.post("/api/anime", animeAction.add);
 router.put("/api/anime/:id", animeAction.edit);
 router.delete("/api/anime/:id", animeAction.destroy);
 
+//Impoty the genre action module
+import genreAction from "./modules/genre/genreAction";
+router.get("/api/genre", genreAction.browse);
+router.get("/api/genre/:id", genreAction.read);
+router.post("/api/genre", genreAction.add);
+router.put("/api/genre/:id", genreAction.edit);
+router.delete("/api/genre/:id", genreAction.destroy);
+
+// Import the type action module
+import typeAction from "./modules/type/typeAction";
+router.get("/api/type", typeAction.browse);
+router.get("/api/type/:id", typeAction.read);
+router.post("/api/type", typeAction.add);
+router.put("/api/type/:id", typeAction.edit);
+router.delete("/api/type/:id", typeAction.destroy);
+
 // Import the season action module
 import seasonAction from "../src/modules/season/seasonAction";
 router.get("/api/season", seasonAction.browse);
@@ -32,7 +48,7 @@ router.post("/api/episode", episodeAction.add);
 router.put("/api/episode/:id", episodeAction.edit);
 router.delete("/api/episode/:id", episodeAction.destroy);
 
-// Define abonnement routes
+// Import the abonnement routes
 import abonnementAction from "../src/modules/Abonnement/abonnementAction";
 router.get("/api/abonnement", abonnementAction.browse);
 router.get("/api/abonnement/:id", abonnementAction.read);

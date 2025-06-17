@@ -12,7 +12,6 @@ import "swiper/css/effect-coverflow";
 import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
 import { Link } from "react-router";
 
-
 function Carousel() {
   const [selectAnime, setSelectAnime] = useState<Anime[]>([]);
   const { getAnimebyId, setAnimeSelected } = useAnimeContext();
@@ -146,6 +145,7 @@ function Carousel() {
         </div>
 
         {selectAnime[animeIndex] && (
+
           <div className="relative z-10 text-center text-white p-4">
 
             <h2 className="text-sm uppercase">
@@ -153,7 +153,6 @@ function Carousel() {
             </h2>
             <div className="mt-2 grid grid-cols-1 lg:grid-cols-[3fr_4fr_3fr] lg:items-center lg:gap-4 text-[8px] text-white">
               <div className="hidden lg:block" />
-
               <div className="flex justify-center px-2">
                 <p className="text-center max-w-xl">
                   {selectAnime[animeIndex].synopsis}
