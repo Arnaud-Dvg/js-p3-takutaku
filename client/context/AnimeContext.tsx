@@ -17,6 +17,8 @@ export type Anime = {
 // Typage de ce que l'on veut que le contexte réalise
 type AnimeContextType = {
   anime: Anime[];
+  animeSelected: Anime | null;
+  setAnimeSelected: (anime: Anime | null) => void;
   fetchAnime: () => Promise<void>;
   getAnimebyId: (id: number) => Promise<Anime | null>;
   createAnime: (anime: Omit<Anime, "id">) => Promise<number>;
@@ -28,17 +30,31 @@ const AnimeContext = createContext<AnimeContextType | undefined>(undefined);
 
 export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
   const [anime, setAnime] = useState<Anime[]>([]);
+  const [animeSelected, setAnimeSelected] = useState<Anime | null>(() => {
+    // Récupération de l'anime sélectionné depuis le localStorage
+    // Si l'anime est déjà stocké, on le parse et on le retourne, sinon on retourne null
+    const storedAnime = localStorage.getItem("animeSelected");
+    return storedAnime ? JSON.parse(storedAnime) : null;
+  });
 
   useEffect(() => {
     fetchAnime();
   }, []);
+
+  // Stockage de l'anime sélectionné dans le localStorage
+  useEffect(() => {
+    if (animeSelected) {
+      localStorage.setItem("animeSelected", JSON.stringify(animeSelected));
+    } else {
+      localStorage.removeItem("animeSelected");
+    }
+  }, [animeSelected]);
 
   const fetchAnime = (): Promise<void> => {
     return fetch("http://localhost:3310/api/anime")
       .then((res) => res.json())
       .then((data) => {
         setAnime(data);
-        console.info(data);
       });
   };
 
@@ -62,7 +78,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
       .then((res) => res.json())
       .then((data) => {
         fetchAnime();
-        return data.insertId; // Retourne l'ID de l'anime créé
+        return data.insertId; 
       });
   };
 
@@ -89,6 +105,8 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
     <AnimeContext.Provider
       value={{
         anime,
+        animeSelected,
+        setAnimeSelected,
         fetchAnime,
         getAnimebyId,
         createAnime,

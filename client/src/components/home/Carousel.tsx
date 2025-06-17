@@ -12,12 +12,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
+import { Link } from "react-router";
 
 function Carousel() {
   const [selectAnime, setSelectAnime] = useState<Anime[]>([]);
-  const { getAnimebyId } = useAnimeContext();
+  const { getAnimebyId, setAnimeSelected } = useAnimeContext();
   const [animeIndex, setAnimeIndex] = useState<number>(2);
   const swiperRef = useRef<SwiperType | null>(null);
+
+  const handleClick = (anime: Anime) => {
+    setAnimeSelected(anime);
+  };
 
   useEffect(() => {
     Promise.all([
@@ -33,9 +38,15 @@ function Carousel() {
     });
   }, [getAnimebyId]);
 
-  const handleClick = (anime: Anime) => {
-    console.log("Clicked on", anime.title);
-  };
+  // Fonction des boutons
+
+  function setNextR() {
+    swiperRef.current?.slideNext();
+  }
+
+  function setNextL() {
+    swiperRef.current?.slidePrev();
+  }
 
   // Fonction des boutons
 
@@ -139,13 +150,14 @@ function Carousel() {
         </div>
 
         {selectAnime[animeIndex] && (
+
           <div className="relative z-10 text-center text-white p-4">
-            <h2 className="text-sm uppercase font-bold">
+
+            <h2 className="text-sm uppercase">
               {selectAnime[animeIndex].title}
             </h2>
-            <div className="mt-2 grid grid-cols-1 lg:grid-cols-3 lg:grid-cols-[3fr_4fr_3fr] lg:items-center lg:gap-4 text-[8px] text-white">
+            <div className="mt-2 grid grid-cols-1 lg:grid-cols-[3fr_4fr_3fr] lg:items-center lg:gap-4 text-[8px] text-white">
               <div className="hidden lg:block" />
-
               <div className="flex justify-center px-2">
                 <p className="text-center max-w-xl">
                   {selectAnime[animeIndex].synopsis}
@@ -154,12 +166,15 @@ function Carousel() {
 
               {/* Bouton à droite */}
               <div className="mt-2 lg:mt-0 flex justify-center lg:justify-end">
-                <button
-                  type="button"
-                  className="bg-[var(--color-secondary)] text-[var(--color-primary)] py-1 px-4 py-2 !rounded-full font-medium !text-lg"
-                >
-                  COMMENCER À REGARDER
-                </button>
+                <Link to="/watch">
+                  <button
+                    type="button"
+                    onClick={() => handleClick(selectAnime[animeIndex])}
+                    className="bg-[var(--color-secondary)] text-[var(--color-primary)] py-1 px-4 !rounded-full font-medium !text-lg"
+                  >
+                    COMMENCER À REGARDER
+                  </button>
+                </Link>
               </div>
             </div>
 

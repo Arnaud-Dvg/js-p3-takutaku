@@ -1,29 +1,22 @@
 import type { RequestHandler } from "express";
 
 // Accès à la base de données
-import animeRepository from "./animeRepository";
+import abonnementRepository from "./abonnementRepository";
 
-interface Anime {
+type AbonnementName = "gratuit" | "premium";
+interface Abonnement {
   id: number;
-  title: string;
-  synopsis: string;
-  portrait: string;
-  date: string;
-  is_published: boolean;
-  genre_id: number;
-  users_created: number;
-  paysage: string;
-  video: string;
+  name: AbonnementName;
 }
 
 // Le B du BREAD - Browse (Read All) operation
 const browse: RequestHandler = async (req, res, next) => {
   try {
-    // Fetch tout les animes
-    const animes = await animeRepository.readAll();
+    // Fetch tout les abonnements
+    const abonnements = await abonnementRepository.readAll();
 
-    // Reponse avec les animes au format JSON
-    res.json(animes);
+    // Reponse avec les abonnements au format JSON
+    res.json(abonnements);
   } catch (err) {
     // Transmettez toutes les erreurs au middleware de gestion des erreurs
     next(err);
@@ -34,15 +27,15 @@ const browse: RequestHandler = async (req, res, next) => {
 const read: RequestHandler = async (req, res, next) => {
   try {
     // Fetch un élément spécifique à partir de l'ID fourni
-    const animeId = Number(req.params.id);
-    const anime = await animeRepository.read(animeId);
+    const abonnementId = Number(req.params.id);
+    const abonnement = await abonnementRepository.read(abonnementId);
 
     // Si l'élément est introuvable, répondez avec HTTP 404 (Introuvable)
     // Sinon, répondez avec l'élément au format JSON
-    if (anime == null) {
+    if (abonnement == null) {
       res.sendStatus(404);
     } else {
-      res.json(anime);
+      res.json(abonnement);
     }
   } catch (err) {
     // Transmettez toutes les erreurs au middleware de gestion des erreurs
@@ -54,27 +47,19 @@ const read: RequestHandler = async (req, res, next) => {
 const edit: RequestHandler = async (req, res, next) => {
   try {
     // Mettre à jour une catégorie spécifique en fonction de l'identifiant fourni.
-    const anime = {
+    const abonnement = {
       id: Number(req.params.id),
-      title: req.body.title,
-      synopsis: req.body.synopsis,
-      portrait: req.body.portrait,
-      date: req.body.date,
-      is_published: req.body.is_published,
-      genre_id: req.body.genre_id,
-      users_created: req.body.user_created,
-      paysage: req.body.paysage,
-      video: req.body.video,
+      name: req.body.name,
     };
 
-    const affectedRows = await animeRepository.update(anime);
+    const affectedRows = await abonnementRepository.update(abonnement);
 
     // Si la catégorie n’est pas trouvée, répondre avec un code HTTP 404 (Non trouvé)
     // Sinon, répondre avec la catégorie au format JSON.
     if (affectedRows === 0) {
       res.sendStatus(404);
     } else {
-      res.json(anime);
+      res.sendStatus(204);
     }
   } catch (err) {
     // Transmettre toute erreur au middleware de gestion des erreurs.
@@ -86,20 +71,12 @@ const edit: RequestHandler = async (req, res, next) => {
 const add: RequestHandler = async (req, res, next) => {
   try {
     // Extraire les données de l'élément du corps de la requête
-    const newAnime: Anime = {
+    const abonnement = {
       id: Number(req.params.id),
-      title: req.body.title,
-      synopsis: req.body.synopsis,
-      portrait: req.body.portrait,
-      date: req.body.date,
-      is_published: req.body.is_published,
-      genre_id: req.body.genre_id,
-      users_created: req.body.user_created,
-      paysage: req.body.paysage,
-      video: req.body.video,
+      name: req.body.name,
     };
-    // Create the anime
-    const insertId = await animeRepository.create(newAnime);
+    // Create the abonnement
+    const insertId = await abonnementRepository.create(abonnement);
 
     // Répondez avec HTTP 201 (Créé) et l'ID de l'élément nouvellement inséré
     res.status(201).json({ insertId });
@@ -113,9 +90,9 @@ const add: RequestHandler = async (req, res, next) => {
 const destroy: RequestHandler = async (req, res, next) => {
   try {
     // Supprimer une catégorie spécifique en fonction de l'ID fourni
-    const animeId = Number(req.params.id);
+    const abonnementId = Number(req.params.id);
 
-    await animeRepository.delete(animeId);
+    await abonnementRepository.delete(abonnementId);
 
     // Répondez quand même avec HTTP 204 (Aucun contenu)
     res.sendStatus(204);
