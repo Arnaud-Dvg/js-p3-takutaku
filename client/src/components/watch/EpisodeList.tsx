@@ -84,7 +84,6 @@ function EpisodeList({
                 S0{seasonSelected?.number}E{episode.number} - {episode.title}
               </span>
             </button>
-
           </li>
         ))}
       </ul>

@@ -13,6 +13,7 @@ type Anime = {
   users_created: number;
   paysage: string;
   video: string;
+  types?: { id: number; nom: string }[]; // récupération des types associés
 };
 
 class AnimeRepository {
@@ -36,16 +37,27 @@ class AnimeRepository {
     //Retourne l'ID du nouvel animé inséré
     return result.insertId;
   }
+
   // Le R du CRUD - Read
   async read(id: number) {
-    // Execute la requête SQL pour lire un item spécifique par son ID
-    const [rows] = await databaseClient.query<Rows>(
-      "select * from Anime where id = ?",
+    // Récupère l'animé
+    const [animeRows] = await databaseClient.query<Rows>(
+      "SELECT * FROM Anime WHERE id = ?",
       [id],
     );
-    //Retourne la première ligne du résultat de la requête
-    return rows[0] as Anime;
+    // Vérifie si l'animé existe
+    const anime = animeRows[0] as Anime;
+
+    // Récupère les types associés
+    const [typeRows] = await databaseClient.query<Rows>(
+      "SELECT type.id, type.name FROM type JOIN anime_type ON type.id = anime_type.type_id WHERE anime_type.anime_id = ?",
+      [id],
+    );
+
+    // Ajoute les types à l'objet animé
+    return { ...anime, types: typeRows };
   }
+
   async readAll() {
     // Exécute la requête SQL pour lire tout le tableau de la table "Anime"
     const [rows] = await databaseClient.query<Rows>("select * from Anime");
