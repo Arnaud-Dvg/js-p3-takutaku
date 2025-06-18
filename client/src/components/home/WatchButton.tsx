@@ -19,7 +19,7 @@ function WatchButton({ anime }: Props) {
         <button
           type="button"
           onClick={handleClick}
-          className="bg-[var(--color-secondary)] text-[var(--color-primary)] py-1 px-4 !rounded-full font-medium !text-lg"
+          className="bg-[var(--color-secondary)] text-[var(--color-primary)] py-1 px-4 !rounded-full font-medium !text-lg cursor-pointer"
         >
           COMMENCER À REGARDER
         </button>
