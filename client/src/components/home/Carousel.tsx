@@ -54,7 +54,7 @@ function Carousel() {
 
   return (
     <section
-      className="relative bg-cover bg-center transition-[background-image] duration-500"
+      className="relative bg-cover bg-center transition-[background-image] duration-500 mt-6"
       style={{
         backgroundImage: `url(${selectAnime[animeIndex]?.paysage})`,
       }}

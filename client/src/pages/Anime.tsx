@@ -16,7 +16,7 @@ function Anime() {
   return (
     <>
       {/* Affichage mobile et tablette */}
-      <section className="lg:hidden text-tertiary mt-4">
+      <section className="lg:hidden text-tertiary mt-4 md:mt-0">
         <div className="flex flex-col justify-center items-center gap-2">
           <img
             src={animeSelected.paysage}
@@ -52,7 +52,7 @@ function Anime() {
       </section>
 
       {/* Affichage desktop */}
-      <section className="hidden lg:block text-tertiary mt-4">
+      <section className="hidden lg:block text-tertiary">
         <section className="relative flex flex-col justify-center items-center gap-2">
           <img
             src={animeSelected.paysage}

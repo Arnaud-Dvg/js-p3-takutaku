@@ -69,7 +69,7 @@ function Header() {
           </Link>
         </div>
       </section>
-      <hr className="hidden md:block border-b border-gray-600 mb-10 z-30 relative" />
+      <hr className="hidden md:block border-b border-gray-600 z-30 relative" />
     </>
   );
 }
