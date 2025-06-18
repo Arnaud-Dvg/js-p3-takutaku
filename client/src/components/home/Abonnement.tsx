@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SignupPopup from "../CreateAccount";
+import CreateAccountProps from "./CreateAccount";
 
 function Abonnement() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -100,7 +100,7 @@ function Abonnement() {
         </section>
       </section>
       {/* Popup avec props complètes */}
-      <SignupPopup
+      <CreateAccountProps
         isOpen={isSignupOpen}
         onClose={handleCloseSignup}
         selectedPlan={selectedPlan}

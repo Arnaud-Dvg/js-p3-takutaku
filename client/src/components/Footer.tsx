@@ -36,7 +36,7 @@ function Footer() {
   };
 
   return (
-    <section className="m-10 text-white container mx-auto px-4 py-4 flex flex-row justify-between items-center">
+    <section className="text-white container mx-auto flex flex-row justify-between items-center">
       {/* Gauche */}
       <section className="text-sm mb-4 lg:mb-0">© 2025 TakuTaku</section>
 

@@ -2,16 +2,19 @@
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import { AnimeProvider } from "../context/AnimeContext";
-import Header from "./components/Header/DesktopNavBar";
+import { UserProvider } from "../context/UserContext";
 import Footer from "./components/Footer";
+import Header from "./components/Header/DesktopNavBar";
 
 function App() {
   return (
     <>
       <div>
         <AnimeProvider>
-          <Header />
-          <Outlet />
+          <UserProvider>
+            <Header />
+            <Outlet />
+          </UserProvider>
         </AnimeProvider>
         <Footer />
       </div>
