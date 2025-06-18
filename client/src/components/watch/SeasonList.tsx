@@ -53,7 +53,6 @@ function SeasonList({ onSeasonSelect }: SeasonListProps) {
               setSelectedSeason(season);
               onSeasonSelect(season);
             }}
-
             className={`text-tertiary font-semibold border-b-2 transition-colors duration-300 text-lg
         ${selectedSeason?.id === season.id ? "border-secondary" : "hover:border-tertiary border-transparent"}
 

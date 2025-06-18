@@ -4,7 +4,6 @@ import EpisodeList from "../components/watch/EpisodeList";
 import SeasonList from "../components/watch/SeasonList";
 import SummaryEpisode from "../components/watch/SummaryEpisode";
 
-
 type Season = {
   id: number;
   number: number;
