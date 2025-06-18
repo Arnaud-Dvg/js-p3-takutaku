@@ -1,10 +1,10 @@
-import ButtonsGenre from "../components/genre/ButtonsGenre";
+import ButtonsPageGenre from "../components/genre/ButtonsPageGenre";
 import CarouselGenre from "../components/genre/CarouselGenre";
 
 function Genre() {
   return (
     <>
-      <ButtonsGenre />
+      <ButtonsPageGenre />
       <CarouselGenre />
     </>
   );
