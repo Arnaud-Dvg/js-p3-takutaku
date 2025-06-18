@@ -146,6 +146,7 @@ function Carousel() {
             )}
           </Swiper>
         </div>
+
         {selectAnime[animeIndex] && (
           <div className="relative z-10 text-center text-tertiary p-4">
             <h2 className="text-sm uppercase md:text-lg">

@@ -28,6 +28,7 @@ class AnimeRepository {
         anime.portrait,
         anime.date,
         anime.is_published,
+        anime.date,
         anime.users_created,
         anime.paysage,
         anime.video,

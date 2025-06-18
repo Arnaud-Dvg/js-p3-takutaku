@@ -1,13 +1,7 @@
-import ButtonsGenre from "../components/genre/ButtonsGenre";
 import CarouselGenre from "../components/genre/CarouselGenre";
 
 function Genre() {
-  return (
-    <>
-      <ButtonsGenre />
-      <CarouselGenre />
-    </>
-  );
+  return <CarouselGenre />;
 }
 
 export default Genre;
