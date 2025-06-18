@@ -13,7 +13,7 @@ type Anime = {
   users_created: number;
   paysage: string;
   video: string;
-  types?: { id: number; nom: string }[]; // récupération des types associés
+  types?: { id: number; name: string }[]; // récupération des types associés
 };
 
 class AnimeRepository {
@@ -28,7 +28,7 @@ class AnimeRepository {
         anime.portrait,
         anime.date,
         anime.is_published,
-        anime.date,
+        anime.genre_id,
         anime.users_created,
         anime.paysage,
         anime.video,
@@ -54,8 +54,14 @@ class AnimeRepository {
       [id],
     );
 
-    // Ajoute les types à l'objet animé
-    return { ...anime, types: typeRows };
+    // Récupère le genre via genre_id
+    const [genreRows] = await databaseClient.query<Rows>(
+      "SELECT id, name FROM genre WHERE id = ?",
+      [anime.genre_id],
+    );
+
+    // Retourne l'objet complet
+    return { ...anime, types: typeRows, genre: genreRows[0] };
   }
 
   async readAll() {
@@ -70,8 +76,19 @@ class AnimeRepository {
   async update(anime: Anime) {
     // Exécute la requête SQL pour lire tout le tableau de la table "Anime"
     const [result] = await databaseClient.query<Result>(
-      "UPDATE Anime set title = ? WHERE id = ?",
-      [anime.title, anime.id],
+      "UPDATE Anime set title = ?, synopsis = ?, portrait = ?, date = ?, is_published = ?, genre_id = ?, users_created = ?, paysage = ?, video = ? WHERE id = ?",
+      [
+        anime.title,
+        anime.synopsis,
+        anime.portrait,
+        anime.date,
+        anime.is_published,
+        anime.genre_id,
+        anime.users_created,
+        anime.paysage,
+        anime.video,
+        anime.id,
+      ],
     );
 
     // Retourne le tableau d'animés mis à jour

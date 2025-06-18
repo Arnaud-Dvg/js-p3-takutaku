@@ -13,6 +13,7 @@ export type Anime = {
   paysage: string;
   video: string;
   types?: { id: number; name: string }[]; // Récupération des types associés
+  genre?: { id: number; name: string }; // Récupération du genre associé
 };
 
 // Typage de ce que l'on veut que le contexte réalise
