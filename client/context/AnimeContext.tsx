@@ -12,6 +12,7 @@ export type Anime = {
   users_created: number;
   paysage: string;
   video: string;
+  types?: { id: number; name: string }[]; // Récupération des types associés
 };
 
 // Typage de ce que l'on veut que le contexte réalise
@@ -78,7 +79,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
       .then((res) => res.json())
       .then((data) => {
         fetchAnime();
-        return data.insertId;
+        return data.insertId; 
       });
   };
 
