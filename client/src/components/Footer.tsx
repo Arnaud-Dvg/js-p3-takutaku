@@ -36,12 +36,14 @@ function Footer() {
   };
 
   return (
-    <section className="text-white container mx-auto flex flex-row justify-between items-center">
+    <section className="text-white flex flex-row justify-between items-end mt-10 px-2">
       {/* Gauche */}
-      <section className="text-sm mb-4 lg:mb-0">© 2025 TakuTaku</section>
+      <section className="text-xs md:text-sm pb-1 w-14 md:w-28">
+        © 2025 TakuTaku
+      </section>
 
       {/* Centre */}
-      <section className="text-center text-sm space-y-1">
+      <section className="text-center text-xs md:text-sm pb-1">
         <section>
           <Link to="/CGV">CGV</Link>
         </section>
@@ -54,7 +56,7 @@ function Footer() {
 
         <section>
           <p>
-            contact@takutaku.fr -
+            contact@takutaku.fr - {""}
             <button
               type="button"
               onClick={() => setOpen(true)}
@@ -67,11 +69,11 @@ function Footer() {
       </section>
 
       {/* Droite : image */}
-      <section className="mt-4">
+      <section className="mt-4 w-14 md:w-28">
         <img
-          src="/public/favicon.ico"
+          src="/favicon.ico"
           alt="Mascotte TakuTaku"
-          className="h-20 w-auto"
+          className="object-cover h-auto"
         />
       </section>
 
@@ -81,16 +83,14 @@ function Footer() {
             {/* Logo TakuTaku */}
             <section className="text-center mb-10">
               <img
-                src="/public/logo_taku.png"
+                src="/logo_taku.png"
                 alt="Logo TakuTaku"
                 className="mx-auto h-15"
               />
             </section>
 
             {/* Titre */}
-            <h2 className="text-2xl font-semibold text-center mb-6">
-              Nous contacter
-            </h2>
+            <h2 className="text-2xl text-center mb-6">Nous contacter</h2>
 
             <form
               ref={form}
@@ -148,7 +148,7 @@ function Footer() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="text-secondary font-bold text-lg hover:text-secondary pb-10 "
+                  className="text-secondary font-semibold text-lg hover:text-secondary pb-10 "
                 >
                   {loading ? "Envoi en cours..." : "Envoyer"}
                 </button>
