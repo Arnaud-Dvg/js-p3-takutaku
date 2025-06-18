@@ -80,7 +80,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
       .then((res) => res.json())
       .then((data) => {
         fetchAnime();
-        return data.insertId;
+        return data.insertId; 
       });
   };
 
