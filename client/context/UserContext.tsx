@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
 // Typage des données du context
-export type Users = {
+export type User = {
   id: number;
   firstname: string;
   lastname: string;
@@ -9,40 +9,42 @@ export type Users = {
   password: string;
   is_admin: boolean;
   is_actif: boolean;
+  abonnement_id: number;
 };
 
 // Typage du context User
 type UserContextType = {
-  user: Users | null;
-  setUser: React.Dispatch<React.SetStateAction<Users | null>>;
-  createUser: (newUser: Omit<Users, "id">) => Promise<void>;
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  createUser: (newUser: Omit<User, "id">) => Promise<void>;
   connected: boolean;
   setConnected: React.Dispatch<React.SetStateAction<boolean>>;
   fetchUser: () => Promise<void>;
   deleteUser: (id: number) => Promise<void>;
-  handleLogin: (user: Users) => Promise<void>;
-  updateUser: (id: number, updateData: Partial<Users>) => Promise<void>;
+  handleLogin: (user: User) => Promise<void>;
+  updateUser: (id: number, updateData: Partial<User>) => Promise<void>;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
-  const [user, setUser] = useState<Users | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
-  const fetchUser = (): Promise<void> => {
-    return fetch("http://localhost:3310/api/users")
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-        console.info(data);
-      });
+  const fetchUser = async (): Promise<void> => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user`);
+      const data = await res.json();
+      setUser(data);
+    } catch (error) {
+      console.error("Erreur lors du fetch utilisateur :", error);
+    }
   };
 
   //Fonction qui gère la création de compte utilisateur
-  const createUser = async (newUser: Omit<Users, "id">): Promise<void> => {
+  const createUser = async (newUser: Omit<User, "id">): Promise<void> => {
     try {
-      const response = await fetch("http://localhost:3310/api/users", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +70,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     password: string;
   }): Promise<void> => {
     try {
-      const response = await fetch("http://localhost:3310/api/users", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,15 +95,18 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   // Fonction pour la mise à jour de la base de donnée des utilisateurs pour la page Admin
   const updateUser = async (
     id: number,
-    updateData: Partial<Users>,
+    updateData: Partial<User>,
   ): Promise<void> => {
-    const response = await fetch(`http://localhost:3310/api/users/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/user/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData),
       },
-      body: JSON.stringify(updateData),
-    });
+    );
     if (!response.ok) {
       throw new Error("Echec de la mise à jour de l'utilisateur");
     }
@@ -111,9 +116,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   // Fonction pour la suppression de la base de donnée des utilisateurs pour la page Admin
   const deleteUser = async (id: number): Promise<void> => {
     try {
-      const response = await fetch(`http://localhost:3310/api/users/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/user/${id}`,
+        {
+          method: "DELETE",
+        },
+      );
       if (!response.ok) {
         throw new Error(
           `Echec de la suppression de l'utilisateur avec l'id ${id}: ${response.statusText}`,
