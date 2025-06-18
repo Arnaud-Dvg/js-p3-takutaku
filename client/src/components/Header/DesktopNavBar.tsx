@@ -24,7 +24,7 @@ function Header() {
           />
         </div>
         <nav className="flex justify-center flex-1 relative">
-          <ul className="hidden md:flex z-50 text-tertiary text-lg gap-40">
+          <ul className="hidden md:flex z-50 text-tertiary text-lg gap-30">
             <li>
               <Link
                 to="/"
