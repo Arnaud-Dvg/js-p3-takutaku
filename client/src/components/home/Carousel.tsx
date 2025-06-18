@@ -1,16 +1,21 @@
-//Ajustement margin searchbar en desktop
+// Import react and necessary hooks
 import { useEffect, useState } from "react";
 import { useRef } from "react";
-import type { Swiper as SwiperType } from "swiper/types";
 import { useAnimeContext } from "../../../../client/context/AnimeContext";
 import type { Anime } from "../../../../client/context/AnimeContext";
-import DesktopSearchBar from "../Header/DesktopSearchBar";
 
 import { EffectCoverflow } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+// Import for Swiper
+import type { Swiper as SwiperType } from "swiper/types";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
+
+import WatchButton from "../../components/home/WatchButton";
+// Import components
+import DesktopSearchBar from "../Header/DesktopSearchBar";
+
+// Import icons
 import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
 import { Link } from "react-router";
 
@@ -39,7 +44,6 @@ function Carousel() {
   }, [getAnimebyId]);
 
   // Fonction des boutons
-
   function setNextR() {
     swiperRef.current?.slideNext();
   }
@@ -66,6 +70,8 @@ function Carousel() {
         <div className="relative pt-5 ">
           {/* Bouton gauche */}
           <RxChevronLeft
+            aria-label="Précédent"
+            role="button"
             type="button"
             onClick={setNextL}
             className=" lg:flex lg:absolute lg:left-4 lg:top-1/2 lg:-translate-y-1/2 lg:bg-[var(--color-secondary)] lg:rounded-full lg:w-8 lg:h-8 lg:z-10 hidden "
@@ -73,6 +79,8 @@ function Carousel() {
           <div>
             {/* Bouton droit */}
             <RxChevronRight
+              aria-label="Suivant"
+              role="button"
               type="button"
               onClick={setNextR}
               className=" lg:flex lg:absolute lg:right-4 lg:top-1/2 lg:-translate-y-1/2 lg:bg-[var(--color-secondary)] lg:rounded-full lg:w-8 lg:h-8 lg:z-10 hidden"
@@ -142,38 +150,33 @@ function Carousel() {
         {selectAnime[animeIndex] && (
           <div className="relative z-10 text-center text-white p-4">
             <h2 className="text-sm uppercase">
+          <div className="relative z-10 text-center text-tertiary p-4">
+            <h2 className="text-sm uppercase md:text-lg">
+
               {selectAnime[animeIndex].title}
             </h2>
-            <div className="mt-2 grid grid-cols-1 lg:grid-cols-[3fr_4fr_3fr] lg:items-center lg:gap-4 text-[8px] text-white">
-              <div className="hidden lg:block" />
-              <div className="flex justify-center px-2">
-                <p className="text-center max-w-xl">
+            <div className="text-[8px] text-tertiary px-4 lg:px-0">
+              <div className="flex justify-center">
+                <p className="text-center max-w-xl md:text-xs">
                   {selectAnime[animeIndex].synopsis}
                 </p>
               </div>
-
-              {/* Bouton à droite */}
-              <div className="mt-2 lg:mt-0 flex justify-center lg:justify-end">
-                <Link to="/watch">
-                  <button
-                    type="button"
+              <div className="mt-2 flex justify-center">
+                <button
+                  type="button"
+                  className="bg-[var(--color-secondary)] text-[var(--color-primary)] py-1 px-4 !rounded-full font-semibold !text-xs"
+                >
+                  <Link
+                    to="/anime"
                     onClick={() => handleClick(selectAnime[animeIndex])}
-                    className="bg-[var(--color-secondary)] text-[var(--color-primary)] py-1 px-4 !rounded-full font-medium !text-lg"
                   >
-                    COMMENCER À REGARDER
-                  </button>
-                </Link>
+                    Détails
+                  </Link>
+                </button>
               </div>
-            </div>
-
-            {/* Bouton détails centré en dessous */}
-            <div className="mt-2">
-              <button
-                type="button"
-                className="bg-[var(--color-secondary)] text-[var(--color-primary)] py-1 px-4 !rounded-full font-semibold !text-md"
-              >
-                Détails
-              </button>
+              <div className="mt-2 flex justify-center lg:justify-end">
+                <WatchButton anime={selectAnime[animeIndex]} />
+              </div>
             </div>
           </div>
         )}
