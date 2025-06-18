@@ -54,7 +54,7 @@ function Carousel() {
 
   return (
     <section
-      className="relative bg-cover bg-center transition-[background-image] duration-500"
+      className="relative bg-cover bg-center transition-[background-image] duration-500 mt-6"
       style={{
         backgroundImage: `url(${selectAnime[animeIndex]?.paysage})`,
       }}
@@ -148,10 +148,7 @@ function Carousel() {
         </div>
         {selectAnime[animeIndex] && (
           <div className="relative z-10 text-center text-white p-4">
-            <h2 className="text-sm uppercase">
-          <div className="relative z-10 text-center text-tertiary p-4">
-            <h2 className="text-sm uppercase md:text-lg">
-
+            <h2 className="relative z-10 text-center text-tertiary p-4">
               {selectAnime[animeIndex].title}
             </h2>
             <div className="text-[8px] text-tertiary px-4 lg:px-0">
