@@ -7,7 +7,7 @@ type User = {
   firstname: string;
   lastname: string;
   mail: string;
-  password: string;
+  password?: string;
   is_admin: boolean;
   is_actif: boolean;
   abonnement_id: number;
@@ -56,18 +56,18 @@ class userRepository {
   async update(user: User) {
     // Exécute la requête SQL pour lire tout le tableau de la table "User"
     const [result] = await databaseClient.query<Result>(
-      "UPDATE Users set firstname = ?, lastname = ?, mail = ?, password = ?, is_admin = ?, is_actif = ? WHERE id = ?",
+      "UPDATE Users set firstname = ?, lastname = ?, mail = ?, is_admin = ?, is_actif = ?, abonnement_id = ? WHERE id = ?",
       [
         user.firstname,
         user.lastname,
         user.mail,
-        user.password,
         user.is_admin,
         user.is_actif,
+        user.abonnement_id,
         user.id,
       ],
     );
-    // Retourne le tableau d'animés mis à jour
+    // Retourne le tableau des users mis à jour
     return result.affectedRows;
   }
   // Le D du CRUD

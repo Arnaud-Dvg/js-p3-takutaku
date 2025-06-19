@@ -100,6 +100,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     id: number,
     updateData: Partial<User>,
   ): Promise<void> => {
+
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/api/user/${id}`,
       {
@@ -131,10 +132,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         );
       }
 
-      await fetchUser();
-    } catch (error) {
-      console.error("Erreur lors de la suppression de l'utilisateur :", error);
+    if (!response.ok) {
+      throw new Error("La suppression a échoué côté serveur");
     }
+
+    console.info("Utilisateur supprimé avec succès");
   };
 
   return (

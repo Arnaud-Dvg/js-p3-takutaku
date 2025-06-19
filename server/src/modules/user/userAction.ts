@@ -50,13 +50,13 @@ const read: RequestHandler = async (req, res, next) => {
 
 const edit: RequestHandler = async (req, res, next) => {
   try {
+    console.log(req.body);
     //Mettre à jour une information spécifique en fonction de l'ID fourni
     const user = {
       id: Number(req.params.id),
-      firstname: req.body.firstName,
-      lastname: req.body.lastName,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
       mail: req.body.mail,
-      password: req.body.password,
       is_admin: req.body.is_admin,
       is_actif: req.body.is_actif,
       abonnement_id: req.body.abonnement_id,
@@ -79,8 +79,7 @@ const edit: RequestHandler = async (req, res, next) => {
 const add: RequestHandler = async (req, res, next) => {
   try {
     // On extrait les donnés de l'élément du corps de la requête
-    const newUser: User = {
-      id: Number(req.params.id),
+    const newUser: Omit<User, "id"> = {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       mail: req.body.mail,

@@ -1,4 +1,4 @@
-import UserManagement from "../components/admin/UsersManagement";
+import UserManagement from "../components/admin/userManagement/UsersManagement";
 
 function Admin() {
   return (
