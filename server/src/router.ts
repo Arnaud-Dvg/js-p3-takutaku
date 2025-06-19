@@ -71,7 +71,7 @@ router.get("/api/user-with-abonnement", userAction.browseWithAbonnement);
 
 //Routes for the authenfication module
 import authAction from "./modules/auth/authAction";
-router.post("api/auth/signin", authAction.signIn);
-router.post("api/auth/signup", authAction.signUp);
+router.post("/api/auth/signin", authAction.signIn);
+router.post("/api/auth/signup", authAction.signUp);
 
 export default router;
