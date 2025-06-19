@@ -9,7 +9,7 @@ type User = {
   password: string;
   is_admin: boolean;
   is_actif: boolean;
-  abonnement: number;
+  abonnement_id: number;
 };
 
 function UserManagement() {
@@ -31,12 +31,12 @@ function UserManagement() {
     password: "",
     is_admin: false,
     is_actif: true,
-    abonnement: 1,
+    abonnement_id: 1,
   });
 
   // Fetch qui récupère tous les utilisateurs avec leurs abonnements
   const fetchUsers = () => {
-    fetch("http://localhost:3310/api/users-with-abonnement")
+    fetch("http://localhost:3310/api/user-with-abonnement")
       .then((res) => res.json())
       .then((data) => setUsers(data));
   };
@@ -123,7 +123,7 @@ function UserManagement() {
                 {user.firstname} {user.lastname}
               </div>
               <div className="break-all">{user.mail}</div>
-              <div>{user.abonnement}</div>
+              <div>{user.abonnement_id}</div>
               <div>{user.is_admin}</div>
               <div>
                 {/* Bouton "change" relié à la fonction modification */}
@@ -230,12 +230,12 @@ function UserManagement() {
               {/* Abonnement ? */}
               <select
                 name="abonnement"
-                value={editUser.abonnement}
+                value={editUser.abonnement_id}
                 required
                 onChange={(e) =>
                   setEditUser({
                     ...editUser,
-                    abonnement: Number(e.target.value),
+                    abonnement_id: Number(e.target.value),
                   })
                 }
                 className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl text-sm"
@@ -404,11 +404,11 @@ function UserManagement() {
             <select
               name="abonnement"
               required
-              value={newUser.abonnement}
+              value={newUser.abonnement_id}
               onChange={(e) =>
                 setNewUser({
                   ...newUser,
-                  abonnement: Number(e.target.value),
+                  abonnement_id: Number(e.target.value),
                 })
               }
               className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl text-sm"
@@ -448,7 +448,7 @@ function UserManagement() {
                     password: "",
                     is_admin: false,
                     is_actif: true,
-                    abonnement: 2,
+                    abonnement_id: 2,
                   });
                   setOpen(false);
                 }}

@@ -88,8 +88,8 @@ class userRepository {
     const [rows] = await databaseClient.query(
       `SELECT u.id, u.firstname, u.lastname, u.mail, u.is_admin, u.is_actif,
             a.name AS abonnement
-     FROM Users u
-     LEFT JOIN Abonnement a ON u.abonnement_id = a.id`,
+      FROM Users u
+      LEFT JOIN Abonnement a ON u.abonnement_id = a.id`,
     );
     return rows;
   }
