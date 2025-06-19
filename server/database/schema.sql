@@ -87,7 +87,7 @@ CREATE TABLE users_anime (
 -- Requêtes d'insertion
 -- Insertion des abonnements
 INSERT INTO Abonnement (name) VALUES
-('Gratuit'),
+('Découverte'),
 ('Premium');
 
 -- Insertion des genres

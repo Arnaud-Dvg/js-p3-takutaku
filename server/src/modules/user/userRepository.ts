@@ -16,21 +16,23 @@ type User = {
 class userRepository {
   // Le C du CRUD - CREATE
   async create(user: Omit<User, "id">) {
-    // Création d'un nouveau user
-    const [result] = await databaseClient.query<Result>(
-      "INSERT INTO Users (firstname, lastname, mail, password, is_admin, is_actif, abonnement_id) values (?, ?, ?, ?, ?, ?, ?)",
-      [
-        user.firstname,
-        user.lastname,
-        user.mail,
-        user.password,
-        user.is_admin,
-        user.is_actif,
-        user.abonnement_id,
-      ],
-    );
-    // Retourne l'ID du nouveau user inséré
-    return result.insertId;
+    try {
+      // Création d'un nouveau user
+      const [result] = await databaseClient.query<Result>(
+        "INSERT INTO Users (firstname, lastname, mail, password, is_admin, is_actif, abonnement_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [
+          user.firstname,
+          user.lastname,
+          user.mail,
+          user.password,
+          user.is_admin,
+          user.is_actif,
+          user.abonnement_id,
+        ],
+      );
+      // Retourne l'ID du nouveau user inséré
+      return result.insertId;
+    } catch (error) {}
   }
 
   // Le R du CRUD

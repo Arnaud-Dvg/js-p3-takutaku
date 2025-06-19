@@ -3,7 +3,7 @@ import type { RequestHandler } from "express";
 // Accès à la base de données
 import abonnementRepository from "./abonnementRepository";
 
-type AbonnementName = "gratuit" | "premium";
+type AbonnementName = "Découverte" | "Premium";
 interface Abonnement {
   id: number;
   name: AbonnementName;

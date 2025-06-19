@@ -59,7 +59,7 @@ const edit: RequestHandler = async (req, res, next) => {
       mail: req.body.mail,
       is_admin: req.body.is_admin,
       is_actif: req.body.is_actif,
-      abonnement_id: req.body.abonnement,
+      abonnement_id: req.body.abonnement_id,
     };
     const affectedRows = await userRepository.update(user);
     // Si l'information n'est pas trouvée, répondre avec statut 404
@@ -86,7 +86,7 @@ const add: RequestHandler = async (req, res, next) => {
       password: req.body.password,
       is_admin: req.body.is_admin,
       is_actif: req.body.is_actif,
-      abonnement_id: Number(req.body.abonnement),
+      abonnement_id: req.body.abonnement_id,
     };
     // Création d'un user
     const insertId = await userRepository.create(newUser);

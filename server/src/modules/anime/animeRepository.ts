@@ -13,6 +13,7 @@ type Anime = {
   users_created: number;
   paysage: string;
   video: string;
+  types?: { id: number; name: string }[]; // récupération des types associés
 };
 
 class AnimeRepository {
@@ -27,7 +28,7 @@ class AnimeRepository {
         anime.portrait,
         anime.date,
         anime.is_published,
-        anime.date,
+        anime.genre_id,
         anime.users_created,
         anime.paysage,
         anime.video,
@@ -36,16 +37,33 @@ class AnimeRepository {
     //Retourne l'ID du nouvel animé inséré
     return result.insertId;
   }
+
   // Le R du CRUD - Read
   async read(id: number) {
-    // Execute la requête SQL pour lire un item spécifique par son ID
-    const [rows] = await databaseClient.query<Rows>(
-      "select * from Anime where id = ?",
+    // Récupère l'animé
+    const [animeRows] = await databaseClient.query<Rows>(
+      "SELECT * FROM Anime WHERE id = ?",
       [id],
     );
-    //Retourne la première ligne du résultat de la requête
-    return rows[0] as Anime;
+    // Vérifie si l'animé existe
+    const anime = animeRows[0] as Anime;
+
+    // Récupère les types associés
+    const [typeRows] = await databaseClient.query<Rows>(
+      "SELECT type.id, type.name FROM type JOIN anime_type ON type.id = anime_type.type_id WHERE anime_type.anime_id = ?",
+      [id],
+    );
+
+    // Récupère le genre via genre_id
+    const [genreRows] = await databaseClient.query<Rows>(
+      "SELECT id, name FROM genre WHERE id = ?",
+      [anime.genre_id],
+    );
+
+    // Retourne l'objet complet
+    return { ...anime, types: typeRows, genre: genreRows[0] };
   }
+
   async readAll() {
     // Exécute la requête SQL pour lire tout le tableau de la table "Anime"
     const [rows] = await databaseClient.query<Rows>("select * from Anime");
@@ -58,8 +76,19 @@ class AnimeRepository {
   async update(anime: Anime) {
     // Exécute la requête SQL pour lire tout le tableau de la table "Anime"
     const [result] = await databaseClient.query<Result>(
-      "UPDATE Anime set title = ? WHERE id = ?",
-      [anime.title, anime.id],
+      "UPDATE Anime set title = ?, synopsis = ?, portrait = ?, date = ?, is_published = ?, genre_id = ?, users_created = ?, paysage = ?, video = ? WHERE id = ?",
+      [
+        anime.title,
+        anime.synopsis,
+        anime.portrait,
+        anime.date,
+        anime.is_published,
+        anime.genre_id,
+        anime.users_created,
+        anime.paysage,
+        anime.video,
+        anime.id,
+      ],
     );
 
     // Retourne le tableau d'animés mis à jour

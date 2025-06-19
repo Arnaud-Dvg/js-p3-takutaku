@@ -15,6 +15,7 @@ import Genre from "./pages/Genre";
 import Historic from "./pages/Historic";
 import Home from "./pages/Home";
 import LegalNotices from "./pages/LegalNotices";
+import Login from "./pages/Login";
 import Watch from "./pages/Watch";
 
 const router = createBrowserRouter([
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "/watch",
         element: <Watch />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },
