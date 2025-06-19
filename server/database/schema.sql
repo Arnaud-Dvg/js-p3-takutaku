@@ -109,7 +109,7 @@ INSERT INTO Type (name) VALUES
 ('Thriller');
 
 -- Insertion des users
-INSERT INTO Users (firstname ,lastname, mail, password, is_admin, is_actif, abonnement_id) VALUES
+INSERT INTO users (firstname ,lastname, mail, password, is_admin, is_actif, abonnement_id) VALUES
 ('Alexandra', 'Pastor', 'pastoralex@free.fr', 'admin', TRUE, TRUE, 1),
 ('Thibaud', 'Guadagna', 'thibaud.guadagna@gmail.com', 'thibaud', TRUE, TRUE, 2),
 ('Nathan', 'Durnerin', 'durnerin.nathan01@gmail.com', 'nathan', TRUE, TRUE, 2),

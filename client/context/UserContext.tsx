@@ -31,18 +31,18 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<Users | null>(null);
 
   const fetchUser = (): Promise<void> => {
-    return fetch("http://localhost:3310/api/users")
+    return fetch("http://localhost:3310/api/user")
       .then((res) => res.json())
       .then((data) => {
         setUser(data);
-        console.info(data);
       });
   };
 
   //Fonction qui gère la création de compte utilisateur
+
   const createUser = async (newUser: Omit<Users, "id">): Promise<void> => {
     try {
-      const response = await fetch("http://localhost:3310/api/users", {
+      const response = await fetch("http://localhost:3310/api/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +95,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     id: number,
     updateData: Partial<Users>,
   ): Promise<void> => {
-    const response = await fetch(`http://localhost:3310/api/users/${id}`, {
+    const response = await fetch(`http://localhost:3310/api/user/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -110,20 +110,15 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Fonction pour la suppression de la base de donnée des utilisateurs pour la page Admin
   const deleteUser = async (id: number): Promise<void> => {
-    try {
-      const response = await fetch(`http://localhost:3310/api/users/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        throw new Error(
-          `Echec de la suppression de l'utilisateur avec l'id ${id}: ${response.statusText}`,
-        );
-      }
+    const response = await fetch(`http://localhost:3310/api/user/${id}`, {
+      method: "DELETE",
+    });
 
-      await fetchUser();
-    } catch (error) {
-      console.error("Erreur lors de la suppression de l'utilisateur :", error);
+    if (!response.ok) {
+      throw new Error("La suppression a échoué côté serveur");
     }
+
+    console.info("Utilisateur supprimé avec succès");
   };
 
   return (
