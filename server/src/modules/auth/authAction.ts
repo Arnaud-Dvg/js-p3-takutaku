@@ -1,0 +1,63 @@
+import type { Request, Response } from "express";
+import jwt, { sign } from "jsonwebtoken";
+import authRepository from "./authRepository";
+
+// Clé secrète pour signer les tokens et verifier leur authenticité (obligatoire pour la sécurité, à mettre dans .env ne doit pas être exposée)
+const tokenKey = process.env.JWT_SECRET;
+if (!tokenKey) {
+  throw new Error("La clé secrète du token n'est pas définie dans le .env");
+}
+
+// Fonction asynchrone de connexion d'un utilisateur (login)
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+const signIn = async (request: Request, response: Response): Promise<any> => {
+  // Récupération des données envoyées depuis le client via le formulaire et insertion dans le corps de la requête
+  const { mail, password } = request.body;
+  // Appel du repository pour vérifier si un utilisateur existe dans la base de donnees
+  const user = await authRepository.signIn(mail, password);
+
+  if (!user) {
+    // Si l'utilisateur n'existe pas ou que les identifiants sont incorrects, on envoie une erreur 401 au client
+    return response
+      .status(401)
+      .send({ message: "Cet utilisateur n'existe pas" });
+  }
+
+  // Si un user est trouvé, récupération du token de l'utilisateur
+  const userId = user.id;
+  const token = jwt.sign({ id: userId }, tokenKey);
+  // Envoie au client un message de succes, le token dauthentification (JWT) et l'identifiant du nouvel utilisateur
+  response.send({
+    message: "Utilisateur connecté",
+    token: token,
+    userId: userId,
+  });
+};
+
+// Fonction asynchrone de creation dun utilisateur (inscription)
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+const signUp = async (request: Request, response: Response): Promise<any> => {
+  // Récupération des données envoyées depuis le client via le formulaire et insertion dans le corps de la requête
+  const { firstname, lastname, mail, password, abonnement_id } = request.body;
+  // Appel du repository pour creer un utilisateur dans la base de donnees
+  const userId = await authRepository.create({
+    firstname,
+    lastname,
+    mail,
+    password,
+    abonnement_id,
+  });
+  // Si la creation echoue (retour falsy), on envoie une erreur 400 au client
+  if (!userId) {
+    return response
+      .status(400)
+      .send({ message: "Erreur dans la création de l'utilisateur" });
+  }
+
+  // Si un user est cree, un token lui est attribue qui permet de l'identifier lors des futures requetes
+  const token = jwt.sign({ id: userId }, tokenKey);
+  // Envoie au client un message de succees, le token dauthentification (JWT) et l'identifiant du nouvel utilisateur
+  response.send({ message: "Utilisateur créé", token: token, userId: userId });
+};
+
+export default { signIn, signUp };

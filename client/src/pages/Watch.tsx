@@ -39,7 +39,7 @@ function Watch() {
 
   // Fonction pour gérer la sélection d'un épisode
   const handleEpisodeSelect = (episode: Episode) => {
-    setEpisodeSelected(episode);
+    setEpisodeSelected(episode); // Met à jour l'état local de l'épisode sélectionné
     localStorage.setItem("episodeSelected", JSON.stringify(episode)); // Sauvegarde de l'épisode sélectionné dans le localStorage
     window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll vers le haut de la page
   };

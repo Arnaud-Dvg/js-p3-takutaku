@@ -11,6 +11,10 @@ export type User = {
   is_actif: boolean;
   abonnement_id: number;
 };
+export type Login = {
+  mail: string;
+  password: string;
+};
 
 // Typage du context User
 type UserContextType = {
@@ -21,7 +25,7 @@ type UserContextType = {
   setConnected: React.Dispatch<React.SetStateAction<boolean>>;
   fetchUser: () => Promise<void>;
   deleteUser: (id: number) => Promise<void>;
-  handleLogin: (user: User) => Promise<void>;
+  handleLogin: (user: Login) => Promise<void>;
   updateUser: (id: number, updateData: Partial<User>) => Promise<void>;
 };
 
@@ -65,17 +69,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Fonction qui gère la connexion de l'utilisateur
-  const handleLogin = async (loginUser: {
-    mail: string;
-    password: string;
-  }): Promise<void> => {
+  const handleLogin = async ({ mail, password }: Login) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user`, {
+      const response = await fetch("http://localhost:3310/api/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(loginUser),
+        body: JSON.stringify({ mail, password }),
       });
 
       if (!response.ok) {
@@ -83,9 +84,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await response.json();
-
       setUser(data);
-      setConnected(true);
+      console.log("Login Response:", data);
+      if (!connected) {
+        setConnected(true);
+      }
     } catch (error) {
       console.error(error);
       setConnected(false);
