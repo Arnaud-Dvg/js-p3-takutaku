@@ -166,7 +166,7 @@ function Carousel() {
                     to="/anime"
                     onClick={() => handleClick(selectAnime[animeIndex])}
                   >
-                    Détails
+                    DÃ©tails
                   </Link>
                 </button>
               </div>

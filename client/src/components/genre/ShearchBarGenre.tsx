@@ -1,12 +1,12 @@
 //Search Desktop
 function SearchBarGenre() {
   return (
-    <div className="hidden md:flex w-100 rounded-full bg-white">
+    <div className="hidden md:flex min-w-[150px] w-100 h-full rounded-full bg-white">
       <input
-        className=" w-full px-4 py-1 text-gray-400 outline-none focus:outline-none "
+        className=" w-full px-4 text-gray-400 outline-none focus:outline-none "
         type="search"
         name="search"
-        placeholder="Search..."
+        placeholder="Rechercher..."
       />
       <button type="submit" className=" rounded px-4 py-3 text-white">
         <svg
