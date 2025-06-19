@@ -10,6 +10,7 @@ type User = {
   is_admin: boolean;
   is_actif: boolean;
   abonnement_id: number;
+  abonnement_name?: string; // Optionnel pour l'affichage du nom de l'abonnement
 };
 
 function UserManagement() {
@@ -36,7 +37,7 @@ function UserManagement() {
 
   // Fetch qui récupère tous les utilisateurs avec leurs abonnements
   const fetchUsers = () => {
-    fetch("http://localhost:3310/api/user-with-abonnement")
+    fetch("http://localhost:3310/api/user_with_abonnement")
       .then((res) => res.json())
       .then((data) => setUsers(data));
   };
@@ -123,7 +124,7 @@ function UserManagement() {
                 {user.firstname} {user.lastname}
               </div>
               <div className="break-all">{user.mail}</div>
-              <div>{user.abonnement_id}</div>
+              <div>{user.abonnement_name}</div>
               <div>{user.is_admin}</div>
               <div>
                 {/* Bouton "change" relié à la fonction modification */}
@@ -242,7 +243,7 @@ function UserManagement() {
               >
                 <option value="">-- Choisir un abonnement --</option>
                 <option value="2">Premium</option>
-                <option value="1">Gratuit</option>
+                <option value="1">Découverte</option>
               </select>
 
               {/* Admin ? */}
@@ -414,7 +415,7 @@ function UserManagement() {
               className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl text-sm"
             >
               <option value="">-- Choisir un abonnement --</option>
-              <option value="1">Gratuit</option>
+              <option value="1">Découverte</option>
               <option value="2">Premium</option>
             </select>
 

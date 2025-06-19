@@ -2,7 +2,7 @@ import databaseClient from "../../../database/client";
 
 import type { Result, Rows } from "../../../database/client";
 
-type AbonnementName = "gratuit" | "premium";
+type AbonnementName = "découverte" | "premium";
 
 type Abonnement = {
   id: number;

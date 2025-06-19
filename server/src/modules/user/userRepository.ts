@@ -87,7 +87,7 @@ class userRepository {
   async readAllWithAbonnement() {
     const [rows] = await databaseClient.query(
       `SELECT u.id, u.firstname, u.lastname, u.mail, u.is_admin, u.is_actif,
-            a.name AS abonnement
+            a.name AS abonnement_name
       FROM Users u
       LEFT JOIN Abonnement a ON u.abonnement_id = a.id`,
     );
