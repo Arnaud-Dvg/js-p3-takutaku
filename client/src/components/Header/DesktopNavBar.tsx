@@ -64,8 +64,10 @@ function Header() {
           </ul>
         </nav>
         <div className="flex justify-end flex-1">
-          <Link to="/account">
-            <img src="/avatar.svg" alt="avatar" className="z-10" />
+          <Link to="/login">
+            <button type="button" className="w-9 h-9 p-1 z-10">
+              <img src="/avatar.svg" alt="Avatar Icon" />
+            </button>
           </Link>
         </div>
       </section>
