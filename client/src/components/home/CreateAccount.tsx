@@ -75,9 +75,7 @@ function createAccount({
           />
         </section>
 
-        <h2 className="text-2xl font-semibold text-center mb-6">
-          Création de compte
-        </h2>
+        <h2 className="text-2xl text-center mb-6">Création de compte</h2>
         {/* Formulaire de création de compte */}
         <form
           className="flex flex-col space-y-3 text-sm"
