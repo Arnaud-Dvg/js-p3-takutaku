@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
+import { Link } from "react-router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper/types";
 import type { Anime } from "../../../../client/context/AnimeContext";
@@ -8,7 +9,7 @@ import { useAnimeContext } from "../../../../client/context/AnimeContext";
 
 function ShonenCarousel() {
   const [shonenAnime, setShonenAnime] = useState<Anime[]>([]);
-  const { anime } = useAnimeContext();
+  const { anime, setAnimeSelected } = useAnimeContext();
   const swiperRefShonen = useRef<SwiperType | null>(null);
 
   useEffect(() => {
@@ -17,7 +18,7 @@ function ShonenCarousel() {
   }, [anime]);
 
   const handleClick = (anime: Anime) => {
-    console.log("Clicked on", anime.title);
+    setAnimeSelected(anime);
   };
 
   // Fonction pour les boutons gauche/droite pour les Shonens
@@ -72,11 +73,13 @@ function ShonenCarousel() {
                 onClick={() => handleClick(anime)}
               >
                 <div>
-                  <img
-                    src={anime.portrait}
-                    alt={anime.title}
-                    className="w-full rounded-sm"
-                  />
+                  <Link to={"/anime"} onClick={() => handleClick(anime)}>
+                    <img
+                      src={anime.portrait}
+                      alt={anime.title}
+                      className="w-full rounded-sm"
+                    />
+                  </Link>
                   <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
                     {anime.title}
                   </p>

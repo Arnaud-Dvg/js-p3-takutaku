@@ -10,9 +10,18 @@ function ButtonGenre() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3310/api/genre")
-      .then((res) => res.json())
-      .then((data) => setGenres(data));
+    const fetchGenres = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/genre`,
+        );
+        const data = await response.json();
+        setGenres(data);
+      } catch (err) {
+        console.error("Erreur lors du fetch :", err);
+      }
+    };
+    fetchGenres();
   }, []);
 
   function handleSelectType(id: number): void {

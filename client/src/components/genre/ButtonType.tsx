@@ -10,9 +10,18 @@ function ButtonType() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3310/api/type")
-      .then((res) => res.json())
-      .then((data) => setTypes(data));
+    const fetchTypes = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/type`,
+        );
+        const data = await response.json();
+        setTypes(data);
+      } catch (err) {
+        console.error("Erreur lors du fetch :", err);
+      }
+    };
+    fetchTypes();
   }, []);
 
   function handleSelectType(id: number): void {
@@ -28,7 +37,7 @@ function ButtonType() {
       <button
         type="button"
         onClick={toggleDropdown}
-        className="group transition-all duration-200 w-[150px] py-2 flex flex-row items-center justify-center bg-secondary gap-2 rounded-full font-semibold text-sm"
+        className="group transition-all duration-200 w-[150px] py-2 flex flex-row items-center justify-center bg-secondary gap-2 rounded-lg font-semibold text-sm"
       >
         <span>TYPE</span>
         <svg
