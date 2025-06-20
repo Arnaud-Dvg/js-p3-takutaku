@@ -3,6 +3,7 @@ import { useAnimeContext } from "../../context/AnimeContext";
 import EpisodeList from "../components/watch/EpisodeList";
 import SeasonList from "../components/watch/SeasonList";
 import SummaryEpisode from "../components/watch/SummaryEpisode";
+import WatchEpisode from "../components/watch/WatchEpisode";
 
 type Season = {
   id: number;
@@ -45,7 +46,8 @@ function Watch() {
   };
 
   return (
-    <section className="mx-5 md:mx-15 lg:mx-30">
+    <section className="mx-5 md:mx-15 lg:mx-30 xl:mx-60 2xl:mx-120">
+      <WatchEpisode episodeSelected={episodeSelected} />
       <SummaryEpisode
         seasonSelected={seasonSelected}
         episodeSelected={episodeSelected}
