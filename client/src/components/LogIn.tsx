@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useUserContext } from "../../context/UserContext";
+import CreateAccount from "../components/home/CreateAccount";
 
 function LogIn() {
   const [mail, setMail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { handleLogin, connected } = useUserContext(); // je récupère la fonction handleLogin, et le state "connecté" du context
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState("");
+
+  const { handleLogin, connected } = useUserContext();
 
   const handleClick = (e: React.FormEvent) => {
-    //ici je crée une fonction handleclick a insérer dans mon formulaire
     e.preventDefault();
-    handleLogin({ mail, password }); // la je récupère l'objet mail et mdp de la fonction handleLogin
+    handleLogin({ mail, password });
   };
+
+  const handleCloseSignup = () => {
+    setIsSignupOpen(false);
+    setSelectedPlan("");
+  };
+
   const navigate = useNavigate(); // je crée une variable qui prend la fonction useNavigate
 
   useEffect(() => {
@@ -23,41 +32,61 @@ function LogIn() {
   }, [connected, navigate]);
 
   return (
-    <>
-      <form onSubmit={handleClick}>
-        <section className=" flex flex-col items-center justify-center">
-          <section className="my-5">
-            <input
-              type="email"
-              value={mail}
-              placeholder="E-mail"
-              required
-              onChange={(e) => setMail(e.target.value)}
-              className="w-full border-b border-white text-white px-4 py-2 text-sm"
-            />
-          </section>
-          <section>
-            <input
-              type="password"
-              value={password}
-              placeholder="Mot de Passe"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full border-b border-white text-white px-4 py-2 text-sm"
-            />
-          </section>
+    <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
+      <section className="relative bg-black text-white rounded-lg w-full max-w-lg p-8">
+        <h1 className="text-center text-2xl mb-25">Connexion</h1>
+
+        <form onSubmit={handleClick}>
+          <input
+            type="email"
+            value={mail}
+            placeholder="Adresse e-mail"
+            required
+            onChange={(e) => setMail(e.target.value)}
+            className="border-b border-white bg-transparent py-2 mb-6 text-white placeholder-white focus:outline-none w-full"
+          />
+
+          <input
+            type="password"
+            value={password}
+            placeholder="Mot de passe"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+            className="border-b border-white bg-transparent py-2 mb-6 text-white placeholder-white focus:outline-none w-full"
+          />
+
           <button
             type="submit"
-            className="text-secondary font-bold text-lg hover:text-secondary py-5"
+            className="border border-white text-white my-10 py-2 rounded-full w-full mb-6 hover:bg-secondary hover:text-black transition"
           >
-            Connexion
+            Se connecter
           </button>
-          <section className="flex justify-start w-full">
-            <img src="/favicon.ico" alt="Mascotte" className="h-15" />
-          </section>
-        </section>
-      </form>
-    </>
+        </form>
+
+        <div className="w-full flex justify-end mb-6">
+          <button
+            type="button"
+            onClick={() => setIsSignupOpen(true)}
+            className="text-yellow-400 font-semibold hover:text-yellow-300 my-5"
+          >
+            Créer un compte
+          </button>
+        </div>
+
+        <div className="flex justify-between items-end mt-4">
+          <img src="/favicon.ico" alt="Mascotte" className="h-15" />
+        </div>
+
+        {isSignupOpen && (
+          <CreateAccount
+            isOpen={isSignupOpen}
+            onClose={handleCloseSignup}
+            selectedPlan={selectedPlan}
+            setSelectedPlan={setSelectedPlan}
+          />
+        )}
+      </section>
+    </section>
   );
 }
 
