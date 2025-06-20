@@ -17,7 +17,7 @@ class userRepository {
   // Le C du CRUD - CREATE
   async create(user: Omit<User, "id">) {
     try {
-      // Création d'un nouveau user
+      // Création d'un nouveau user dans la base de données
       const [result] = await databaseClient.query<Result>(
         "INSERT INTO Users (firstname, lastname, mail, password, is_admin, is_actif, abonnement_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [
@@ -31,8 +31,12 @@ class userRepository {
         ],
       );
       // Retourne l'ID du nouveau user inséré
+      console.log("Utilisateur inséré avec ID :", result.insertId);
       return result.insertId;
-    } catch (error) {}
+    } catch (error) {
+      console.error("Erreur d'insertion dans la base :", error);
+      throw error; // si la requête échoue, on relance l'erreur
+    }
   }
 
   // Le R du CRUD
