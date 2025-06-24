@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 
+const navigate = useNavigate();
 // Typage des données du context
 export type User = {
   id: number;
@@ -88,6 +89,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       const data = await response.json();
       setUser(data);
+      localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
       console.log("Login Response:", data);
       localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
       if (!connected) {
@@ -97,6 +99,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.error(error);
       setConnected(false);
     }
+  };
+  const handleLogOut = () => {
+    setUser(null);
+    setConnected(false);
+    localStorage.removeItem("Utilisateur connecté");
+    localStorage.setItem("connected", "false");
+    navigate("/login");
   };
 
   const handleLogOut = () => {
@@ -159,6 +168,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         fetchUser,
         deleteUser,
         handleLogin,
+        handleLogOut,
         updateUser,
         handleLogOut,
       }}
