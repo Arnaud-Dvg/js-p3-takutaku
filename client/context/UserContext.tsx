@@ -1,7 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { useNavigate } from "react-router";
+import { createContext, useContext, useEffect, useState } from "react";
 
-const navigate = useNavigate();
 // Typage des données du context
 export type User = {
   id: number;
@@ -30,6 +28,7 @@ type UserContextType = {
   handleLogin: (user: Login) => Promise<void>;
   updateUser: (id: number, updateData: Partial<User>) => Promise<void>;
   handleLogOut: () => void;
+  loading: boolean;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -37,6 +36,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchUser = async (): Promise<void> => {
     try {
@@ -90,9 +90,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(data);
       localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
       console.log("Login Response:", data);
-      if (!connected) {
-        setConnected(true);
-      }
+      setConnected(true);
     } catch (error) {
       console.error(error);
       setConnected(false);
@@ -103,7 +101,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     setConnected(false);
     localStorage.removeItem("Utilisateur connecté");
     localStorage.setItem("connected", "false");
-    navigate("/login");
   };
 
   // Fonction pour la mise à jour de la base de donnée des utilisateurs pour la page Admin
@@ -147,6 +144,28 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem("Utilisateur connecté"); // au démarrage je vérifie le localstorage et je prends ce qu'il y a dans la clé "Utilisateur connecté" si rien alors storeUser = null
+
+    if (storedUser) {
+      // si il y a quelque chose  on rentre dans le bloc
+      try {
+        const data = JSON.parse(storedUser); //transformer les données en objet javascript
+        if (data?.token) {
+          setUser(data);
+          setConnected(true);
+        }
+      } catch (error) {
+        console.error(
+          "Erreur dans la lecture des éléments du localstorage :",
+          error,
+        );
+      }
+    }
+
+    setLoading(false);
+  }, []);
+
   return (
     <UserContext.Provider
       value={{
@@ -159,6 +178,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         deleteUser,
         handleLogin,
         handleLogOut,
+        loading,
         updateUser,
       }}
     >
