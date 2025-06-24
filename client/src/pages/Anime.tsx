@@ -29,11 +29,7 @@ function Anime() {
           <h1 className="text-2xl uppercase text-center mx-8 ">
             {animeSelected.title}
           </h1>
-          <p className="text-sm">
-            Date de sortie :{" "}
-            {new Date(animeSelected.date).toLocaleDateString("fr-FR")}
-            {/*Formatage de la date*/}
-          </p>
+          <p className="text-sm">Année de sortie : {animeSelected.date}</p>
         </div>
 
         <ul className="flex mx-8 my-5 gap-5 justify-center">
@@ -66,11 +62,7 @@ function Anime() {
           <div className="absolute left-20 xl:left-30 flex flex-col gap-2">
             <p className="font-bold">{animeSelected.genre?.name}</p>
             <h1 className="text-4xl uppercase">{animeSelected.title}</h1>
-            <p className="text-sm">
-              Date de sortie :{" "}
-              {new Date(animeSelected.date).toLocaleDateString("fr-FR")}
-              {/*Formatage de la date*/}
-            </p>
+            <p className="text-sm">Année de sortie : {animeSelected.date}</p>
           </div>
         </section>
 

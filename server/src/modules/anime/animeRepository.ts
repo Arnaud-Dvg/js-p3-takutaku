@@ -7,13 +7,13 @@ type Anime = {
   title: string;
   synopsis: string;
   portrait: string;
-  date: string;
+  date: number;
   is_published: boolean;
   genre_id: number;
   users_created: number;
   paysage: string;
   video: string;
-  types?: { id: number; name: string }[]; // récupération des types associés
+  types?: { id: number; name: string }[];
 };
 
 class AnimeRepository {
@@ -104,6 +104,16 @@ class AnimeRepository {
     );
     // Retourne le nombre de lignes affectées par la suppression
     return result.affectedRows;
+  }
+
+  // Lire TOUS les animés avec le genre en plus
+  async readAllWithGenre() {
+    const [rows] = await databaseClient.query(
+      `SELECT a.id, a.title, a.synopsis, a.portrait, a.date, a.is_published, a.paysage, a.video, g.name AS genre_name
+      FROM Anime As a
+      LEFT JOIN Genre AS g ON a.genre_id = g.id`,
+    );
+    return rows;
   }
 }
 

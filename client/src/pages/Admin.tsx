@@ -1,3 +1,4 @@
+import AnimeManagement from "../components/admin/animeManegement/AnimesManagement";
 import UserManagement from "../components/admin/userManagement/UsersManagement";
 
 function Admin() {
@@ -9,6 +10,7 @@ function Admin() {
         d’administration
       </h1>
       <UserManagement />
+      <AnimeManagement />
     </>
   );
 }
