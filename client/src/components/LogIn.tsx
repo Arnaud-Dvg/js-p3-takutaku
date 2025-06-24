@@ -27,7 +27,7 @@ function LogIn() {
   useEffect(() => {
     //j'utilise useEffect parce que le state connecté est une valeur qui peut changer (asynchrone)
     if (connected) {
-      navigate("/");
+      navigate("/myaccount");
     }
   }, [connected, navigate]);
 
