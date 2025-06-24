@@ -26,15 +26,14 @@ describe("Installation", () => {
 
 // Test unitaire de la méthode "create" du userRepository
 test("create retourne l'ID inséré (number)", async () => {
-  // Données fictives représentant un nouvel utilisateur à insérer dans la base
   const fakeUser = {
-    firstname: "Test", // Prénom
-    lastname: "User", // Nom
-    mail: "test.user@example.com", // Email unique (pour éviter les conflits)
-    password: "securepass", // Mot de passe fictif
-    is_admin: false, // Pas admin
-    is_actif: true, // Compte actif
-    abonnement_id: 1, // ID de l'abonnement (doit exister en base)
+    firstname: "Test",
+    lastname: "User",
+    mail: "test.user@example.com",
+    password: "securepass",
+    is_admin: false,
+    is_actif: true,
+    abonnement_id: 1,
   };
 
   // Appelle la méthode create() pour insérer l'utilisateur dans la base
