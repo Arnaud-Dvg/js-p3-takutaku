@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router";
 
+const navigate = useNavigate();
 // Typage des données du context
 export type User = {
   id: number;
@@ -27,6 +29,7 @@ type UserContextType = {
   deleteUser: (id: number) => Promise<void>;
   handleLogin: (user: Login) => Promise<void>;
   updateUser: (id: number, updateData: Partial<User>) => Promise<void>;
+  handleLogOut: () => void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -85,6 +88,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       const data = await response.json();
       setUser(data);
+      localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
       console.log("Login Response:", data);
       if (!connected) {
         setConnected(true);
@@ -93,6 +97,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.error(error);
       setConnected(false);
     }
+  };
+  const handleLogOut = () => {
+    setUser(null);
+    setConnected(false);
+    localStorage.removeItem("Utilisateur connecté");
+    localStorage.setItem("connected", "false");
+    navigate("/login");
   };
 
   // Fonction pour la mise à jour de la base de donnée des utilisateurs pour la page Admin
@@ -147,6 +158,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         fetchUser,
         deleteUser,
         handleLogin,
+        handleLogOut,
         updateUser,
       }}
     >
