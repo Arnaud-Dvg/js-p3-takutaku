@@ -10,7 +10,7 @@ type User = {
   is_admin: boolean;
   is_actif: boolean;
   abonnement_id: number;
-  abonnement_name?: string; // Optionnel pour l'affichage du nom de l'abonnement
+  abonnement_name?: string;
 };
 
 function UserManagement() {

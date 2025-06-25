@@ -1,8 +1,8 @@
-import SelectPicture from "../components/account/ChooseProfilePicture";
 import LogOutButton from "../components/account/LogOutButton";
 import ProfilePicture from "../components/account/ProfilePicture";
 import ProfileSettings from "../components/account/ProfileSettings";
 import Abonnement from "../components/home/Abonnement";
+import SelectPicture from "../components/account/ChooseProfilePicture";
 
 function Account() {
   return (
@@ -14,6 +14,7 @@ function Account() {
       <ProfileSettings />
       <Abonnement />
     </section>
+
   );
 }
 

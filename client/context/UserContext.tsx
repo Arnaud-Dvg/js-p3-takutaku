@@ -107,6 +107,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       );
       console.log("🔐 Login réussi :", formattedUser);
       setConnected(true);
+
     } catch (error) {
       console.error("❌ Erreur login :", error);
       setConnected(false);
@@ -202,6 +203,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         handleLogOut,
         loading,
         updateUser,
+        handleLogOut,
       }}
     >
       {children}
