@@ -1,7 +1,9 @@
+import History from "../components/History/HistoryComponent";
+
 function Historic() {
   return (
     <>
-      <p>Historic</p>
+      <History />
     </>
   );
 }
