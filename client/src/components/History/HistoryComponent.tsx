@@ -15,11 +15,14 @@ function History() {
   const { setAnimeSelected } = useAnimeContext();
   const swiperRefShojo = useRef<SwiperType | null>(null);
 
+  const { user } = useUserContext();
+
   useEffect(() => {
     const readAnime = async () => {
       try {
+        if (!user) return;
         const res = await fetch(
-          "http://localhost:3310/api/read_all_with_anime",
+          `http://localhost:3310/api/user/${user.id}/history`,
         );
         const data = await res.json();
         setViewedAnime(data);
@@ -27,8 +30,9 @@ function History() {
         console.error("Erreur lors du fetch:", err);
       }
     };
+
     readAnime();
-  }, []);
+  }, [user]);
 
   const handleClick = (anime: Anime) => {
     setAnimeSelected(anime);

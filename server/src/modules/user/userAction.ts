@@ -123,11 +123,33 @@ const browseWithAbonnement: RequestHandler = async (req, res, next) => {
   }
 };
 
-// Lire le prénom et le nom de chaque User et afficher toutes les infos des animés qu'il a visualisé
+// Fonction qui récupère tous les utilisateurs et tous les animés qu'ils ont vus
 const readAllWithUsers: RequestHandler = async (req, res, next) => {
   try {
     const users = await userRepository.readAllWithUsers();
     res.json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+//Cette fonction ajoute un animé à l'historique de visionnage d'un utilisateur
+const addToHistory: RequestHandler = async (req, res, next) => {
+  try {
+    //On récupère l'ID de l'utilisateur et de l'animé depuis le corps de la requête
+    const userId = Number(req.body.userId);
+    const animeId = Number(req.body.animeId);
+    const addAnime = await userRepository.addToHistory(userId, animeId);
+    res.json(addAnime);
+  } catch (err) {
+    next(err);
+  }
+};
+//Cette fonction retourne uniquement les animés vus par un utilisateur spécifique
+const readUserHistory: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.id);
+    const animeHistory = await userRepository.readUserHistory(userId);
+    res.json(animeHistory);
   } catch (err) {
     next(err);
   }
@@ -141,4 +163,6 @@ export default {
   destroy,
   browseWithAbonnement,
   readAllWithUsers,
+  addToHistory,
+  readUserHistory,
 };

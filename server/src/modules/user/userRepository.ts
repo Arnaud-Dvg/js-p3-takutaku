@@ -113,6 +113,48 @@ class userRepository {
   `);
     return rows;
   }
+  //Cette fonction ajoute un animé visionné dans l'historique et dans la table Users_Anime
+  async addToHistory(userId: number, animeId: number) {
+    try {
+      // On vérifie si l'utilisateur à déjà visionné l'animé
+      const [existing] = await databaseClient.query<Rows>(
+        "SELECT * FROM Users_Anime WHERE users_id = ? AND anime_id = ?",
+        [userId, animeId],
+      );
+      //Si on trouve déjà l'animé alors on ne l'ajoute pas à l'historique
+      if ((existing as Rows).length > 0) {
+        console.log("Animé déjà dans l'historique, pas de duplication");
+        return { message: "Déjà présent" };
+      }
+
+      // Sinon on ajoute l'animé à l'historique
+      const [result] = await databaseClient.query(
+        "INSERT INTO Users_Anime (users_id, anime_id) VALUES (?, ?)",
+        [userId, animeId],
+      );
+
+      return result; // on renvoie le résultat de l'instertion
+    } catch (error) {
+      console.error("Erreur lors de l'ajout à l'historique :", error);
+      throw error;
+    }
+  }
+  // Lire les animés vus par un utilisateur spécifique
+  async readUserHistory(userId: number) {
+    const [rows] = await databaseClient.query(
+      `
+    SELECT 
+      a.id AS anime_id,
+      a.title,
+      a.portrait
+    FROM users_anime AS ua
+    INNER JOIN anime AS a ON a.id = ua.anime_id
+    WHERE ua.users_id = ?
+  `,
+      [userId],
+    );
+    return rows;
+  }
 }
 
 export default new userRepository();
