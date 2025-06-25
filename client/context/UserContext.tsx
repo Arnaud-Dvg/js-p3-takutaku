@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Typage des données du context
 export type User = {
@@ -32,12 +33,12 @@ type UserContextType = {
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
-
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchUser = async (): Promise<void> => {
     try {
@@ -94,17 +95,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
       if (!connected) {
-        setConnected(true)
+        setConnected(true);
+      }
     } catch (error) {
       console.error(error);
       setConnected(false);
     }
-  };
-  const handleLogOut = () => {
-    setUser(null);
-    setConnected(false);
-    localStorage.removeItem("Utilisateur connecté");
-    localStorage.setItem("connected", "false");
   };
 
   const handleLogOut = () => {
@@ -192,7 +188,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         handleLogOut,
         loading,
         updateUser,
-        handleLogOut,
       }}
     >
       {children}
