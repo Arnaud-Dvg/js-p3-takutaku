@@ -1,7 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 
-const navigate = useNavigate();
 // Typage des données du context
 export type User = {
   id: number;
@@ -37,6 +36,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   const fetchUser = async (): Promise<void> => {
     try {

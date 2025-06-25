@@ -43,6 +43,10 @@ const router = createBrowserRouter([
         element: <Anime />,
       },
       {
+        path: "/anime/:id",
+        element: <Anime />,
+      },
+      {
         path: "/cgv",
         element: <Cgv />,
       },
