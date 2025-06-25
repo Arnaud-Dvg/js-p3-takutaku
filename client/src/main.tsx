@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/myaccount",
+        path: "/account",
         element: (
           <PrivateRoute>
             <Account />
@@ -46,6 +46,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/anime",
+        element: <Anime />,
+      },
+      {
+        path: "/anime/:id",
         element: <Anime />,
       },
       {
