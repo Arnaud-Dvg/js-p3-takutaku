@@ -17,6 +17,7 @@ router.get("/api/anime/:id", animeAction.read);
 router.post("/api/anime", animeAction.add);
 router.put("/api/anime/:id", animeAction.edit);
 router.delete("/api/anime/:id", animeAction.destroy);
+router.get("/api/anime_with_genre", animeAction.browseWithGenre);
 
 //Routes for the genre module
 import genreAction from "./modules/genre/genreAction";
