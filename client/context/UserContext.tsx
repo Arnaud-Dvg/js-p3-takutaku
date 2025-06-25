@@ -90,7 +90,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(data);
       localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
       console.log("Login Response:", data);
-      setConnected(true);
+
+      localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
+      if (!connected) {
+        setConnected(true)
     } catch (error) {
       console.error(error);
       setConnected(false);
@@ -101,6 +104,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     setConnected(false);
     localStorage.removeItem("Utilisateur connecté");
     localStorage.setItem("connected", "false");
+  };
+
+  const handleLogOut = () => {
+    setUser(null);
+    setConnected(false);
+    localStorage.removeItem("Utilisateur connecté");
+    localStorage.setItem("connected", "false");
+    navigate("/login");
   };
 
   // Fonction pour la mise à jour de la base de donnée des utilisateurs pour la page Admin
@@ -180,6 +191,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         handleLogOut,
         loading,
         updateUser,
+        handleLogOut,
       }}
     >
       {children}

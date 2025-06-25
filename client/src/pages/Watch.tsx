@@ -46,7 +46,7 @@ function Watch() {
   };
 
   return (
-    <section className="mx-5 md:mx-15 lg:mx-30 xl:mx-60 2xl:mx-120">
+    <section className="mx-5 md:mx-15 lg:mx-30 xl:mx-60 2xl:mx-80 3xl:mx-100">
       <WatchEpisode episodeSelected={episodeSelected} />
       <SummaryEpisode
         seasonSelected={seasonSelected}
