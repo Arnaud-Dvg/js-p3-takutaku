@@ -123,4 +123,22 @@ const browseWithAbonnement: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, edit, add, destroy, browseWithAbonnement };
+// Lire le prénom et le nom de chaque User et afficher toutes les infos des animés qu'il a visualisé
+const readAllWithUsers: RequestHandler = async (req, res, next) => {
+  try {
+    const users = await userRepository.readAllWithUsers();
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default {
+  browse,
+  read,
+  edit,
+  add,
+  destroy,
+  browseWithAbonnement,
+  readAllWithUsers,
+};

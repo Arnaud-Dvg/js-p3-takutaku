@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useState } from "react";
 import { useUserContext } from "../../context/UserContext";
 import CreateAccount from "../components/home/CreateAccount";
 
@@ -10,7 +9,7 @@ function LogIn() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
 
-  const { handleLogin, connected } = useUserContext();
+  const { handleLogin } = useUserContext();
 
   const handleClick = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,15 +20,6 @@ function LogIn() {
     setIsSignupOpen(false);
     setSelectedPlan("");
   };
-
-  const navigate = useNavigate(); // je crée une variable qui prend la fonction useNavigate
-
-  useEffect(() => {
-    //j'utilise useEffect parce que le state connecté est une valeur qui peut changer (asynchrone)
-    if (connected) {
-      navigate("/account");
-    }
-  }, [connected, navigate]);
 
   return (
     <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
