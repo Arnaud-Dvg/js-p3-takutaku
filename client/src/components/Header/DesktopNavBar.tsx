@@ -14,7 +14,6 @@ function Header() {
       <div className="block md:hidden">
         <NavBar />
       </div>
-
       <section className="hidden md:flex items-center w-full p-3">
         <div className="flex justify-start flex-1 z-10">
           <img

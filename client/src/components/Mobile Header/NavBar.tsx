@@ -3,12 +3,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import BurgerButton from "./BurgerButton";
-import SearchBar from "./SearchBar";
 
 function NavBar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsNavOpen((prev) => !prev);
   };
@@ -23,17 +20,14 @@ function NavBar() {
       <section>
         <section className="relative flex items-center justify-between px-2 py-4">
           <BurgerButton toggleMenu={toggleMenu} isOpen={isNavOpen} />
-          {!isSearchOpen && (
-            <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-              <img
-                src="/logo_taku.png"
-                className="h-12 object-cover"
-                alt="Logo Taku Taku"
-              />
-            </div>
-          )}
+          <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
+            <img
+              src="/logo_taku.png"
+              className="h-12 object-cover"
+              alt="Logo Taku Taku"
+            />
+          </div>
           <div className="flex items-center space-x-1">
-            <SearchBar isOpen={isSearchOpen} setIsOpen={setIsSearchOpen} />
             <Link to="/login">
               <button type="button" className="w-9 h-9 p-1 z-10">
                 <img src="/avatar.svg" alt="Avatar Icon" />

@@ -1,37 +1,49 @@
-//Search Desktop
-function DesktopSearchBar() {
-  return (
-    <div className=" mb-3 xl:w-96 pt-3">
-      <div className="relative mb-4 ml-3 flex w-full flex-wrap items-stretch z-10">
-        <input
-          type="submit"
-          className="relative m-0 block flex-auto rounded-full border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="button-addon2"
-        />
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useAnimeContext } from "../../../context/AnimeContext";
 
-        {/* <!--Search icon--> */}
-        <button
-          className="!ml-4 p-2 bg-white !rounded-full hover:scale-105 transition-transform"
-          id="basic-addon2"
-          type="submit"
+function DesktopSearchBar() {
+  const [search, setSearch] = useState("");
+  const { anime } = useAnimeContext();
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    const result = anime.filter((anime) =>
+      anime.title.toLowerCase().includes(search.toLowerCase()),
+    );
+    const found = result[0];
+    if (found) {
+      navigate(`/anime/${found.id}`);
+    } else {
+      alert("Aucun animé trouvé.");
+    }
+  };
+
+  return (
+    <div className="flex min-w-[150px] md:w-100 w-62 md:h-full h-6 rounded-full bg-white">
+      <input
+        className=" w-full px-4 text-gray-800 outline-none focus:outline-none "
+        type="search"
+        name="search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Rechercher par titre..."
+      />
+      <button
+        type="submit"
+        className=" rounded px-4 py-3 text-white"
+        onClick={handleSearch}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 59 59"
+          fill=""
+          className="h-5 w-5 cursor-pointer flex items-center"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="h-5 w-5"
-          >
-            <title>Icône de recherche</title>
-            <path
-              fillRule="evenodd"
-              d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-      </div>
+          <title>Search Icon</title>
+          <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+        </svg>
+      </button>
     </div>
   );
 }

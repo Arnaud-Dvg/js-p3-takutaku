@@ -19,6 +19,7 @@ export type Anime = {
 // Typage de ce que l'on veut que le contexte réalise
 type AnimeContextType = {
   anime: Anime[];
+  setAnime: React.Dispatch<React.SetStateAction<Anime[]>>;
   animeSelected: Anime | null;
   setAnimeSelected: (anime: Anime | null) => void;
   fetchAnime: () => Promise<void>;
@@ -107,6 +108,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
     <AnimeContext.Provider
       value={{
         anime,
+        setAnime,
         animeSelected,
         setAnimeSelected,
         fetchAnime,

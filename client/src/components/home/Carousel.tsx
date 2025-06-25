@@ -59,7 +59,7 @@ function Carousel() {
         backgroundImage: `url(${selectAnime[animeIndex]?.paysage})`,
       }}
     >
-      <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 z-20 pb-2">
+      <div className="block absolute left-1/2 transform -translate-x-1/2 z-20 pb-2">
         <DesktopSearchBar />
       </div>
       {/* Calque de flou par-dessus l'image de fond */}
