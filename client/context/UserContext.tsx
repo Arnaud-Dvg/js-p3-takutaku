@@ -37,6 +37,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   const fetchUser = async (): Promise<void> => {
     try {
@@ -90,6 +91,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(data);
       localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
       console.log("Login Response:", data);
+      localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
       if (!connected) {
         setConnected(true);
       }
@@ -98,6 +100,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setConnected(false);
     }
   };
+  const handleLogOut = () => {
+    setUser(null);
+    setConnected(false);
+    localStorage.removeItem("Utilisateur connecté");
+    localStorage.setItem("connected", "false");
+    navigate("/login");
+  };
+
   const handleLogOut = () => {
     setUser(null);
     setConnected(false);
@@ -160,6 +170,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         handleLogin,
         handleLogOut,
         updateUser,
+        handleLogOut,
       }}
     >
       {children}

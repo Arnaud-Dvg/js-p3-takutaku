@@ -13,7 +13,7 @@ import "swiper/css/effect-coverflow";
 
 import WatchButton from "../../components/home/WatchButton";
 // Import components
-import DesktopSearchBar from "../Header/DesktopSearchBar";
+import DesktopSearchBar from "../header/DesktopSearchBar";
 
 // Import icons
 import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
