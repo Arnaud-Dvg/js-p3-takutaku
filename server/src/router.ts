@@ -69,6 +69,8 @@ router.delete("/api/user/:id", userAction.destroy);
 router.get("/api/user_abonnement", userAction.browse);
 router.get("/api/user_with_abonnement", userAction.browseWithAbonnement);
 router.get("/api/read_all_with_anime", userAction.readAllWithUsers);
+router.post("/api/add_to_history", userAction.addToHistory);
+router.get("/api/user/:id/history", userAction.readUserHistory);
 
 //Routes for the authenfication module
 import authAction from "./modules/auth/authAction";

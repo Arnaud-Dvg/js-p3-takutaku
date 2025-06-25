@@ -87,15 +87,32 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await response.json();
-      setUser(data);
-      localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
-      console.log("Login Response:", data);
+
+      // Crée un utilisateur minimal pour le context
+      const formattedUser: User = {
+        id: data.userId, // récupéré depuis l’API
+        firstname: "", // à compléter si dispo
+        lastname: "",
+        mail, // on garde le mail utilisé pour se connecter
+        password: "", // à éviter de garder en vrai, mais requis par le type
+        is_admin: false,
+        is_actif: true,
+        abonnement_id: 0,
+      };
+
+      setUser(formattedUser);
+      localStorage.setItem(
+        "Utilisateur connecté",
+        JSON.stringify(formattedUser),
+      );
+      console.log("🔐 Login réussi :", formattedUser);
       setConnected(true);
     } catch (error) {
-      console.error(error);
+      console.error("❌ Erreur login :", error);
       setConnected(false);
     }
   };
+
   const handleLogOut = () => {
     setUser(null);
     setConnected(false);
@@ -145,25 +162,30 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("Utilisateur connecté"); // au démarrage je vérifie le localstorage et je prends ce qu'il y a dans la clé "Utilisateur connecté" si rien alors storeUser = null
+    const storedUser = localStorage.getItem("Utilisateur connecté"); // je récupère les données utilisateur dans la variable storeUser
 
     if (storedUser) {
-      // si il y a quelque chose  on rentre dans le bloc
+      //si je trouve quelque chose
       try {
-        const data = JSON.parse(storedUser); //transformer les données en objet javascript
-        if (data?.token) {
-          setUser(data);
-          setConnected(true);
+        const parsedUser = JSON.parse(storedUser); //je transforme la chaine JSON(format de la donée du local storage) en objet JS utilisable
+
+        if (parsedUser?.id) {
+          // je vérifie que cet objet JS détient un ID
+          setUser(parsedUser); // je met à jour l'objet récupéré
+          setConnected(true); //je déclare l'utilisateur connecté
+          console.log(
+            "🔁 Données chargées depuis le localStorage :",
+            parsedUser,
+          ); //j'affiche dans la console que tout a été chargé depuis le local storage
+        } else {
+          console.warn("❗ Format utilisateur invalide dans le localStorage"); // alerte pour aider à debug
         }
       } catch (error) {
-        console.error(
-          "Erreur dans la lecture des éléments du localstorage :",
-          error,
-        );
+        console.error("❌ Erreur parsing localStorage :", error); //idem
       }
     }
 
-    setLoading(false);
+    setLoading(false); // j'arrête le chargement peu importe s'il y a eu un utilisateur de trouvé ou pas.
   }, []);
 
   return (
