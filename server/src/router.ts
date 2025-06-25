@@ -17,6 +17,7 @@ router.get("/api/anime/:id", animeAction.read);
 router.post("/api/anime", animeAction.add);
 router.put("/api/anime/:id", animeAction.edit);
 router.delete("/api/anime/:id", animeAction.destroy);
+router.get("/api/anime_with_genre", animeAction.browseWithGenre);
 
 //Routes for the genre module
 import genreAction from "./modules/genre/genreAction";
@@ -68,6 +69,7 @@ router.put("/api/user/:id", userAction.edit);
 router.delete("/api/user/:id", userAction.destroy);
 router.get("/api/user_abonnement", userAction.browse);
 router.get("/api/user_with_abonnement", userAction.browseWithAbonnement);
+router.get("/api/read_all_with_anime", userAction.readAllWithUsers);
 
 //Routes for the authenfication module
 import authAction from "./modules/auth/authAction";

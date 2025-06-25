@@ -97,6 +97,22 @@ class userRepository {
     );
     return rows;
   }
+  // Lire le prénom et le nom de chaque User et afficher toutes les infos des animés qu'il a visualisé
+  async readAllWithUsers() {
+    const [rows] = await databaseClient.query(`
+    SELECT 
+      u.id AS user_id,
+      u.firstname,
+      u.lastname,
+      a.id AS anime_id,
+      a.title,
+      a.portrait
+    FROM users AS u
+    INNER JOIN users_anime AS ua ON u.id = ua.users_id
+    INNER JOIN anime AS a ON a.id = ua.anime_id
+  `);
+    return rows;
+  }
 }
 
 export default new userRepository();

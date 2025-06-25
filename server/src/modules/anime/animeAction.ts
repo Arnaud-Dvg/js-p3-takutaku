@@ -8,7 +8,7 @@ interface Anime {
   title: string;
   synopsis: string;
   portrait: string;
-  date: string;
+  date: number;
   is_published: boolean;
   genre_id: number;
   users_created: number;
@@ -125,4 +125,14 @@ const destroy: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, add, destroy, edit };
+// Lire TOUS les animés avec le genre en plus
+const browseWithGenre: RequestHandler = async (req, res, next) => {
+  try {
+    const animes = await animeRepository.readAllWithGenre();
+    res.json(animes);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { browse, read, add, destroy, edit, browseWithGenre };

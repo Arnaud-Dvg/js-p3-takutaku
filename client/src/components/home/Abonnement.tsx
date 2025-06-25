@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useLocation } from "react-router";
 import CreateAccount from "./CreateAccount";
 
 function Abonnement() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
+  const location = useLocation();
+  const isHomePage = location.pathname === "/"; // Vérifie si on est sur la page d'accueil
 
   const handleSubscribeClick = (plan: string) => {
     setSelectedPlan(plan); // Met à jour l'offre choisie
@@ -16,18 +19,15 @@ function Abonnement() {
   };
 
   return (
-    <section className="text-white py-12 px-4 lg:py-20 ">
-      <h2 className="text-3xl font-bold text-center mb-10 lg:mb-20">
-        Abonnement
-      </h2>
-      <section className="grid grid-cols-2 gap-3 lg:gap-40 max-w-4xl mx-auto">
+    <>
+      <section className="grid grid-cols-2 gap-3 lg:gap-40 max-w-4xl mx-auto text-tertiary">
         {/* Offre Découverte */}
         <section className="border-5 border-secondary p-4 flex flex-col justify-between shadow-lg">
           <section>
-            <h3 className="text-xl font-bold mb-4 mt-4 lg:mb-20 text-center">
+            <h3 className="text-lg lg:text-xl mb-4 mt-4 lg:mb-20 text-center">
               Offre Découverte
             </h3>
-            <p className="font-semibold lg:ml-5">
+            <p className="font-semibold lg:ml-5 mb-8">
               2 mois offert <br />
               puis <span className="text-secondary">10.99€</span> par mois
             </p>
@@ -39,33 +39,37 @@ function Abonnement() {
               </li>
               <li>• 1 écran à la fois</li>
             </ul>
-            <p className="mt-21 lg:mt-16 text-sm font-semibold text-white text-center">
-              Parfait pour découvrir nos animés sans engagement !
-            </p>
-            <section className="flex justify-center mt-6 ">
-              <button
-                type="button"
-                onClick={() => handleSubscribeClick("Découverte")}
-                className="mt-4  bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
-              >
-                S'abonner
-              </button>
-            </section>
+            {isHomePage && (
+              <section>
+                <p className="mt-21 lg:mt-16 text-sm font-semibold text-tertiary text-center">
+                  Parfait pour découvrir nos animés sans engagement !
+                </p>
+                <section className="flex justify-center mt-6 ">
+                  <button
+                    type="button"
+                    onClick={() => handleSubscribeClick("Découverte")}
+                    className="mt-4  bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
+                  >
+                    S'abonner
+                  </button>
+                </section>
+              </section>
+            )}
           </section>
         </section>
 
         {/* Offre Premium */}
         <section className="border-5 border-secondary p-4 flex flex-col justify-between shadow-lg">
           <section>
-            <h3 className="text-xl font-bold mb-4 mt-4 lg:mb-15 text-center">
+            <h3 className="text-lg lg:text-xl mb-4 mt-4 lg:mb-15 text-center">
               Offre Premium
               <br />
               “Sans Pub”
             </h3>
-            <p className="text-secondary font-semibold mb-10 lg:ml-5 lg:mb-4">
-              Prix : <span className="text-secondary">20.99 €/mois</span>
+            <p className=" font-semibold mb-14 lg:ml-5 lg:mb-4">
+              Prix : <span className="text-secondary">20.99€ </span> par mois
             </p>
-            <ul className="mt-4 lg:ml-4 space-y-2 text-sm">
+            <ul className="mt-8 lg:ml-4 space-y-2 text-sm">
               <li>• Accès complet au catalogue</li>
               <li>
                 • <span className="text-secondary">Sans publicité</span>
@@ -84,18 +88,22 @@ function Abonnement() {
                 </span>
               </li>
             </ul>
-            <p className="mt-9 lg:mt-13 text-sm font-semibold text-white text-center">
-              Pour les vrais fans qui veulent profiter sans interruption !
-            </p>
-            <section className="flex justify-center mt-6 mb-3">
-              <button
-                type="button"
-                onClick={() => handleSubscribeClick("Premium")}
-                className="mt-4 bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
-              >
-                S'abonner
-              </button>
-            </section>
+            {isHomePage && (
+              <section>
+                <p className="mt-9 lg:mt-13 text-sm font-semibold text-tertiary text-center">
+                  Pour les vrais fans qui veulent profiter sans interruption !
+                </p>
+                <section className="flex justify-center mt-6 mb-3">
+                  <button
+                    type="button"
+                    onClick={() => handleSubscribeClick("Premium")}
+                    className="mt-4 bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
+                  >
+                    S'abonner
+                  </button>
+                </section>
+              </section>
+            )}
           </section>
         </section>
       </section>
@@ -106,7 +114,7 @@ function Abonnement() {
         selectedPlan={selectedPlan}
         setSelectedPlan={setSelectedPlan}
       />
-    </section>
+    </>
   );
 }
 
