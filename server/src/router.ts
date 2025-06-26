@@ -63,7 +63,7 @@ router.delete("/api/abonnement/:id", abonnementAction.destroy);
 import userAction from "./modules/user/userAction";
 
 router.get("/api/user", userAction.browse);
-router.get("/api/users/:id([0-9]+)", checkToken, userAction.read);
+router.get("/api/user/:id([0-9]+)", checkToken, userAction.read);
 router.post("/api/user", userAction.add);
 router.put("/api/user/:id", userAction.edit);
 router.delete("/api/user/:id", userAction.destroy);

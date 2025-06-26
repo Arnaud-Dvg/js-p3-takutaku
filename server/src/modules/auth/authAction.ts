@@ -30,7 +30,15 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
   response.send({
     message: "Utilisateur connecté",
     token: token,
-    userId: userId,
+    user: {
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      mail: user.mail,
+      abonnement_id: user.abonnement_id,
+      is_admin: false,
+      is_actif: true,
+    },
   });
 };
 

@@ -14,7 +14,7 @@ class authRepository {
   async create(user: Omit<Auth, "id">) {
     // Création d'un nouvel utilisateur
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO User (firstname, lastname, mail, password, abonnement_id) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO Users (firstname, lastname, mail, password, abonnement_id) VALUES (?, ?, ?, ?, ?)",
       [
         user.firstname,
         user.lastname,
@@ -30,7 +30,7 @@ class authRepository {
   async read(id: number) {
     // Exécute la requête SQL pour lire un utilisateur par son id
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT * FROM User WHERE id = ?",
+      "SELECT * FROM Users WHERE id = ?",
       [id],
     );
     // Retourne la première ligne du résultat de la requête

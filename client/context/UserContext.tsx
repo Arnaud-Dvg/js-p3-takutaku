@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 // Typage des données du context
 export type User = {
@@ -36,9 +35,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   const fetchUser = async (): Promise<void> => {
     try {
@@ -90,7 +87,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       const data = await response.json();
 
-
       // Crée un utilisateur minimal pour le context
       const formattedUser: User = {
         id: data.userId, // récupéré depuis l’API
@@ -110,7 +106,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       );
       console.log("🔐 Login réussi :", formattedUser);
       setConnected(true);
-
     } catch (error) {
       console.error("❌ Erreur login :", error);
       setConnected(false);
