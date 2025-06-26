@@ -2,6 +2,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 // Typage des données du contexte
 export type Anime = {
+  is_favorite: boolean; // Utilisé pour savoir si l'anime est favori
+  users_id: number; // Utilisé pour l'identifiant de l'utilisateur
+  anime_id: number; // Utilisé pour l'identifiant de l'anime
   id: number;
   title: string;
   synopsis: string;
