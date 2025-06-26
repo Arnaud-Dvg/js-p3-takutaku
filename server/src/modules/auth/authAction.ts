@@ -28,8 +28,18 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
   const token = jwt.sign({ id: userId }, tokenKey);
   // Envoie au client un message de succes, le token dauthentification (JWT) et l'identifiant du nouvel utilisateur
   response.send({
-    ...user, // renvoie tout (id, nom, mail, etc.)
-    token,
+
+    message: "Utilisateur connecté",
+    token: token,
+    user: {
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      mail: user.mail,
+      abonnement_id: user.abonnement_id,
+      is_admin: false, // si tu veux ajouter ce champ plus tard
+      is_actif: true, // idem
+    },
   });
 };
 
