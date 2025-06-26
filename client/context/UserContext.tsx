@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 // Typage des données du context
 export type User = {
@@ -36,9 +35,8 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   const fetchUser = async (): Promise<void> => {
     try {
@@ -90,17 +88,16 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       const data = await response.json();
 
-
       // Crée un utilisateur minimal pour le context
       const formattedUser: User = {
-        id: data.userId, // récupéré depuis l’API
-        firstname: "", // à compléter si dispo
-        lastname: "",
-        mail, // on garde le mail utilisé pour se connecter
-        password: "", // à éviter de garder en vrai, mais requis par le type
-        is_admin: false,
-        is_actif: true,
-        abonnement_id: 0,
+        id: data.user.id,
+        firstname: data.user.firstname,
+        lastname: data.user.lastname,
+        mail: data.user.mail,
+        password: "", // tu peux laisser vide
+        abonnement_id: data.user.abonnement_id,
+        is_admin: data.user.is_admin ?? false,
+        is_actif: data.user.is_actif ?? true,
       };
 
       setUser(formattedUser);
@@ -110,7 +107,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       );
       console.log("🔐 Login réussi :", formattedUser);
       setConnected(true);
-
     } catch (error) {
       console.error("❌ Erreur login :", error);
       setConnected(false);
