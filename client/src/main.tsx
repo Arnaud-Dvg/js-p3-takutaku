@@ -57,12 +57,8 @@ const router = createBrowserRouter([
         element: <Cgv />,
       },
       {
-        path: "/favoris",
-        element: (
-          <PrivateRoute>
-            <Favorite />
-          </PrivateRoute>
-        ),
+        path: "/favorite",
+        element: <Favorite />,
       },
       {
         path: "/genre",
