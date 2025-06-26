@@ -59,7 +59,7 @@ function CreateAccount({
       password: newaccount.password,
     });
 
-    setShowPayment(true); // 🔁 affiche le paiement intégré
+    setShowPayment(true); // affiche le paiement intégré
   };
 
   const closeAll = () => {
