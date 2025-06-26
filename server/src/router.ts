@@ -52,7 +52,7 @@ router.put("/api/episode/:id", episodeAction.edit);
 router.delete("/api/episode/:id", episodeAction.destroy);
 
 // Routes for the abonnement module
-import abonnementAction from "../src/modules/Abonnement/abonnementAction";
+import abonnementAction from "./modules/abonnement/abonnementAction";
 router.get("/api/abonnement", abonnementAction.browse);
 router.get("/api/abonnement/:id", abonnementAction.read);
 router.post("/api/abonnement", abonnementAction.add);
@@ -77,5 +77,22 @@ router.get("/api/user/:id/history", userAction.readUserHistory);
 import authAction from "./modules/auth/authAction";
 router.post("/api/auth/signin", authAction.signIn);
 router.post("/api/auth/signup", authAction.signUp);
+
+// Routes for the users_anime module / favorites
+import usersAnimeAction from "./modules/usersAnime/usersAnimeActions";
+router.get("/api/users_anime/:userId([0-9]+)", usersAnimeAction.browse);
+router.get(
+  "/api/users_anime/:userId([0-9]+)/:animeId([0-9]+)",
+  usersAnimeAction.read,
+);
+router.post("/api/users_anime", usersAnimeAction.add);
+router.put(
+  "/api/users_anime/:userId([0-9]+)/:animeId([0-9]+)",
+  usersAnimeAction.edit,
+);
+router.delete(
+  "/api/users_anime/:userId([0-9]+)/:animeId([0-9]+)",
+  usersAnimeAction.destroy,
+);
 
 export default router;

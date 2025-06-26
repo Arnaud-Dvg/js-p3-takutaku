@@ -28,6 +28,7 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
   const token = jwt.sign({ id: userId }, tokenKey);
   // Envoie au client un message de succes, le token dauthentification (JWT) et l'identifiant du nouvel utilisateur
   response.send({
+
     message: "Utilisateur connecté",
     token: token,
     user: {
@@ -36,8 +37,13 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
       lastname: user.lastname,
       mail: user.mail,
       abonnement_id: user.abonnement_id,
+<<<<<<< S03_US02_UpdateAccountPage
       is_admin: false,
       is_actif: true,
+=======
+      is_admin: false, // si tu veux ajouter ce champ plus tard
+      is_actif: true, // idem
+>>>>>>> dev
     },
   });
 };
@@ -61,11 +67,22 @@ const signUp = async (request: Request, response: Response): Promise<any> => {
       .status(400)
       .send({ message: "Erreur dans la création de l'utilisateur" });
   }
+  // Récupérer le user fraîchement créé (important !)
+  const user = await authRepository.signIn(mail, password);
 
+  if (!user) {
+    return response
+      .status(500)
+      .send({ message: "Utilisateur créé mais non retrouvé" });
+  }
   // Si un user est cree, un token lui est attribue qui permet de l'identifier lors des futures requetes
   const token = jwt.sign({ id: userId }, tokenKey);
   // Envoie au client un message de succees, le token dauthentification (JWT) et l'identifiant du nouvel utilisateur
-  response.send({ message: "Utilisateur créé", token: token, userId: userId });
+  // Renvoyer tout l'objet user + token
+  response.send({
+    ...user,
+    token,
+  });
 };
 
 export default { signIn, signUp };

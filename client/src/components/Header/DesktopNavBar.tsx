@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useUserContext } from "../../../context/UserContext";
 //NavBar Desktop
 import NavBar from "../Mobile Header/NavBar";
 
@@ -8,7 +9,7 @@ function Header() {
   const isHomePage = location.pathname === "/";
   const isGenrePage = location.pathname === "/genre";
   const isFavoritePage = location.pathname === "/favorite";
-
+  const { connected } = useUserContext();
   return (
     <>
       <div className="block md:hidden">
@@ -65,7 +66,11 @@ function Header() {
         <div className="flex justify-end flex-1">
           <Link to="/login">
             <button type="button" className="w-9 h-9 p-1 z-10">
-              <img src="/avatar.svg" alt="Avatar Icon" />
+              <img
+                src={!connected ? "/avatar.svg" : "/profilpicture.png"}
+                alt="Avatar Icon"
+                className={!connected ? "" : "rounded-full"}
+              />
             </button>
           </Link>
         </div>

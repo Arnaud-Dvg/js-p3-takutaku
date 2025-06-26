@@ -35,6 +35,10 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
+<<<<<<< S03_US02_UpdateAccountPage
+=======
+
+>>>>>>> dev
   const [loading, setLoading] = useState(true);
 
   const fetchUser = async (): Promise<void> => {
@@ -89,14 +93,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       // Crée un utilisateur minimal pour le context
       const formattedUser: User = {
-        id: data.userId, // récupéré depuis l’API
-        firstname: "", // à compléter si dispo
-        lastname: "",
-        mail, // on garde le mail utilisé pour se connecter
-        password: "", // à éviter de garder en vrai, mais requis par le type
-        is_admin: false,
-        is_actif: true,
-        abonnement_id: 0,
+        id: data.user.id,
+        firstname: data.user.firstname,
+        lastname: data.user.lastname,
+        mail: data.user.mail,
+        password: "", // tu peux laisser vide
+        abonnement_id: data.user.abonnement_id,
+        is_admin: data.user.is_admin ?? false,
+        is_actif: data.user.is_actif ?? true,
       };
 
       setUser(formattedUser);
