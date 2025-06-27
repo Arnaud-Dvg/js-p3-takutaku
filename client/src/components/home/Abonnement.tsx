@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router";
+import { useUserContext } from "../../../context/UserContext";
 import CreateAccount from "./CreateAccount";
 
 function Abonnement() {
@@ -7,6 +8,7 @@ function Abonnement() {
   const [selectedPlan, setSelectedPlan] = useState("");
   const location = useLocation();
   const isHomePage = location.pathname === "/"; // Vérifie si on est sur la page d'accueil
+  const { connected } = useUserContext();
 
   const handleSubscribeClick = (plan: string) => {
     setSelectedPlan(plan); // Met à jour l'offre choisie
@@ -39,7 +41,7 @@ function Abonnement() {
               </li>
               <li>• 1 écran à la fois</li>
             </ul>
-            {isHomePage && (
+            {isHomePage && !connected && (
               <section>
                 <p className="mt-21 lg:mt-16 text-sm font-semibold text-tertiary text-center">
                   Parfait pour découvrir nos animés sans engagement !
@@ -88,7 +90,7 @@ function Abonnement() {
                 </span>
               </li>
             </ul>
-            {isHomePage && (
+            {isHomePage && !connected && (
               <section>
                 <p className="mt-9 lg:mt-13 text-sm font-semibold text-tertiary text-center">
                   Pour les vrais fans qui veulent profiter sans interruption !

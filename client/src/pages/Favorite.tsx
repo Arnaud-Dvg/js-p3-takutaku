@@ -69,7 +69,7 @@ function Favorite() {
 
   return (
     <section className="px-4 py-8">
-      <h1 className="text-white text-2xl mb-6">Mes Favoris</h1>
+      <h1 className="text-white text-xl mb-6">Mes Favoris</h1>
       <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {favorites.map((anime) => (
           <div key={anime.anime_id} className="relative group">
@@ -78,7 +78,7 @@ function Favorite() {
                 <img
                   src={anime.portrait}
                   alt={anime.title}
-                  className="rounded w-full h-[250px] object-cover"
+                  className="rounded w-full object-cover"
                 />
               </Link>
 
