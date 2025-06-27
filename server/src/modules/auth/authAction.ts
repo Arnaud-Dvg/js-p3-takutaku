@@ -28,7 +28,6 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
   const token = jwt.sign({ id: userId }, tokenKey);
   // Envoie au client un message de succes, le token dauthentification (JWT) et l'identifiant du nouvel utilisateur
   response.send({
-
     message: "Utilisateur connecté",
     token: token,
     user: {
