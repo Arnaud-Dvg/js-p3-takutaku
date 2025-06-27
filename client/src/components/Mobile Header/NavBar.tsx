@@ -6,7 +6,7 @@ import BurgerButton from "./BurgerButton";
 
 function NavBar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [showBurgerProfile, setShowBurgerProfile] = useState(false);
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const toggleMenu = () => setIsNavOpen((prev) => !prev);
   const { connected } = useUserContext();
   const location = useLocation();
@@ -18,11 +18,15 @@ function NavBar() {
 
   const handleClick = () => {
     const storedUser = localStorage.getItem("Utilisateur connecté");
-    if (storedUser) {
-      setShowBurgerProfile((prev) => !prev);
-    } else {
+    if (!storedUser) {
       navigate("/login");
+    } else {
+      setIsBurgerOpen((prev) => !prev); // toggle
     }
+  };
+
+  const handleCloseBurger = () => {
+    setIsBurgerOpen(false);
   };
 
   return (
@@ -51,9 +55,6 @@ function NavBar() {
             </button>
           </div>
         </section>
-        {showBurgerProfile && (
-          <BurgerProfil onClose={() => setShowBurgerProfile(false)} />
-        )}
 
         <nav
           className={`
@@ -82,6 +83,9 @@ function NavBar() {
           </ul>
         </nav>
       </section>
+
+      {/* Menu utilisateur contrôlé */}
+      <BurgerProfil isOpen={isBurgerOpen} onClose={handleCloseBurger} />
     </>
   );
 }
