@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function BurgerProfil({
   isOpen,
@@ -7,6 +7,10 @@ function BurgerProfil({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const location = useLocation();
+  const isAccountPage = location.pathname === "/account";
+  const isHistoryPage = location.pathname === "/history";
+
   return (
     <nav
       className={`
@@ -20,18 +24,22 @@ function BurgerProfil({
       {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 text-2xl text-white"
+        className="absolute top-4 right-4 text-2xl text-tertiary"
       >
-        <span className="absolute  h-0.5 w-8 bg-white rotate-45 top-2.5 top-4 right-0" />
-        <span className="absolute  h-0.5 w-8 bg-white -rotate-45 top-2.5 top-4 right-0" />
+        <span className="absolute  h-0.5 w-8 bg-tertiary rotate-45 top-4 right-0" />
+        <span className="absolute  h-0.5 w-8 bg-tertiary -rotate-45 top-4 right-0" />
       </button>
 
       <ul className="mt-10 px-4">
         <Link to="/account" onClick={onClose}>
-          <li className="mt-20 text-tertiary">Mon Compte</li>
+          <li className={`mt-20  ${isAccountPage ? "text-secondary" : ""}`}>
+            MON COMPTE
+          </li>
         </Link>
         <Link to="/history" onClick={onClose}>
-          <li className="pt-4 text-tertiary">Historique</li>
+          <li className={`pt-4  ${isHistoryPage ? "text-secondary" : ""}`}>
+            HISTORIQUE
+          </li>
         </Link>
       </ul>
     </nav>
