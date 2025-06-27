@@ -1,7 +1,7 @@
 import type { RequestHandler } from "express";
 
 // Accès à la base de données
-import abonnementRepository from "./abonnementRepository";
+import AbonnementRepository from "../Abonnement/abonnementRepository";
 
 type AbonnementName = "Découverte" | "Premium";
 interface Abonnement {
@@ -13,7 +13,7 @@ interface Abonnement {
 const browse: RequestHandler = async (req, res, next) => {
   try {
     // Fetch tout les abonnements
-    const abonnements = await abonnementRepository.readAll();
+    const abonnements = await AbonnementRepository.readAll();
 
     // Reponse avec les abonnements au format JSON
     res.json(abonnements);
@@ -28,7 +28,7 @@ const read: RequestHandler = async (req, res, next) => {
   try {
     // Fetch un élément spécifique à partir de l'ID fourni
     const abonnementId = Number(req.params.id);
-    const abonnement = await abonnementRepository.read(abonnementId);
+    const abonnement = await AbonnementRepository.read(abonnementId);
 
     // Si l'élément est introuvable, répondez avec HTTP 404 (Introuvable)
     // Sinon, répondez avec l'élément au format JSON
@@ -52,7 +52,7 @@ const edit: RequestHandler = async (req, res, next) => {
       name: req.body.name,
     };
 
-    const affectedRows = await abonnementRepository.update(abonnement);
+    const affectedRows = await AbonnementRepository.update(abonnement);
 
     // Si la catégorie n’est pas trouvée, répondre avec un code HTTP 404 (Non trouvé)
     // Sinon, répondre avec la catégorie au format JSON.
@@ -76,7 +76,7 @@ const add: RequestHandler = async (req, res, next) => {
       name: req.body.name,
     };
     // Create the abonnement
-    const insertId = await abonnementRepository.create(abonnement);
+    const insertId = await AbonnementRepository.create(abonnement);
 
     // Répondez avec HTTP 201 (Créé) et l'ID de l'élément nouvellement inséré
     res.status(201).json({ insertId });
@@ -92,7 +92,7 @@ const destroy: RequestHandler = async (req, res, next) => {
     // Supprimer une catégorie spécifique en fonction de l'ID fourni
     const abonnementId = Number(req.params.id);
 
-    await abonnementRepository.delete(abonnementId);
+    await AbonnementRepository.delete(abonnementId);
 
     // Répondez quand même avec HTTP 204 (Aucun contenu)
     res.sendStatus(204);

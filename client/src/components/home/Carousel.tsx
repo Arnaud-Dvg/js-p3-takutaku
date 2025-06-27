@@ -133,11 +133,16 @@ function Carousel() {
                   onClick={() => handleClick(anime)}
                 >
                   <div>
-                    <img
-                      src={anime.portrait}
-                      alt={anime.title}
-                      className="w-full rounded-sm h-full object-cover"
-                    />
+                    <Link
+                      to="/anime"
+                      onClick={() => handleClick(selectAnime[animeIndex])}
+                    >
+                      <img
+                        src={anime.portrait}
+                        alt={anime.title}
+                        className="w-full rounded-sm h-full object-cover"
+                      />
+                    </Link>
                   </div>
                 </SwiperSlide>
               ))

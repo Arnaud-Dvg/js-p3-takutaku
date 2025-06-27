@@ -9,11 +9,13 @@ import Header from "./components/Header/DesktopNavBar";
 function App() {
   return (
     <>
-      <div>
+      <div className="min-h-screen flex flex-col">
         <UserProvider>
           <AnimeProvider>
             <Header />
-            <Outlet />
+            <main className="flex-1">
+              <Outlet />
+            </main>
             <Footer />
           </AnimeProvider>
         </UserProvider>

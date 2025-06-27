@@ -106,6 +106,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       );
       console.log("🔐 Login réussi :", formattedUser);
       setConnected(true);
+      window.location.href = "/"; // Redirige vers la page d'accueil après la connexion réussie
     } catch (error) {
       console.error("❌ Erreur login :", error);
       setConnected(false);
@@ -117,6 +118,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     setConnected(false);
     localStorage.removeItem("Utilisateur connecté");
     localStorage.setItem("connected", "false");
+    window.location.href = "/"; // Redirige vers la page d'accueil après la déconnexion
   };
 
   // Fonction pour la mise à jour de la base de donnée des utilisateurs pour la page Admin

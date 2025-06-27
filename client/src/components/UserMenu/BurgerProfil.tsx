@@ -28,7 +28,7 @@ function BurgerProfil({
 
       <ul className="mt-10 px-4">
         <Link to="/account" onClick={onClose}>
-          <li className="pt-10 text-tertiary">Mon Compte</li>
+          <li className="mt-20 text-tertiary">Mon Compte</li>
         </Link>
         <Link to="/history" onClick={onClose}>
           <li className="pt-4 text-tertiary">Historique</li>
