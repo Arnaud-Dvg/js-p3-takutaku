@@ -37,13 +37,8 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
       lastname: user.lastname,
       mail: user.mail,
       abonnement_id: user.abonnement_id,
-<<<<<<< S03_US02_UpdateAccountPage
       is_admin: false,
       is_actif: true,
-=======
-      is_admin: false, // si tu veux ajouter ce champ plus tard
-      is_actif: true, // idem
->>>>>>> dev
     },
   });
 };
