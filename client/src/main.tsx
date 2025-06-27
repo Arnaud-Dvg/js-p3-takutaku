@@ -17,6 +17,7 @@ import History from "./pages/History";
 import Home from "./pages/Home";
 import LegalNotices from "./pages/LegalNotices";
 import Login from "./pages/Login";
+import Page404 from "./pages/Page404";
 import Watch from "./pages/Watch";
 
 const router = createBrowserRouter([
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "*",
+        element: <Page404 />,
       },
     ],
   },
