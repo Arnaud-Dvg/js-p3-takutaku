@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { IoChevronDown } from "react-icons/io5";
+import { IoChevronUp } from "react-icons/io5";
 import { useUserContext } from "../../../../context/UserContext";
 
 type User = {
@@ -96,66 +98,87 @@ function UserManagement() {
         {/* Bouton voir/masquer les users */}
         <button
           type="button"
-          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full"
+          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full flex items-center gap-1"
           onClick={() => setListe(!liste)}
         >
-          {liste ? "Masquer les utilisateurs ˄" : "Voir les utilisateurs ˅"}
+          {liste ? (
+            <>
+              Masquer les utilisateurs <IoChevronUp />
+            </>
+          ) : (
+            <>
+              Voir les utilisateurs <IoChevronDown />
+            </>
+          )}
         </button>
       </div>
       {liste && (
-        <div className="overflow-x-auto px-10 pt-6">
-          {/* En-têtes */}
-          <div className="grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] text-yellow-400 font-bold text-sm min-w-[900px]">
-            <div>Utilisateur</div>
-            <div>E-mail</div>
-            <div>Abonnement</div>
-            <div>Admin ?</div>
-            <div>Modifier</div>
-            <div>Supprimer</div>
-          </div>
-
-          {/* Données */}
-          {users.map((user) => (
-            <div
-              key={user.id}
-              className="grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] py-1 text-sm text-white min-w-[900px] items-center"
-            >
-              <div>
-                {user.firstname} {user.lastname}
-              </div>
-              <div className="break-all">{user.mail}</div>
-              <div>{user.abonnement_name}</div>
-              <div>{user.is_admin}</div>
-              <div>
-                {/* Bouton "change" relié à la fonction modification */}
-                <button type="button" onClick={() => setEditUser(user)}>
-                  <img
-                    src="./public/change.png"
-                    alt="modifier"
-                    className="w-4"
-                  />
-                </button>
-              </div>
-              <div>
-                {/* Bouton poubelle relié à la fonction delete */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (user.id !== undefined) {
-                      handleDeleteUser(user.id);
-                    }
-                  }}
-                >
-                  <img
-                    src="./public/trash.png"
-                    alt="supprimer"
-                    className="w-4"
-                  />
-                </button>
-              </div>
+        <>
+          {/* Liste des utilisateurs */}
+          <div className="overflow-x-auto px-10 pt-6">
+            {/* En-têtes */}
+            <div className="grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] text-yellow-400 font-bold text-sm min-w-[900px]">
+              <div>Utilisateur</div>
+              <div>E-mail</div>
+              <div>Abonnement</div>
+              <div>Admin ?</div>
+              <div>Modifier</div>
+              <div>Supprimer</div>
             </div>
-          ))}
-        </div>
+
+            {/* Données */}
+            {users.map((user) => (
+              <div
+                key={user.id}
+                className="grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] py-1 text-sm text-white min-w-[900px] items-center"
+              >
+                <div>
+                  {user.firstname} {user.lastname}
+                </div>
+                <div className="break-all">{user.mail}</div>
+                <div>{user.abonnement_name}</div>
+                <div>{user.is_admin}</div>
+                <div>
+                  {/* Bouton "change" relié à la fonction modification */}
+                  <button type="button" onClick={() => setEditUser(user)}>
+                    <img
+                      src="./public/change.png"
+                      alt="modifier"
+                      className="w-4"
+                    />
+                  </button>
+                </div>
+                <div>
+                  {/* Bouton poubelle relié à la fonction delete */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (user.id !== undefined) {
+                        handleDeleteUser(user.id);
+                      }
+                    }}
+                  >
+                    <img
+                      src="./public/trash.png"
+                      alt="supprimer"
+                      className="w-4"
+                    />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Bouton d'ajout d'utilisateur */}
+          <div className="pl-10 pt-4">
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full"
+            >
+              + Nouvel utilisateur
+            </button>
+          </div>
+        </>
       )}
 
       {/* Pop-Up pour la modification des users */}
@@ -306,17 +329,6 @@ function UserManagement() {
           </section>
         </section>
       )}
-
-      {/* Bouton d'ajout d'utilisateur */}
-      <div className="pl-10 pt-4">
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full"
-        >
-          + Nouvel utilisateur
-        </button>
-      </div>
 
       {/* Pop-Up d'ajout utilisateur*/}
       {open && (

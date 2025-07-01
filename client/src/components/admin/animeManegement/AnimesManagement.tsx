@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { IoChevronDown } from "react-icons/io5";
+import { IoChevronUp } from "react-icons/io5";
 import { useAnimeContext } from "../../../../context/AnimeContext";
 
 type Anime = {
@@ -49,7 +51,7 @@ function AnimeManagement() {
 
   return (
     <>
-      <h1 className="text-[var(--color-secondary)] pl-10 text-xl pt-40">
+      <h1 className="text-[var(--color-secondary)] pl-10 text-xl pt-20">
         Gestion des animés
       </h1>
       <p className="text-white pt-4 pl-10">
@@ -60,10 +62,18 @@ function AnimeManagement() {
         {/* Bouton voir/masquer les animés */}
         <button
           type="button"
-          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full"
+          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full flex items-center gap-1"
           onClick={() => setListe(!liste)}
         >
-          {liste ? "Masquer les animés ˄" : "Voir les animés ˅"}
+          {liste ? (
+            <>
+              Masquer les animés <IoChevronUp />
+            </>
+          ) : (
+            <>
+              Voir les animés <IoChevronDown />
+            </>
+          )}
         </button>
       </div>
       {liste && (

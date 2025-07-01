@@ -35,11 +35,13 @@ function NavBar() {
         <section className="relative flex items-center justify-between px-2 py-4">
           <BurgerButton toggleMenu={toggleMenu} isOpen={isNavOpen} />
           <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-            <img
-              src="/logo_taku.png"
-              className="h-12 object-cover"
-              alt="Logo Taku Taku"
-            />
+            <Link to="/">
+              <img
+                src="/logo_taku.png"
+                className="h-12 object-cover"
+                alt="Logo Taku Taku"
+              />
+            </Link>
           </div>
           <div className="flex items-center space-x-1">
             <button
@@ -57,7 +59,7 @@ function NavBar() {
         </section>
 
         <nav
-          className={`
+          className={` I
             fixed left-0 h-full -m-[15px] pt-5 w-1/3 z-40
             bg-[var(--color-primary)] text-tertiary
             transform transition-transform duration-300
@@ -65,17 +67,17 @@ function NavBar() {
           `}
         >
           <ul className="mt-5 px-8">
-            <Link to="/">
+            <Link to="/" onClick={() => setIsNavOpen(false)}>
               <li className={`pb-5 ${isHomePage ? "text-secondary" : ""}`}>
                 ACCUEIL
               </li>
             </Link>
-            <Link to="/genre">
+            <Link to="/genre" onClick={() => setIsNavOpen(false)}>
               <li className={`pb-5 ${isGenrePage ? "text-secondary" : ""}`}>
                 GENRES
               </li>
             </Link>
-            <Link to="/favorite">
+            <Link to="/favorite" onClick={() => setIsNavOpen(false)}>
               <li className={`pb-5 ${isFavoritePage ? "text-secondary" : ""}`}>
                 FAVORIS
               </li>

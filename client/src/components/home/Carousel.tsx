@@ -23,7 +23,7 @@ function Carousel() {
   const [selectAnime, setSelectAnime] = useState<Anime[]>([]);
   const { getAnimebyId, setAnimeSelected } = useAnimeContext();
   const [animeIndex, setAnimeIndex] = useState<number>(2);
-  const swiperRef = useRef<SwiperType | null>(null);
+  const swiperRef = useRef<SwiperType | null>(null); // Reference pour le contrôle du Swiper
 
   const handleClick = (anime: Anime) => {
     setAnimeSelected(anime);
@@ -51,6 +51,14 @@ function Carousel() {
   function setNextL() {
     swiperRef.current?.slidePrev();
   }
+
+  // Contrôle du bug d'affichage : Force une mise à jour manuelle du Swiper quand les données sont chargées
+  // Utile si on ne veut pas recréer le composant mais que les slides ne s’affichent pas bien
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.update();
+    }
+  }, []);
 
   return (
     <section
@@ -88,6 +96,7 @@ function Carousel() {
           </div>
 
           <Swiper
+            key={selectAnime.length} // 🔑 Force React à recréer Swiper une fois les données chargées, ce qui résout les bugs d’effet initial.
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
             }}
@@ -111,6 +120,10 @@ function Carousel() {
                 slidesPerView: 5,
                 spaceBetween: 50,
               },
+              1920: {
+                slidesPerView: 5,
+                spaceBetween: 80,
+              },
             }}
             coverflowEffect={{
               rotate: 30,
@@ -133,11 +146,16 @@ function Carousel() {
                   onClick={() => handleClick(anime)}
                 >
                   <div>
-                    <img
-                      src={anime.portrait}
-                      alt={anime.title}
-                      className="w-full rounded-sm h-full object-cover"
-                    />
+                    <Link
+                      to="/anime"
+                      onClick={() => handleClick(selectAnime[animeIndex])}
+                    >
+                      <img
+                        src={anime.portrait}
+                        alt={anime.title}
+                        className="w-full rounded-sm h-full object-cover"
+                      />
+                    </Link>
                   </div>
                 </SwiperSlide>
               ))
