@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       };
 
       setUser(formattedUser);
-      localStorage.setItem("UserConnected", JSON.stringify(formattedUser));
+      localStorage.setItem("userConnected", JSON.stringify(formattedUser));
       localStorage.setItem("token", data.token);
       console.log("🔐 Login réussi :", formattedUser);
       setConnected(true);
@@ -72,14 +72,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const handleLogOut = () => {
     setUser(null);
     setConnected(false);
-    localStorage.removeItem("Utilisateur connecté");
+    localStorage.removeItem("userConnected");
+    localStorage.removeItem("token");
     localStorage.setItem("connected", "false");
     window.location.href = "/"; // Redirige vers la page d'accueil après la déconnexion
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    const storedUser = localStorage.getItem("Utilisateur connecté"); // je récupère les données utilisateur dans la variable storeUser
+    const storedUser = localStorage.getItem("userConnected"); // je récupère les données utilisateur dans la variable storeUser
 
     if (storedUser) {
       //si je trouve quelque chose
