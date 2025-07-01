@@ -25,11 +25,13 @@ function NavBar() {
           <BurgerButton toggleMenu={toggleMenu} isOpen={isNavOpen} />
           {!isSearchOpen && (
             <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
+              <Link to={"/"}>
               <img
                 src="/logo_taku.png"
                 className="h-12 object-cover"
                 alt="Logo Taku Taku"
               />
+              </Link>
             </div>
           )}
           <div className="flex items-center space-x-1">

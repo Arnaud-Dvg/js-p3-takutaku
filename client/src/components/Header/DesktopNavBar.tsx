@@ -17,11 +17,13 @@ function Header() {
 
       <section className="hidden md:flex items-center w-full p-3">
         <div className="flex justify-start flex-1 z-10">
+          <Link to={"/"}>
           <img
             src="/logo_taku.png"
             alt="logo"
             className="z-50 h-14 object-cover"
           />
+          </Link>
         </div>
         <nav className="flex justify-center flex-1 relative">
           <ul className="hidden md:flex z-50 text-tertiary text-lg gap-30">

@@ -71,6 +71,27 @@ class AnimeRepository {
     // Return the array of items
     return rows as Anime[];
   }
+  async readAllType(genre, type) {
+    genre = genre !== "all";
+    type = type !== "all";
+    const where = [];
+    if (genre) {
+      where.push("a.genre_id = ?") 
+    }
+    if (type) {
+      where.push("a.type_id = ?")
+    }
+    const whereSQl = where.length > 0 ? `where ${where.join(" and")}` : ""
+    // Exécute la requête SQL pour lire tout le tableau de la table "Anime"
+    const [rows] = await databaseClient.query<Rows>(
+      `select a.id, a.title, a.synopsis, a.genre_id, t.id, a.portrait, group_concat(t.id) as tid from Anime a inner join Anime_type at on a.id = at.anime_id inner join Type t on at.type_id = t.id ${whereSQl} group by a.id, a.title, a.synopsis, a.genre_id, a.portrait`,
+      [genre, type],
+    );
+    console.log(rows.length);
+    
+    // Return the array of items
+    return rows as Anime[];
+  }
 
   // Le U du CRUD - Update
   async update(anime: Anime) {

@@ -5,9 +5,14 @@ interface Type {
   name: string;
 }
 
-function ButtonType() {
+interface setTypeProps {
+  setType: (type: string) => void;
+}
+
+function ButtonType({ setType }: setTypeProps) {
   const [types, setTypes] = useState<Type[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [filteredType, setFilteredType] = useState<"all" | number>("all");
 
   useEffect(() => {
     const fetchTypes = async () => {
@@ -24,13 +29,15 @@ function ButtonType() {
     fetchTypes();
   }, []);
 
-  function handleSelectType(id: number): void {
-    console.log("Selected type id:", id);
-  }
+  const handleSelectType = (id: "all" | number): void => {
+    setFilteredType(id);
+    setType(id.toString());
+    setIsOpen(false); // referme le menu après sélection
+  };
 
-  function toggleDropdown() {
+  const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
-  }
+  };
 
   return (
     <div className="relative">
@@ -39,7 +46,11 @@ function ButtonType() {
         onClick={toggleDropdown}
         className="group transition-all duration-200 w-[150px] py-2 flex flex-row items-center justify-center bg-secondary gap-2 rounded-lg font-semibold text-sm"
       >
-        <span>TYPE</span>
+        <span>
+          {filteredType === "all"
+            ? "TYPE"
+            : types.find((t) => t.id === filteredType)?.name.toUpperCase()}
+        </span>
         <svg
           className={`transition-transform duration-300 cursor-pointer ${
             isOpen ? "rotate-180" : "rotate-90"
@@ -59,14 +70,23 @@ function ButtonType() {
 
       {isOpen && (
         <div className="absolute z-50 top-full left-0 mt-2 w-full p-2 bg-secondary rounded-lg flex flex-col gap-2">
+          <button
+            key="all"
+            type="button"
+            onClick={() => handleSelectType("all")}
+            className="cursor-pointer text-left font-semibold text-sm transition duration-300 ease-in-out hover:translate-x-2 px-2"
+          >
+            TOUT
+          </button>
+          <hr className="w-[90%] h-[2px] mx-auto border" />
           {types.map((type) => (
             <button
               key={type.id}
               type="button"
               onClick={() => handleSelectType(type.id)}
-              className="cursor-pointer text-left font-semibold text-sm transition duration-300 ease-in-out hover:translate-x-2 px-2 uppercase"
+              className="cursor-pointer text-left font-semibold text-sm transition duration-300 ease-in-out hover:translate-x-2 px-2"
             >
-              {type.name}
+              {type.name.toUpperCase()}
             </button>
           ))}
         </div>

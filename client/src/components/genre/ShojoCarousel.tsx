@@ -70,7 +70,6 @@ function ShojoCarousel() {
               <SwiperSlide
                 key={anime.id}
                 style={{ width: "300px", cursor: "pointer" }}
-                onClick={() => handleClick(anime)}
               >
                 <div>
                   <Link to={"/anime"} onClick={() => handleClick(anime)}>

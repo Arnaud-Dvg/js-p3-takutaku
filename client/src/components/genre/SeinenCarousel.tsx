@@ -28,6 +28,7 @@ function SeinenCarousel() {
   function setPrevSeinen() {
     swiperRefSeinen.current?.slidePrev();
   }
+
   return (
     <div className="relative mt-10 md:mt-15">
       <h2 className="text-white text-xl mb-3">Seinen</h2>
@@ -70,7 +71,6 @@ function SeinenCarousel() {
               <SwiperSlide
                 key={anime.id}
                 style={{ width: "300px", cursor: "pointer" }}
-                onClick={() => handleClick(anime)}
               >
                 <div>
                   <Link to={"/anime"} onClick={() => handleClick(anime)}>
