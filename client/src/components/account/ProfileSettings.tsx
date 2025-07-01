@@ -9,30 +9,26 @@ function ProfileSettings() {
   const [editUser, setEditUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await fetch(`http://localhost:3310/api/user/${user?.id}`);
-        const data = await res.json();
-        setEditUser(data);
-      } catch (err) {
-        console.error("Erreur lors du chargement des utilisateurs :", err);
-      }
-    };
+    if (user) {
+      setEditUser(user);
+    }
+  }, [user]);
 
-    fetchUsers();
-  }, [user?.id]);
-
-  const handleChangeUser = (id: number, user: User) => {
-    updateUser(id, user)
-      .then(() => {
-        fetch(`http://localhost:3310/api/user/${user.id}`)
-          .then((res) => res.json())
-          .then((data) => setEditUser(data));
-      })
-      .catch((err) => {
-        console.error("Erreur lors de la modif :", err);
-        alert("Modification échouée");
+  const handleChangeUser = async (id: number, user: User) => {
+    try {
+      await updateUser(id, user);
+      const res = await fetch(`http://localhost:3310/api/user/${id}`, {
+        headers: {
+          Authorization: localStorage.getItem("token") || "",
+        },
       });
+      const data = await res.json();
+      setEditUser(data);
+      setEditMode(false);
+    } catch (err) {
+      console.error("Erreur lors de la modif :", err);
+      alert("Modification échouée");
+    }
   };
 
   return (
@@ -48,7 +44,7 @@ function ProfileSettings() {
           onSubmit={(e) => {
             e.preventDefault();
             if (editUser && editUser.id !== undefined) {
-              updateUser(editUser.id, editUser);
+              handleChangeUser(editUser.id, editUser);
             }
           }}
           method="PUT"
@@ -59,7 +55,7 @@ function ProfileSettings() {
               id="lastname"
               name="lastname"
               className="uppercase"
-              value={user?.lastname}
+              value={editUser?.lastname}
               onChange={(e) => {
                 if (editUser) {
                   setEditUser({ ...editUser, lastname: e.target.value });
@@ -74,7 +70,7 @@ function ProfileSettings() {
             <input
               id="firstname"
               name="firstname"
-              value={user?.firstname}
+              value={editUser?.firstname}
               onChange={(e) => {
                 if (editUser) {
                   setEditUser({ ...editUser, firstname: e.target.value });
@@ -90,7 +86,7 @@ function ProfileSettings() {
               id="email"
               name="mail"
               type="email"
-              value={user?.mail}
+              value={editUser?.mail}
               onChange={(e) => {
                 if (editUser) {
                   setEditUser({ ...editUser, mail: e.target.value });
@@ -107,7 +103,7 @@ function ProfileSettings() {
               name="password"
               type="password"
               placeholder="••••••••"
-              value={user?.password}
+              value={editUser?.password}
               onChange={(e) => {
                 if (editUser) {
                   setEditUser({ ...editUser, password: e.target.value });
@@ -117,23 +113,16 @@ function ProfileSettings() {
             />
           </label>
 
-          <label htmlFor="subscription">
-            Abonnement : {""}
-            <input
-              id="subscription"
-              name="subscription"
-              value={user?.abonnement_id}
-              onChange={(e) => {
-                if (editUser) {
-                  setEditUser({
-                    ...editUser,
-                    abonnement_id: Number.parseInt(e.target.value),
-                  });
-                }
-              }}
-              disabled={!editMode}
-            />
-          </label>
+          <div className="flex items-center">
+            <label htmlFor="subscription">Abonnement : {""}</label>
+            <p className="bg-black text-tertiary px-4 py-2 text-sm">
+              {editUser?.abonnement_id === 2
+                ? "Premium"
+                : editUser?.abonnement_id === 1
+                  ? "Découverte"
+                  : "Aucun abonnement actif"}
+            </p>
+          </div>
 
           {!editMode && (
             <button
@@ -148,13 +137,6 @@ function ProfileSettings() {
           {editMode && (
             <button
               type="submit"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (editUser && editUser.id !== undefined) {
-                  handleChangeUser(editUser.id, editUser);
-                  setEditMode(false);
-                }
-              }}
               className="border border-tertiary rounded-full text-secondary my-2 p-2 cursor-pointer"
             >
               Enregistrer

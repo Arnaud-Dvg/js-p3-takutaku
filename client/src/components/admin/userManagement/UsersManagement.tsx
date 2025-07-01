@@ -13,6 +13,7 @@ type User = {
   is_actif: boolean;
   abonnement_id: number;
   abonnement_name?: string;
+  token: string;
 };
 
 function UserManagement() {
@@ -35,6 +36,7 @@ function UserManagement() {
     is_admin: false,
     is_actif: true,
     abonnement_id: 1,
+    token: "",
   });
 
   // Fetch qui récupère tous les utilisateurs avec leurs abonnements
@@ -462,6 +464,7 @@ function UserManagement() {
                     is_admin: false,
                     is_actif: true,
                     abonnement_id: 2,
+                    token: "",
                   });
                   setOpen(false);
                 }}

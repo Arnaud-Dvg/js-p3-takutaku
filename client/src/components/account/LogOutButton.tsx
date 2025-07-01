@@ -1,7 +1,7 @@
-import { useUserContext } from "../../../context/UserContext";
+import { useAuthContext } from "../../../context/AuthContext";
 
 function LogOutButton() {
-  const { handleLogOut } = useUserContext();
+  const { handleLogOut } = useAuthContext();
 
   return (
     <button
