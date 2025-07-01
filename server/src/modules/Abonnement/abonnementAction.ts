@@ -1,7 +1,7 @@
 import type { RequestHandler } from "express";
 
 // Accès à la base de données
-import AbonnementRepository from "../Abonnement/abonnementRepository";
+import AbonnementRepository from "./abonnementRepository";
 
 type AbonnementName = "Découverte" | "Premium";
 interface Abonnement {
