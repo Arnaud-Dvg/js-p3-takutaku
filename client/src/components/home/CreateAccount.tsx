@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuthContext } from "../../../context/AuthContext";
 import { useUserContext } from "../../../context/UserContext";
 import PaymentPopUp from "./PayementPopUp";
 
@@ -15,7 +16,8 @@ function CreateAccount({
   selectedPlan,
   setSelectedPlan,
 }: CreateAccountProps) {
-  const { createUser, handleLogin } = useUserContext();
+  const { handleLogin } = useAuthContext();
+  const { createUser } = useUserContext();
 
   const abonnementMap: Record<string, number> = {
     Découverte: 1,
@@ -51,6 +53,7 @@ function CreateAccount({
       is_admin: false,
       is_actif: true,
       abonnement_id,
+      token: "",
     };
 
     await createUser(userToCreate);

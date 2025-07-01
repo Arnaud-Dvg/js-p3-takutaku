@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUserContext } from "../../context/UserContext";
+import { useAuthContext } from "../../context/AuthContext";
 import CreateAccount from "../components/home/CreateAccount";
 
 function LogIn() {
@@ -9,7 +9,7 @@ function LogIn() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
 
-  const { handleLogin } = useUserContext();
+  const { handleLogin } = useAuthContext();
 
   const handleClick = (e: React.FormEvent) => {
     e.preventDefault();

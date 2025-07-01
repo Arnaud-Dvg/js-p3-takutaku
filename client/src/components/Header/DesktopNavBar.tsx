@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useUserContext } from "../../../context/UserContext";
+import { useAuthContext } from "../../../context/AuthContext";
 
 //NavBar Desktop
 import NavBar from "../Mobile Header/NavBar";
 import BurgerProfil from "../UserMenu/BurgerProfil";
 
 function Header() {
-  const { connected } = useUserContext();
+  const { connected } = useAuthContext();
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === "/";

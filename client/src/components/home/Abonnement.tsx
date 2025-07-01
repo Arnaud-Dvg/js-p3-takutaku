@@ -1,14 +1,9 @@
 import { useState } from "react";
-import { useLocation } from "react-router";
-import { useUserContext } from "../../../context/UserContext";
 import CreateAccount from "./CreateAccount";
 
 function Abonnement() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
-  const location = useLocation();
-  const isHomePage = location.pathname === "/"; // Vérifie si on est sur la page d'accueil
-  const { connected } = useUserContext();
 
   const handleSubscribeClick = (plan: string) => {
     setSelectedPlan(plan); // Met à jour l'offre choisie
@@ -43,22 +38,20 @@ function Abonnement() {
                 <li>• 1 écran à la fois</li>
               </ul>
             </section>
-            {isHomePage && !connected && (
-              <section>
-                <p className="mt-21 lg:mt-16 text-sm font-semibold text-tertiary text-center">
-                  Parfait pour découvrir nos animés sans engagement !
-                </p>
-                <section className="flex justify-center mt-6 ">
-                  <button
-                    type="button"
-                    onClick={() => handleSubscribeClick("Découverte")}
-                    className="mt-4  bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
-                  >
-                    S'abonner
-                  </button>
-                </section>
+            <section>
+              <p className="mt-21 lg:mt-16 text-sm font-semibold text-tertiary text-center">
+                Parfait pour découvrir nos animés sans engagement !
+              </p>
+              <section className="flex justify-center mt-6 ">
+                <button
+                  type="button"
+                  onClick={() => handleSubscribeClick("Découverte")}
+                  className="mt-4  bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
+                >
+                  S'abonner
+                </button>
               </section>
-            )}
+            </section>
           </section>
         </section>
 
@@ -94,22 +87,20 @@ function Abonnement() {
                 </li>
               </ul>
             </section>
-            {isHomePage && !connected && (
-              <section>
-                <p className="mt-9 md:mt-12 lg:mt-8 text-sm font-semibold text-tertiary text-center">
-                  Pour les vrais fans qui veulent profiter sans interruption !
-                </p>
-                <section className="flex justify-center mt-6 mb-3">
-                  <button
-                    type="button"
-                    onClick={() => handleSubscribeClick("Premium")}
-                    className="mt-4 bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
-                  >
-                    S'abonner
-                  </button>
-                </section>
+            <section>
+              <p className="mt-9 md:mt-12 lg:mt-8 text-sm font-semibold text-tertiary text-center">
+                Pour les vrais fans qui veulent profiter sans interruption !
+              </p>
+              <section className="flex justify-center mt-6 mb-3">
+                <button
+                  type="button"
+                  onClick={() => handleSubscribeClick("Premium")}
+                  className="mt-4 bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
+                >
+                  S'abonner
+                </button>
               </section>
-            )}
+            </section>
           </section>
         </section>
       </section>

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { useAnimeContext } from "../../../context/AnimeContext";
+import { useAuthContext } from "../../../context/AuthContext";
 import { useUserContext } from "../../../context/UserContext";
 
 type Episode = {
@@ -17,7 +18,8 @@ type WatchEpisodeProps = {
 
 function WatchEpisode({ episodeSelected }: WatchEpisodeProps) {
   const { animeSelected } = useAnimeContext();
-  const { user, loading } = useUserContext();
+  const { user } = useUserContext();
+  const { loading } = useAuthContext();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 

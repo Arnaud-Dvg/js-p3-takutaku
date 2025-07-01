@@ -1,10 +1,10 @@
 // src/components/PrivateRoute.tsx
 import type { JSX } from "react";
 import { Navigate } from "react-router-dom";
-import { useUserContext } from "../../../context/UserContext";
+import { useAuthContext } from "../../../context/AuthContext";
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
-  const { connected, loading } = useUserContext();
+  const { connected, loading } = useAuthContext();
 
   if (loading) {
     return null;

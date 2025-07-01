@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 // Typage des données du context
 export type User = {
@@ -10,10 +10,7 @@ export type User = {
   is_admin: boolean;
   is_actif: boolean;
   abonnement_id: number;
-};
-export type Login = {
-  mail: string;
-  password: string;
+  token: string;
 };
 
 // Typage du context User
@@ -25,17 +22,13 @@ type UserContextType = {
   setConnected: React.Dispatch<React.SetStateAction<boolean>>;
   fetchUser: () => Promise<void>;
   deleteUser: (id: number) => Promise<void>;
-  handleLogin: (user: Login) => Promise<void>;
   updateUser: (id: number, updateData: Partial<User>) => Promise<void>;
-  handleLogOut: () => void;
-  loading: boolean;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
 
   const fetchUser = async (): Promise<void> => {
     try {
@@ -68,57 +61,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error) {
       console.error("Erreur lors de la création de l'utilisateur :", error);
     }
-  };
-
-  // Fonction qui gère la connexion de l'utilisateur
-  const handleLogin = async ({ mail, password }: Login) => {
-    try {
-      const response = await fetch("http://localhost:3310/api/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ mail, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Email ou mot de passe incorrect");
-      }
-
-      const data = await response.json();
-
-      // Crée un utilisateur minimal pour le context
-      const formattedUser: User = {
-        id: data.user.id,
-        firstname: data.user.firstname,
-        lastname: data.user.lastname,
-        mail: data.user.mail,
-        password: "", // tu peux laisser vide
-        abonnement_id: data.user.abonnement_id,
-        is_admin: data.user.is_admin ?? false,
-        is_actif: data.user.is_actif ?? true,
-      };
-
-      setUser(formattedUser);
-      localStorage.setItem(
-        "Utilisateur connecté",
-        JSON.stringify(formattedUser),
-      );
-      console.log("🔐 Login réussi :", formattedUser);
-      setConnected(true);
-      window.location.href = "/"; // Redirige vers la page d'accueil après la connexion réussie
-    } catch (error) {
-      console.error("❌ Erreur login :", error);
-      setConnected(false);
-    }
-  };
-
-  const handleLogOut = () => {
-    setUser(null);
-    setConnected(false);
-    localStorage.removeItem("Utilisateur connecté");
-    localStorage.setItem("connected", "false");
-    window.location.href = "/"; // Redirige vers la page d'accueil après la déconnexion
   };
 
   // Fonction pour la mise à jour de la base de donnée des utilisateurs pour la page Admin
@@ -162,33 +104,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("Utilisateur connecté"); // je récupère les données utilisateur dans la variable storeUser
-
-    if (storedUser) {
-      //si je trouve quelque chose
-      try {
-        const parsedUser = JSON.parse(storedUser); //je transforme la chaine JSON(format de la donée du local storage) en objet JS utilisable
-
-        if (parsedUser?.id) {
-          // je vérifie que cet objet JS détient un ID
-          setUser(parsedUser); // je met à jour l'objet récupéré
-          setConnected(true); //je déclare l'utilisateur connecté
-          console.log(
-            "🔁 Données chargées depuis le localStorage :",
-            parsedUser,
-          ); //j'affiche dans la console que tout a été chargé depuis le local storage
-        } else {
-          console.warn("❗ Format utilisateur invalide dans le localStorage"); // alerte pour aider à debug
-        }
-      } catch (error) {
-        console.error("❌ Erreur parsing localStorage :", error); //idem
-      }
-    }
-
-    setLoading(false); // j'arrête le chargement peu importe s'il y a eu un utilisateur de trouvé ou pas.
-  }, []);
-
   return (
     <UserContext.Provider
       value={{
@@ -199,9 +114,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         createUser,
         fetchUser,
         deleteUser,
-        handleLogin,
-        handleLogOut,
-        loading,
         updateUser,
       }}
     >
