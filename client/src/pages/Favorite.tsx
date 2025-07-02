@@ -9,12 +9,18 @@ import FavoriteButton from "../../src/components/favorite/FavoriteButton";
 function Favorite() {
   const { user } = useUserContext();
   const { connected } = useAuthContext(); //Récupère le user et l'état de connexion
-  const { setAnimeSelected } = useAnimeContext();
+  const { setAnimeSelected, getAnimebyId } = useAnimeContext();
   const [favorites, setFavorites] = useState<Anime[]>([]); // Tableau pour stocker les favoris
   const [loading, setLoading] = useState(true); // Pour gérer l'état de chargement
-  const handleClick = (anime: Anime) => {
-    setAnimeSelected(anime);
+  const handleClick = async (anime: Anime) => {
+    const fullAnime = await getAnimebyId(anime.anime_id);
+    if (fullAnime) {
+      setAnimeSelected(fullAnime);
+    } else {
+      setAnimeSelected(anime);
+    }
   };
+
   useEffect(() => {
     const fetchFavorites = async () => {
       if (!connected || !user) return;

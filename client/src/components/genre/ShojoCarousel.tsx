@@ -10,13 +10,16 @@ import FavoriteButton from "../../../../client/src/components/favorite/FavoriteB
 
 function ShojoCarousel() {
   const [shojoAnime, setShojoAnime] = useState<Anime[]>([]);
-  const { anime, setAnimeSelected } = useAnimeContext();
+  const { anime, setAnimeSelected, getAnimebyId } = useAnimeContext();
   const swiperRefShojo = useRef<SwiperType | null>(null);
 
   useEffect(() => {
-    const filtered = anime.filter((anime) => anime.genre_id === 3);
-    setShojoAnime(filtered);
-  }, [anime]);
+    const shojoIds = anime.filter((a) => a.genre_id === 3).map((a) => a.id);
+
+    Promise.all(shojoIds.map((id) => getAnimebyId(id))).then((data) => {
+      setShojoAnime(data.filter((a): a is Anime => a !== null));
+    });
+  }, [anime, getAnimebyId]);
 
   const handleClick = (anime: Anime) => {
     setAnimeSelected(anime);

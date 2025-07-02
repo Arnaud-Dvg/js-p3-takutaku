@@ -12,11 +12,17 @@ interface propsFilter {
 }
 
 function SearchCarousel({ genre, type }: propsFilter) {
-  const { animeSearch, fetchAnimeType, setAnimeSelected } = useAnimeContext();
+  const { animeSearch, fetchAnimeType, setAnimeSelected, getAnimebyId } =
+    useAnimeContext();
   const swiperRefSearch = useRef<SwiperType | null>(null);
 
-  const handleClick = (anime: Anime) => {
-    setAnimeSelected(anime);
+  const handleClick = async (anime: Anime) => {
+    const fullAnime = await getAnimebyId(anime.id);
+    if (fullAnime) {
+      setAnimeSelected(fullAnime);
+    } else {
+      setAnimeSelected(anime);
+    }
   };
 
   // Fonction pour les boutons gauche/droite pour les Seinens
@@ -74,7 +80,7 @@ function SearchCarousel({ genre, type }: propsFilter) {
                 style={{ width: "300px", cursor: "pointer" }}
               >
                 <div>
-                  <Link to={"/anime"} onClick={() => handleClick(anime)}>
+                  <Link to="/anime" onClick={() => handleClick(anime)}>
                     <img
                       src={anime.portrait}
                       alt={anime.title}

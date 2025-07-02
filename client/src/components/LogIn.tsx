@@ -1,18 +1,29 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import CreateAccount from "../components/home/CreateAccount";
 
 function LogIn() {
   const [mail, setMail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
 
+  const navigate = useNavigate();
+
   const { handleLogin } = useAuthContext();
 
-  const handleClick = (e: React.FormEvent) => {
+  const handleClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    handleLogin({ mail, password });
+
+    try {
+      await handleLogin({ mail, password });
+      navigate("/"); // redirection ici
+    } catch (error) {
+      console.error("Erreur lors de la connexion :", error);
+      alert("Une erreur est survenue.");
+    }
   };
 
   const handleCloseSignup = () => {

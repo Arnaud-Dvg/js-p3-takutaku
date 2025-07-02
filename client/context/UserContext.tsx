@@ -26,13 +26,14 @@ type UserContextType = {
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
+
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
 
   const fetchUser = async (): Promise<void> => {
     try {
-      const res = await fetch(${import.meta.env.VITE_API_URL}/api/user);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user`);
       const data = await res.json();
       setUser(data);
     } catch (error) {
@@ -40,10 +41,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  //Fonction qui gère la création de compte utilisateur
+  // Fonction qui gère la création de compte utilisateur
   const createUser = async (newUser: Omit<User, "id">): Promise<void> => {
     try {
-      const response = await fetch(${import.meta.env.VITE_API_URL}/api/user, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +53,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       if (!response.ok) {
-        throw new Error(Erreur HTTP: ${response.status});
+        throw new Error(`Erreur HTTP : ${response.status}`);
       }
 
       const createdUser = await response.json();
@@ -69,7 +70,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     updateData: Partial<User>,
   ): Promise<void> => {
     const response = await fetch(
-      ${import.meta.env.VITE_API_URL}/api/user/${id},
+      `${import.meta.env.VITE_API_URL}/api/user/${id}`,
       {
         method: "PUT",
         headers: {
@@ -88,14 +89,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const deleteUser = async (id: number): Promise<void> => {
     try {
       const response = await fetch(
-        ${import.meta.env.VITE_API_URL}/api/user/${id},
+        `${import.meta.env.VITE_API_URL}/api/user/${id}`,
         {
           method: "DELETE",
         },
       );
       if (!response.ok) {
         throw new Error(
-          Echec de la suppression de l'utilisateur avec l'id ${id}: ${response.statusText},
+          `Echec de la suppression de l'utilisateur avec l'id ${id}: ${response.statusText}`,
         );
       }
       await fetchUser();
