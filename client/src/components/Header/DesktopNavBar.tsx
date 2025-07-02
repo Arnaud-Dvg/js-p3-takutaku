@@ -16,7 +16,7 @@ function Header() {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
 
   const handleClick = () => {
-    const storedUser = localStorage.getItem("Utilisateur connecté");
+    const storedUser = localStorage.getItem("userConnected");
     if (!storedUser) {
       navigate("/login");
     } else {
