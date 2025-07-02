@@ -21,7 +21,7 @@ function NavBar() {
     if (!storedUser) {
       navigate("/login");
     } else {
-      setIsBurgerOpen((prev) => !prev); // toggle
+      setIsBurgerOpen((prev) => !prev);
     }
   };
 
@@ -59,26 +59,24 @@ function NavBar() {
         </section>
 
         <nav
-          className={ I
-            fixed left-0 h-full -m-[15px] pt-5 w-1/3 z-40
-            bg-[var(--color-primary)] text-tertiary
-            transform transition-transform duration-300
-            ${isNavOpen ? "translate-x-0" : "-translate-x-full"}
-          }
+          className={`fixed left-0 h-full -m-[15px] pt-5 w-1/3 z-40
+        bg-[var(--color-primary)] text-tertiary
+        transform transition-transform duration-300
+        ${isNavOpen ? "translate-x-0" : "-translate-x-full"}`}
         >
           <ul className="mt-5 px-8">
             <Link to="/" onClick={() => setIsNavOpen(false)}>
-              <li className={pb-5 ${isHomePage ? "text-secondary" : ""}}>
+              <li className={`pb-5 ${isHomePage ? "text-secondary" : ""}`}>
                 ACCUEIL
               </li>
             </Link>
             <Link to="/genre" onClick={() => setIsNavOpen(false)}>
-              <li className={pb-5 ${isGenrePage ? "text-secondary" : ""}}>
+              <li className={`pb-5 ${isGenrePage ? "text-secondary" : ""}`}>
                 GENRES
               </li>
             </Link>
             <Link to="/favorite" onClick={() => setIsNavOpen(false)}>
-              <li className={pb-5 ${isFavoritePage ? "text-secondary" : ""}}>
+              <li className={`pb-5 ${isFavoritePage ? "text-secondary" : ""}`}>
                 FAVORIS
               </li>
             </Link>
@@ -86,7 +84,6 @@ function NavBar() {
         </nav>
       </section>
 
-      {/* Menu utilisateur contrôlé */}
       <BurgerProfil isOpen={isBurgerOpen} onClose={handleCloseBurger} />
     </>
   );

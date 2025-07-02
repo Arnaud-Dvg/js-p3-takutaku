@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 // Typage des données du contexte
 export type Anime = {
@@ -67,19 +73,24 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
     type: number | string;
   }
 
-  const fetchAnimeType = (
-    genre: FetchAnimeTypeParams["genre"],
-    type: FetchAnimeTypeParams["type"],
-  ): Promise<void> => {
-    return fetch(`http://localhost:3310/api/animetype/${genre}/${type}`)
-      .then((res: Response) => res.json())
-      .then((data: Anime[]) => {
-        setAnimeSearch(data);
-      });
-  };
-  console.log(animeSearch);
+  const fetchAnimeType = useCallback(
+    (
+      genre: FetchAnimeTypeParams["genre"],
+      type: FetchAnimeTypeParams["type"],
+    ): Promise<void> => {
+      return fetch(
+        `${import.meta.env.VITE_API_URL}/api/animetype/${genre}/${type}`,
+      )
+        .then((res: Response) => res.json())
+        .then((data: Anime[]) => {
+          setAnimeSearch(data);
+        });
+    },
+    [],
+  );
+
   const fetchAnime = (): Promise<void> => {
-    return fetch("http://localhost:3310/api/anime")
+    return fetch(`${import.meta.env.VITE_API_URL}/api/anime`)
       .then((res) => res.json())
       .then((data) => {
         setAnime(data);
@@ -87,7 +98,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getAnimebyId = (id: number): Promise<Anime | null> => {
-    return fetch(`http://localhost:3310/api/anime/${id}`)
+    return fetch(`${import.meta.env.VITE_API_URL}/api/anime/${id}`)
       .then((res) => {
         if (!res.ok) return null;
         return res.json();
@@ -96,7 +107,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const createAnime = (newAnime: Omit<Anime, "id">): Promise<number> => {
-    return fetch("http://localhost:3310/api/anime", {
+    return fetch(`${import.meta.env.VITE_API_URL}/api/anime`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +125,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
     id: number,
     updateData: Partial<Anime>,
   ): Promise<void> => {
-    return fetch(`http://localhost:3310/api/anime/${id}`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/api/anime/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -124,7 +135,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const deleteAnime = (id: number): Promise<void> => {
-    return fetch(`http://localhost:3310/api/anime/${id}`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/api/anime/${id}`, {
       method: "DELETE",
     }).then(() => fetchAnime());
   };

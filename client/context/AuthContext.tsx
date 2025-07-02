@@ -62,7 +62,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.log("🔐 Login réussi :", formattedUser);
       setConnected(true);
       localStorage.setItem("connected", "true"); // Met à jour le statut de connexion dans le localStorage
-      window.location.href = "/"; // Redirige vers la page d'accueil après la connexion réussie
     } catch (error) {
       console.error("❌ Erreur login :", error);
       setConnected(false);

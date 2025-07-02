@@ -10,13 +10,16 @@ import FavoriteButton from "../../../../client/src/components/favorite/FavoriteB
 
 function SeinenCarousel() {
   const [seinenAnime, setSeinenAnime] = useState<Anime[]>([]);
-  const { anime, setAnimeSelected } = useAnimeContext();
+  const { anime, setAnimeSelected, getAnimebyId } = useAnimeContext();
   const swiperRefSeinen = useRef<SwiperType | null>(null);
 
   useEffect(() => {
-    const filtered = anime.filter((anime) => anime.genre_id === 2);
-    setSeinenAnime(filtered);
-  }, [anime]);
+    const seinenIds = anime.filter((a) => a.genre_id === 2).map((a) => a.id);
+
+    Promise.all(seinenIds.map((id) => getAnimebyId(id))).then((data) => {
+      setSeinenAnime(data.filter((a): a is Anime => a !== null));
+    });
+  }, [anime, getAnimebyId]);
 
   const handleClick = (anime: Anime) => {
     setAnimeSelected(anime);

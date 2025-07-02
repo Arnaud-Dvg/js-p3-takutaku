@@ -56,6 +56,7 @@ function FavoriteButton({
           {
             method: "POST",
             headers: {
+              Authorization: `Bearer ${user.token}`, // Envoie le token de l'utilisateur pour authentification
               "Content-Type": "application/json",
             },
             body: JSON.stringify({

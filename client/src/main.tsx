@@ -2,7 +2,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
-import PrivateRoute from "./components/ProtectRoute/PrivateRoute";
 
 // Import the main app component
 import App from "./App";
@@ -39,11 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: (
-          <PrivateRoute>
-            <Admin />
-          </PrivateRoute>
-        ),
+        element: <Admin />,
       },
       {
         path: "/anime",
