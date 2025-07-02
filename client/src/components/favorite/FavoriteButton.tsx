@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useAuthContext } from "../../../context/AuthContext";
 import { useUserContext } from "../../../context/UserContext";
 
 function FavoriteButton({
@@ -9,7 +10,8 @@ function FavoriteButton({
   animeId: number;
   onUnfavorite?: () => void;
 }) {
-  const { user, connected } = useUserContext(); // Récupère l'utilisateur connecté et son état de connexion, indispensable pour vérifier si l'utilisateur peut ajouter un favori
+  const { user } = useUserContext();
+  const { connected } = useAuthContext(); // Récupère l'utilisateur connecté et son état de connexion, indispensable pour vérifier si l'utilisateur peut ajouter un favori
   const [isFavorite, setIsFavorite] = useState(false); // État local pour savoir si l'anime est un favori
   const [relationExists, setRelationExists] = useState(false); // État local pour savoir si la relation entre l'utilisateur et l'anime existe déjà
 

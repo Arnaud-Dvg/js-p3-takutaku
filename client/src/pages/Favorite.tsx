@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import type { Anime } from "../../context/AnimeContext";
 import { useAnimeContext } from "../../context/AnimeContext";
+import { useAuthContext } from "../../context/AuthContext";
 import { useUserContext } from "../../context/UserContext";
 import FavoriteButton from "../../src/components/favorite/FavoriteButton";
 
 function Favorite() {
-  const { user, connected } = useUserContext(); //Récupère le user et l'état de connexion
+  const { user } = useUserContext();
+  const { connected } = useAuthContext(); //Récupère le user et l'état de connexion
   const { setAnimeSelected } = useAnimeContext();
   const [favorites, setFavorites] = useState<Anime[]>([]); // Tableau pour stocker les favoris
   const [loading, setLoading] = useState(true); // Pour gérer l'état de chargement

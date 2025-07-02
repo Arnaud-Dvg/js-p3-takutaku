@@ -6,21 +6,20 @@ import { useUserContext } from "../../../context/UserContext";
 
 type PrivateRouteProps = {
   children: JSX.Element;
-  adminOnly?: boolean;
 };
 
-function PrivateRoute({ children, adminOnly = false }: PrivateRouteProps) {
+function PrivateRoute({ children }: PrivateRouteProps) {
   const { connected, loading } = useAuthContext();
   const { user } = useUserContext();
 
   if (loading) return null;
 
-  if (!connected) {
-    return <Navigate to="/login" replace />;
+  if (!user?.is_admin) {
+    return <Navigate to="/" replace />;
   }
 
-  if (adminOnly && !user?.is_admin) {
-    return <Navigate to="/" replace />;
+  if (!connected) {
+    return <Navigate to="/login" replace />;
   }
 
   return children;

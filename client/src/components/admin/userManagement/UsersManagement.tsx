@@ -66,18 +66,6 @@ function UserManagement() {
       });
   };
 
-  // Pour modifier un user
-  const handleChangeUser = (id: number, user: User) => {
-    updateUser(id, user)
-      .then(() => {
-        fetchUsers();
-      })
-      .catch((err) => {
-        console.error("Erreur lors de la modif :", err);
-        alert("Modification echoué");
-      });
-  };
-
   // Pour ajouter un user
   const handleCreateUser = (user: Omit<User, "id">) => {
     createUser(user)
@@ -210,10 +198,12 @@ function UserManagement() {
                 if (editUser && editUser.id !== undefined) {
                   updateUser(editUser.id, editUser)
                     .then(() => {
-                      fetchUsers(); // Recharge la liste
-                      setEditUser(null); // Ferme la pop-up
+                      fetchUsers();
+                      setEditUser(null);
                     })
-                    .catch((err) => console.error(err));
+                    .catch((err) => {
+                      console.error("Erreur lors de la modif :", err);
+                    });
                 }
               }}
             >
@@ -222,8 +212,8 @@ function UserManagement() {
                 <input
                   type="text"
                   value={editUser.firstname}
-                  name="nom"
-                  placeholder="Nom"
+                  name="Prénom"
+                  placeholder="Prénom"
                   required
                   onChange={(e) =>
                     setEditUser({ ...editUser, firstname: e.target.value })
@@ -233,8 +223,8 @@ function UserManagement() {
                 <input
                   type="text"
                   value={editUser.lastname}
-                  name="prenom"
-                  placeholder="Prénom"
+                  name="Nom"
+                  placeholder="Nom"
                   required
                   onChange={(e) =>
                     setEditUser({ ...editUser, lastname: e.target.value })
@@ -310,13 +300,6 @@ function UserManagement() {
                 <button
                   type="submit"
                   className="text-secondary font-bold text-lg hover:text-secondary pb-10"
-                  onClick={() => {
-                    if (editUser.id !== undefined) {
-                      handleChangeUser(editUser.id, editUser);
-                    } else {
-                      console.error("ID utilisateur manquant !");
-                    }
-                  }}
                 >
                   Modifier
                 </button>
@@ -455,7 +438,7 @@ function UserManagement() {
             <section className="flex justify-between items-end mt-4">
               <img src="/favicon.ico" alt="Mascotte" className="h-15" />
               <button
-                type="submit"
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   handleCreateUser(newUser);
