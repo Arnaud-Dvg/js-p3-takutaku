@@ -1,8 +1,104 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import type { Anime } from "../../context/AnimeContext";
+import { useAnimeContext } from "../../context/AnimeContext";
+import { useUserContext } from "../../context/UserContext";
+import FavoriteButton from "../../src/components/favorite/FavoriteButton";
+
 function Favorite() {
+  const { user, connected } = useUserContext(); //Récupère le user et l'état de connexion
+  const { setAnimeSelected } = useAnimeContext();
+  const [favorites, setFavorites] = useState<Anime[]>([]); // Tableau pour stocker les favoris
+  const [loading, setLoading] = useState(true); // Pour gérer l'état de chargement
+  const handleClick = (anime: Anime) => {
+    setAnimeSelected(anime);
+  };
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (!connected || !user) return;
+      // Il exécute que si l'utilisateur est connecté et a un ID
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/users_anime/${user.id}`,
+        );
+
+        if (!response.ok) {
+          throw new Error("Impossible de récupérer les favoris.");
+        }
+
+        const data = await response.json();
+
+        // On filtre uniquement les favoris marqués (is_favorite: true)
+
+        const filtered = data.filter(
+          (item: { is_favorite: boolean }) => item.is_favorite,
+        ); // Filtre les favoris pour ne garder que ceux marqués comme favoris
+
+        setFavorites(filtered); // Met à jour l'état avec les favoris filtrés
+      } catch (error) {
+        console.error("Erreur fetch favoris :", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFavorites();
+  }, [connected, user]);
+
+  if (!connected) {
+    return (
+      <p className="text-white text-center mt-10">
+        Veuillez vous connecter pour voir vos favoris.
+      </p>
+    ); // Si l'utilisateur n'est pas connecté, on affiche un message
+  }
+
+  if (loading) {
+    return (
+      <p className="text-white text-center mt-10">Chargement des favoris...</p>
+    ); // Si les favoris sont en cours de chargement, on affiche un message
+  }
+
+  if (favorites.length === 0) {
+    return (
+      <p className="text-white text-center mt-10">
+        Vous n'avez aucun favori pour le moment.
+      </p>
+    ); // Si aucun favori n'est trouvé, on affiche un message
+  }
+
   return (
-    <>
-      <p>favorite</p>
-    </>
+    <section className="px-4 py-8">
+      <h1 className="text-white text-xl mb-6">Mes Favoris</h1>
+      <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {favorites.map((anime) => (
+          <div key={anime.anime_id} className="relative group">
+            <div className="relative group">
+              <Link to={"/anime"} onClick={() => handleClick(anime)}>
+                <img
+                  src={anime.portrait}
+                  alt={anime.title}
+                  className="rounded w-full object-cover"
+                />
+              </Link>
+
+              <div className="absolute bottom-1 left-1">
+                <FavoriteButton
+                  animeId={anime.anime_id}
+                  onUnfavorite={() => {
+                    setFavorites((prev) =>
+                      prev.filter((item) => item.anime_id !== anime.anime_id),
+                    );
+                  }}
+                />
+              </div>
+            </div>
+
+            <p className="text-xs text-white text-center mt-2">{anime.title}</p>
+          </div>
+        ))}
+      </section>
+    </section>
   );
 }
 

@@ -1,8 +1,22 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useAnimeContext } from "../../context/AnimeContext";
 import WatchButton from "../components/home/WatchButton";
 
 function Anime() {
-  const { animeSelected } = useAnimeContext();
+  const { id } = useParams();
+  const { animeSelected, setAnimeSelected, getAnimebyId } = useAnimeContext();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (id) {
+      getAnimebyId(Number(id)).then((data) => {
+        if (data) {
+          setAnimeSelected(data);
+        }
+      });
+    }
+  }, [id]);
 
   console.log("animeSelected :", animeSelected);
   if (!animeSelected) {

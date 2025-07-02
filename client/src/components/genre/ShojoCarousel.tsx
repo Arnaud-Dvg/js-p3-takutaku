@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper/types";
 import type { Anime } from "../../../../client/context/AnimeContext";
 import { useAnimeContext } from "../../../../client/context/AnimeContext";
+import FavoriteButton from "../../../../client/src/components/favorite/FavoriteButton";
 
 function ShojoCarousel() {
   const [shojoAnime, setShojoAnime] = useState<Anime[]>([]);
@@ -71,7 +72,7 @@ function ShojoCarousel() {
                 key={anime.id}
                 style={{ width: "300px", cursor: "pointer" }}
               >
-                <div>
+                <div className="relative">
                   <Link to={"/anime"} onClick={() => handleClick(anime)}>
                     <img
                       src={anime.portrait}
@@ -79,10 +80,15 @@ function ShojoCarousel() {
                       className="w-full rounded-sm"
                     />
                   </Link>
-                  <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
-                    {anime.title}
-                  </p>
+
+                  <div className="absolute bottom-1 left-1 z-10">
+                    <FavoriteButton animeId={anime.id} />
+                  </div>
                 </div>
+
+                <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
+                  {anime.title}
+                </p>
               </SwiperSlide>
             ))
           ) : (

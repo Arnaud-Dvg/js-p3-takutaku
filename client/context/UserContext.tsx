@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { useNavigate } from "react-router";
+
 // Typage des données du context
 export type User = {
   id: number;
@@ -10,10 +10,7 @@ export type User = {
   is_admin: boolean;
   is_actif: boolean;
   abonnement_id: number;
-};
-export type Login = {
-  mail: string;
-  password: string;
+  token: string;
 };
 
 // Typage du context User
@@ -25,21 +22,17 @@ type UserContextType = {
   setConnected: React.Dispatch<React.SetStateAction<boolean>>;
   fetchUser: () => Promise<void>;
   deleteUser: (id: number) => Promise<void>;
-  handleLogin: (user: Login) => Promise<void>;
   updateUser: (id: number, updateData: Partial<User>) => Promise<void>;
-  handleLogOut: () => void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
-
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
 
   const fetchUser = async (): Promise<void> => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user`);
+      const res = await fetch(${import.meta.env.VITE_API_URL}/api/user);
       const data = await res.json();
       setUser(data);
     } catch (error) {
@@ -50,7 +43,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   //Fonction qui gère la création de compte utilisateur
   const createUser = async (newUser: Omit<User, "id">): Promise<void> => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user`, {
+      const response = await fetch(${import.meta.env.VITE_API_URL}/api/user, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +52,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       if (!response.ok) {
-        throw new Error(`Erreur HTTP: ${response.status}`);
+        throw new Error(Erreur HTTP: ${response.status});
       }
 
       const createdUser = await response.json();
@@ -70,48 +63,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // Fonction qui gère la connexion de l'utilisateur
-  const handleLogin = async ({ mail, password }: Login) => {
-    try {
-      const response = await fetch("http://localhost:3310/api/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ mail, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Email ou mot de passe incorrect");
-      }
-
-      const data = await response.json();
-      setUser(data);
-      localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
-      console.log("Login Response:", data);
-      localStorage.setItem("Utilisateur connecté", JSON.stringify(data));
-      if (!connected) {
-        setConnected(true);
-      }
-    } catch (error) {
-      console.error(error);
-      setConnected(false);
-    }
-  };
-  const handleLogOut = () => {
-    setUser(null);
-    setConnected(false);
-    localStorage.removeItem("Utilisateur connecté");
-    localStorage.setItem("connected", "false");
-    navigate("/login");
-  };
   // Fonction pour la mise à jour de la base de donnée des utilisateurs pour la page Admin
   const updateUser = async (
     id: number,
     updateData: Partial<User>,
   ): Promise<void> => {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/user/${id}`,
+      ${import.meta.env.VITE_API_URL}/api/user/${id},
       {
         method: "PUT",
         headers: {
@@ -130,14 +88,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const deleteUser = async (id: number): Promise<void> => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/user/${id}`,
+        ${import.meta.env.VITE_API_URL}/api/user/${id},
         {
           method: "DELETE",
         },
       );
       if (!response.ok) {
         throw new Error(
-          `Echec de la suppression de l'utilisateur avec l'id ${id}: ${response.statusText}`,
+          Echec de la suppression de l'utilisateur avec l'id ${id}: ${response.statusText},
         );
       }
       await fetchUser();
@@ -156,8 +114,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         createUser,
         fetchUser,
         deleteUser,
-        handleLogin,
-        handleLogOut,
         updateUser,
       }}
     >

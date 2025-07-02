@@ -6,47 +6,71 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper/types";
 import type { Anime } from "../../../../client/context/AnimeContext";
 import { useAnimeContext } from "../../../../client/context/AnimeContext";
-import FavoriteButton from "../../../../client/src/components/favorite/FavoriteButton";
+import { useUserContext } from "../../../context/UserContext";
 
-function ShonenCarousel() {
-  const [shonenAnime, setShonenAnime] = useState<Anime[]>([]);
-  const { anime, setAnimeSelected } = useAnimeContext();
-  const swiperRefShonen = useRef<SwiperType | null>(null);
+function History() {
+  const { connected } = useUserContext();
+  const [, setShowHistory] = useState(false);
+  const [viewedAnime, setViewedAnime] = useState<Anime[]>([]);
+  const { setAnimeSelected } = useAnimeContext();
+  const swiperRefShojo = useRef<SwiperType | null>(null);
+
+  const { user } = useUserContext();
 
   useEffect(() => {
-    const filtered = anime.filter((anime) => anime.genre_id === 1);
-    setShonenAnime(filtered);
-  }, [anime]);
+    const readAnime = async () => {
+      try {
+        if (!user) return;
+        const res = await fetch(
+          `http://localhost:3310/api/user/${user.id}/history`,
+        );
+        const data = await res.json();
+        setViewedAnime(data);
+      } catch (err) {
+        console.error("Erreur lors du fetch:", err);
+      }
+    };
+
+    readAnime();
+  }, [user]);
 
   const handleClick = (anime: Anime) => {
     setAnimeSelected(anime);
   };
+  function setNextAnimeSelected() {
+    swiperRefShojo.current?.slideNext();
+  }
+  function setPrevAnimeSelected() {
+    swiperRefShojo.current?.slidePrev();
+  }
+  useEffect(() => {
+    if (connected) {
+      setShowHistory(true);
+    } else {
+      setShowHistory(false);
+    }
+  }, [connected]);
 
-  // Fonction pour les boutons gauche/droite pour les Shonens
-  function setNextShonen() {
-    swiperRefShonen.current?.slideNext();
-  }
-  function setPrevShonen() {
-    swiperRefShonen.current?.slidePrev();
-  }
+  console.log("connected:", connected);
+
   return (
     <div className="relative mt-10 md:mt-15">
-      <h2 className="text-white text-xl mb-3">Shonen</h2>
+      <h2 className="text-white text-xl mb-3">Historique de Visionnage</h2>
       <div className="relative">
         {/* Bouton gauche */}
         <RxChevronLeft
-          onClick={setPrevShonen}
+          onClick={setPrevAnimeSelected}
           className="hidden lg:flex absolute -left-12 top-1/2 -translate-y-1/2 bg-[var(--color-secondary)] rounded-full w-6 h-6 z-10 cursor-pointer"
         />
 
         {/* Bouton droit */}
         <RxChevronRight
-          onClick={setNextShonen}
+          onClick={setNextAnimeSelected}
           className="hidden lg:flex absolute -right-12 top-1/2 -translate-y-1/2 bg-[var(--color-secondary)] rounded-full w-6 h-6 z-10 cursor-pointer"
         />
         <Swiper
           onSwiper={(swiper) => {
-            swiperRefShonen.current = swiper;
+            swiperRefShojo.current = swiper;
           }}
           slidesPerView={6}
           spaceBetween={20}
@@ -66,13 +90,14 @@ function ShonenCarousel() {
           }}
           className="mySwiper"
         >
-          {shonenAnime.length > 0 ? (
-            shonenAnime.map((anime) => (
+          {viewedAnime.length > 0 ? (
+            viewedAnime.map((anime) => (
               <SwiperSlide
                 key={anime.id}
                 style={{ width: "300px", cursor: "pointer" }}
+                onClick={() => handleClick(anime)}
               >
-                <div className="relative">
+                <div>
                   <Link to={"/anime"} onClick={() => handleClick(anime)}>
                     <img
                       src={anime.portrait}
@@ -80,15 +105,10 @@ function ShonenCarousel() {
                       className="w-full rounded-sm"
                     />
                   </Link>
-
-                  <div className="absolute bottom-1 left-1 z-10">
-                    <FavoriteButton animeId={anime.id} />
-                  </div>
+                  <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
+                    {anime.title}
+                  </p>
                 </div>
-
-                <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
-                  {anime.title}
-                </p>
               </SwiperSlide>
             ))
           ) : (
@@ -100,4 +120,4 @@ function ShonenCarousel() {
   );
 }
 
-export default ShonenCarousel;
+export default History;

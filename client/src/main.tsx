@@ -2,6 +2,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
+import PrivateRoute from "./components/ProtectRoute/PrivateRoute";
 
 // Import the main app component
 import App from "./App";
@@ -12,10 +13,11 @@ import Anime from "./pages/Anime";
 import Cgv from "./pages/Cgv";
 import Favorite from "./pages/Favorite";
 import Genre from "./pages/Genre";
-import Historic from "./pages/Historic";
+import History from "./pages/History";
 import Home from "./pages/Home";
 import LegalNotices from "./pages/LegalNotices";
 import Login from "./pages/Login";
+import Page404 from "./pages/Page404";
 import Watch from "./pages/Watch";
 
 const router = createBrowserRouter([
@@ -30,9 +32,14 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+
       {
-        path: "/myaccount",
-        element: <Account />,
+        path: "/account",
+        element: (
+          <PrivateRoute>
+            <Account />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/admin",
@@ -40,6 +47,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/anime",
+        element: <Anime />,
+      },
+      {
+        path: "/anime/:id",
         element: <Anime />,
       },
       {
@@ -55,8 +66,12 @@ const router = createBrowserRouter([
         element: <Genre />,
       },
       {
-        path: "/historic",
-        element: <Historic />,
+        path: "/history",
+        element: (
+          <PrivateRoute>
+            <History />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/legal-notices",
@@ -69,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "*",
+        element: <Page404 />,
       },
     ],
   },

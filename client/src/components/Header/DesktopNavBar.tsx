@@ -1,23 +1,41 @@
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../../context/AuthContext";
+
 //NavBar Desktop
 import NavBar from "../Mobile Header/NavBar";
+import BurgerProfil from "../UserMenu/BurgerProfil";
 
 function Header() {
+  const { connected } = useAuthContext();
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
   const isGenrePage = location.pathname === "/genre";
   const isFavoritePage = location.pathname === "/favorite";
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
+
+  const handleClick = () => {
+    const storedUser = localStorage.getItem("userConnected");
+    if (!storedUser) {
+      navigate("/login");
+    } else {
+      setIsBurgerOpen((prev) => !prev); // toggle
+    }
+  };
+
+  const handleCloseBurger = () => {
+    setIsBurgerOpen(false);
+  };
 
   return (
     <>
       <div className="block md:hidden">
         <NavBar />
       </div>
-
       <section className="hidden md:flex items-center w-full p-3">
         <div className="flex justify-start flex-1 z-10">
-          <Link to={"/"}>
+          <Link to="/">
             <img
               src="/logo_taku.png"
               alt="logo"
@@ -66,14 +84,24 @@ function Header() {
           </ul>
         </nav>
         <div className="flex justify-end flex-1">
-          <Link to="/login">
-            <button type="button" className="w-9 h-9 p-1 z-10">
-              <img src="/avatar.svg" alt="Avatar Icon" />
-            </button>
-          </Link>
+          <button type="button" className="w-9 h-9 p-1 z-10">
+            <img
+              src={!connected ? "/avatar.svg" : "/profilpicture.png"}
+              alt="Avatar Icon"
+              className={!connected ? "" : "rounded-full"}
+              onClick={handleClick}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  handleClick();
+                }
+              }}
+            />
+          </button>
         </div>
       </section>
       <hr className="hidden md:block border-b border-gray-600 z-30 relative" />
+
+      <BurgerProfil isOpen={isBurgerOpen} onClose={handleCloseBurger} />
     </>
   );
 }

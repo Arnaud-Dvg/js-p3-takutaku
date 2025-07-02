@@ -1,8 +1,35 @@
+import { useEffect, useState } from "react";
 import { FaCog } from "react-icons/fa";
 import { useUserContext } from "../../../context/UserContext";
+import type { User } from "../../../context/UserContext";
 
 function ProfileSettings() {
-  const { user } = useUserContext();
+  const { user, updateUser } = useUserContext();
+  const [editMode, setEditMode] = useState(false);
+  const [editUser, setEditUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    if (user) {
+      setEditUser(user);
+    }
+  }, [user]);
+
+  const handleChangeUser = async (id: number, user: User) => {
+    try {
+      await updateUser(id, user);
+      const res = await fetch(`http://localhost:3310/api/user/${id}`, {
+        headers: {
+          Authorization: localStorage.getItem("token") || "",
+        },
+      });
+      const data = await res.json();
+      setEditUser(data);
+      setEditMode(false);
+    } catch (err) {
+      console.error("Erreur lors de la modif :", err);
+      alert("Modification échouée");
+    }
+  };
 
   return (
     <>
@@ -10,18 +37,112 @@ function ProfileSettings() {
         <FaCog />
         <h2 className="text-xl ml-2">Paramètres du compte</h2>
       </section>
+
       <section className="text-tertiary mx-6 my-4 flex flex-col gap-2">
-        <p className="uppercase">Nom : {user?.lastname}</p>
-        <p>Prénom : {user?.firstname}</p>
-        <p>Adresse email : {user?.mail}</p>
-        <p>Mot de passe : {user?.password}</p>
-        <p>Abonnement : </p>
-        <button
-          type="button"
-          className="border-1 border-tertiary rounded-full text-secondary my-2 p-2"
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (editUser && editUser.id !== undefined) {
+              handleChangeUser(editUser.id, editUser);
+            }
+          }}
+          method="PUT"
         >
-          Modifier mes informations personnelles
-        </button>
+          <label htmlFor="lastname">
+            Nom : {""}
+            <input
+              id="lastname"
+              name="lastname"
+              className="uppercase"
+              value={editUser?.lastname}
+              onChange={(e) => {
+                if (editUser) {
+                  setEditUser({ ...editUser, lastname: e.target.value });
+                }
+              }}
+              disabled={!editMode}
+            />
+          </label>
+
+          <label htmlFor="firstname">
+            Prénom : {""}
+            <input
+              id="firstname"
+              name="firstname"
+              value={editUser?.firstname}
+              onChange={(e) => {
+                if (editUser) {
+                  setEditUser({ ...editUser, firstname: e.target.value });
+                }
+              }}
+              disabled={!editMode}
+            />
+          </label>
+
+          <label htmlFor="email">
+            Adresse email : {""}
+            <input
+              id="email"
+              name="mail"
+              type="email"
+              value={editUser?.mail}
+              onChange={(e) => {
+                if (editUser) {
+                  setEditUser({ ...editUser, mail: e.target.value });
+                }
+              }}
+              disabled={!editMode}
+            />
+          </label>
+
+          <label htmlFor="password">
+            Mot de passe : {""}
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="••••••••"
+              value={editUser?.password}
+              onChange={(e) => {
+                if (editUser) {
+                  setEditUser({ ...editUser, password: e.target.value });
+                }
+              }}
+              disabled={!editMode}
+            />
+          </label>
+
+          <div className="flex items-center">
+            <label htmlFor="subscription">Abonnement : {""}</label>
+            <p className="bg-black text-tertiary px-4 py-2 text-sm">
+              {editUser?.abonnement_id === 2
+                ? "Premium"
+                : editUser?.abonnement_id === 1
+                  ? "Découverte"
+                  : "Aucun abonnement actif"}
+            </p>
+          </div>
+
+          {!editMode && (
+            <button
+              type="button"
+              className="border border-tertiary rounded-full text-secondary my-2 p-2 cursor-pointer"
+              onClick={() => setEditMode(true)}
+            >
+              Modifier mes informations personnelles
+            </button>
+          )}
+
+          {editMode && (
+            <button
+              type="submit"
+              className="border border-tertiary rounded-full text-secondary my-2 p-2 cursor-pointer"
+            >
+              Enregistrer
+            </button>
+          )}
+        </form>
       </section>
     </>
   );

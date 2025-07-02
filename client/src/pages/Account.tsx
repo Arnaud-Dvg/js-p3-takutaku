@@ -8,7 +8,6 @@ function Account() {
   return (
     <section className="mx-6 flex flex-col items-center justify-center">
       <LogOutButton />
-      <SelectPicture />
       <h1 className="text-tertiary text-2xl pt-6 text-center">Mon compte</h1>
       <ProfilePicture />
       <ProfileSettings />

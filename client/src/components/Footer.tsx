@@ -45,13 +45,13 @@ function Footer() {
       {/* Centre */}
       <section className="text-center text-xs md:text-sm pb-1">
         <section>
-          <Link to="/CGV">CGV</Link>
+          <Link to="/cgv">CGV</Link>
         </section>
         <section>
-          <Link to="/mentions">Mentions légales</Link>
+          <Link to="/legal-notices">Mentions légales</Link>
         </section>
         <section>
-          <Link to="/contact">A propos de TakuTaku</Link>
+          <Link to="/about">A propos de TakuTaku</Link>
         </section>
 
         <section>

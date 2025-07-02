@@ -53,7 +53,7 @@ router.put("/api/episode/:id", episodeAction.edit);
 router.delete("/api/episode/:id", episodeAction.destroy);
 
 // Routes for the abonnement module
-import abonnementAction from "../src/modules/Abonnement/abonnementAction";
+import abonnementAction from "./modules/Abonnement/abonnementAction";
 router.get("/api/abonnement", abonnementAction.browse);
 router.get("/api/abonnement/:id", abonnementAction.read);
 router.post("/api/abonnement", abonnementAction.add);
@@ -64,16 +64,36 @@ router.delete("/api/abonnement/:id", abonnementAction.destroy);
 import userAction from "./modules/user/userAction";
 
 router.get("/api/user", userAction.browse);
-router.get("/api/users/:id([0-9]+)", checkToken, userAction.read);
+router.get("/api/user/:id([0-9]+)", checkToken, userAction.read);
 router.post("/api/user", userAction.add);
 router.put("/api/user/:id", userAction.edit);
 router.delete("/api/user/:id", userAction.destroy);
 router.get("/api/user_abonnement", userAction.browse);
 router.get("/api/user_with_abonnement", userAction.browseWithAbonnement);
+router.get("/api/read_all_with_anime", userAction.readAllWithUsers);
+router.post("/api/add_to_history", userAction.addToHistory);
+router.get("/api/user/:id/history", userAction.readUserHistory);
 
 //Routes for the authenfication module
 import authAction from "./modules/auth/authAction";
 router.post("/api/auth/signin", authAction.signIn);
 router.post("/api/auth/signup", authAction.signUp);
+
+// Routes for the users_anime module / favorites
+import usersAnimeAction from "./modules/usersAnime/usersAnimeActions";
+router.get("/api/users_anime/:userId([0-9]+)", usersAnimeAction.browse);
+router.get(
+  "/api/users_anime/:userId([0-9]+)/:animeId([0-9]+)",
+  usersAnimeAction.read,
+);
+router.post("/api/users_anime", usersAnimeAction.add);
+router.put(
+  "/api/users_anime/:userId([0-9]+)/:animeId([0-9]+)",
+  usersAnimeAction.edit,
+);
+router.delete(
+  "/api/users_anime/:userId([0-9]+)/:animeId([0-9]+)",
+  usersAnimeAction.destroy,
+);
 
 export default router;
