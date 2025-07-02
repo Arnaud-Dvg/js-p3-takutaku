@@ -35,16 +35,12 @@ const router = createBrowserRouter([
 
       {
         path: "/account",
-        element: (
-          <PrivateRoute>
-            <Account />
-          </PrivateRoute>
-        ),
+        element: <Account />,
       },
       {
         path: "/admin",
         element: (
-          <PrivateRoute adminOnly>
+          <PrivateRoute>
             <Admin />
           </PrivateRoute>
         ),
@@ -71,11 +67,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/history",
-        element: (
-          <PrivateRoute>
-            <History />
-          </PrivateRoute>
-        ),
+        element: <History />,
       },
       {
         path: "/legal-notices",

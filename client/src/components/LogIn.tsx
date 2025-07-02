@@ -5,7 +5,6 @@ import CreateAccount from "../components/home/CreateAccount";
 function LogIn() {
   const [mail, setMail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
 

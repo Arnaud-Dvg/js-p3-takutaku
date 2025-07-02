@@ -37,18 +37,6 @@ function AnimeManagement() {
     fetchAnimes();
   }, []);
 
-  // Pour modifier un animé
-  const handleChangeAnime = (id: number, anime: Anime) => {
-    updateAnime(id, anime)
-      .then(() => {
-        fetchAnimes();
-      })
-      .catch((err) => {
-        console.error("Erreur lors de la modif :", err);
-        alert("Modification echoué");
-      });
-  };
-
   return (
     <>
       <h1 className="text-[var(--color-secondary)] pl-10 text-xl pt-20">
@@ -211,13 +199,6 @@ function AnimeManagement() {
                 <button
                   type="submit"
                   className="text-secondary font-bold text-lg hover:text-secondary pb-10"
-                  onClick={() => {
-                    if (editAnime.id !== undefined) {
-                      handleChangeAnime(editAnime.id, editAnime);
-                    } else {
-                      console.error("ID animé manquant !");
-                    }
-                  }}
                 >
                   Modifier
                 </button>
