@@ -72,6 +72,49 @@ class AnimeRepository {
     return rows as Anime[];
   }
 
+  async readAllType(genre: string, type: string) {
+    const where = [];
+    const values = [];
+
+    console.log("📥 Paramètres reçus :", { genre, type });
+
+    if (genre === "all") {
+      where.push("a.genre_id IN (?, ?, ?)");
+      values.push(1, 2, 3);
+    } else {
+      console.log("🔢 Type genre :", typeof genre, genre);
+      where.push("a.genre_id = ?");
+      values.push(Number(genre));
+    }
+
+    if (type !== "all") {
+      console.log("🔢 Type type :", typeof type, type);
+      where.push("t.id = ?");
+      values.push(Number(type));
+    }
+
+    const whereSQL = where.length > 0 ? `WHERE ${where.join(" AND ")}` : "";
+
+    console.log("📄 SQL WHERE :", whereSQL);
+    console.log("📦 Values SQL :", values);
+
+    const query = `
+    SELECT 
+      a.id, a.title, a.synopsis, a.genre_id, a.portrait, 
+      GROUP_CONCAT(t.id) as tid 
+    FROM Anime a 
+    INNER JOIN Anime_type at ON a.id = at.anime_id 
+    INNER JOIN Type t ON at.type_id = t.id 
+    ${whereSQL}
+    GROUP BY a.id, a.title, a.synopsis, a.genre_id, a.portrait
+  `;
+
+    const [rows] = await databaseClient.query<Rows>(query, values);
+    console.log("✅ Résultats trouvés :", rows.length);
+
+    return rows as Anime[];
+  }
+
   // Le U du CRUD - Update
   async update(anime: Anime) {
     // Exécute la requête SQL pour lire tout le tableau de la table "Anime"

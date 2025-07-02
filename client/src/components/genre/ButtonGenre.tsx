@@ -5,9 +5,14 @@ interface Genre {
   name: string;
 }
 
-function ButtonGenre() {
+interface setGenreProps {
+  setGenre: (genre: string) => void;
+}
+
+function ButtonGenre({ setGenre }: setGenreProps) {
   const [genres, setGenres] = useState<Genre[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [filteredGenre, setFilteredGenre] = useState<"all" | number>("all");
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -24,9 +29,11 @@ function ButtonGenre() {
     fetchGenres();
   }, []);
 
-  function handleSelectType(id: number): void {
-    console.log("Selected genre id:", id);
-  }
+  const handleSelectType = (id: "all" | number): void => {
+    setFilteredGenre(id);
+    setGenre(id.toString());
+    setIsOpen(false); // Optionnel : referme le dropdown après sélection
+  };
 
   function toggleDropdown() {
     setIsOpen((prev) => !prev);
@@ -39,7 +46,11 @@ function ButtonGenre() {
         onClick={toggleDropdown}
         className="group transition-all duration-200 w-[150px] py-2 flex flex-row items-center justify-center bg-secondary gap-2 rounded-lg font-semibold text-sm"
       >
-        <span>GENRE</span>
+        <span>
+          {filteredGenre === "all"
+            ? "GENRE"
+            : genres.find((g) => g.id === filteredGenre)?.name.toUpperCase()}
+        </span>
         <svg
           className={`transition-transform duration-300 cursor-pointer ${
             isOpen ? "rotate-180" : "rotate-90"
@@ -59,14 +70,23 @@ function ButtonGenre() {
 
       {isOpen && (
         <div className="absolute z-50 top-full left-0 mt-2 w-full p-2 bg-secondary rounded-lg flex flex-col gap-2">
+          <button
+            key="all"
+            type="button"
+            onClick={() => handleSelectType("all")}
+            className="cursor-pointer text-left font-semibold text-sm transition duration-300 ease-in-out hover:translate-x-2 px-2"
+          >
+            TOUT
+          </button>
+          <hr className="w-[90%] border mx-auto " />
           {genres.map((genre) => (
             <button
               key={genre.id}
               type="button"
               onClick={() => handleSelectType(genre.id)}
-              className="cursor-pointer text-left font-semibold text-sm transition duration-300 ease-in-out hover:translate-x-2 px-2 uppercase"
+              className="cursor-pointer text-left font-semibold text-sm transition duration-300 ease-in-out hover:translate-x-2 px-2 "
             >
-              {genre.name}
+              {genre.name.toUpperCase()}
             </button>
           ))}
         </div>

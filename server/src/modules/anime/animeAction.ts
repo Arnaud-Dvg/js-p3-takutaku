@@ -29,6 +29,18 @@ const browse: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
+const browseType: RequestHandler = async (req, res, next) => {
+  try {
+    const { genre, type } = req.params;
+    // Fetch tout les animes
+    const animes = await animeRepository.readAllType(genre, type);
+    // Reponse avec les animes au format JSON
+    res.json(animes);
+  } catch (err) {
+    // Transmettez toutes les erreurs au middleware de gestion des erreurs
+    next(err);
+  }
+};
 
 // Le R du BREAD - Lis la requête
 const read: RequestHandler = async (req, res, next) => {
@@ -135,4 +147,12 @@ const browseWithGenre: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, add, destroy, edit, browseWithGenre };
+export default {
+  browse,
+  read,
+  add,
+  destroy,
+  edit,
+  browseWithGenre,
+  browseType,
+};

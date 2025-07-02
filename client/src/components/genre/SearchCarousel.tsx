@@ -1,53 +1,53 @@
-import { useEffect, useState } from "react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper/types";
-import type { Anime } from "../../../../client/context/AnimeContext";
-import { useAnimeContext } from "../../../../client/context/AnimeContext";
-import FavoriteButton from "../../../../client/src/components/favorite/FavoriteButton";
+import type { Anime } from "../../../context/AnimeContext";
+import { useAnimeContext } from "../../../context/AnimeContext";
 
-function SeinenCarousel() {
-  const [seinenAnime, setSeinenAnime] = useState<Anime[]>([]);
-  const { anime, setAnimeSelected } = useAnimeContext();
-  const swiperRefSeinen = useRef<SwiperType | null>(null);
+interface propsFilter {
+  genre: string;
+  type: string;
+}
 
-  useEffect(() => {
-    const filtered = anime.filter((anime) => anime.genre_id === 2);
-    setSeinenAnime(filtered);
-  }, [anime]);
+function SearchCarousel({ genre, type }: propsFilter) {
+  const { animeSearch, fetchAnimeType, setAnimeSelected } = useAnimeContext();
+  const swiperRefSearch = useRef<SwiperType | null>(null);
 
   const handleClick = (anime: Anime) => {
     setAnimeSelected(anime);
   };
 
   // Fonction pour les boutons gauche/droite pour les Seinens
-  function setNextSeinen() {
-    swiperRefSeinen.current?.slideNext();
+  function setNextSearch() {
+    swiperRefSearch.current?.slideNext();
   }
-  function setPrevSeinen() {
-    swiperRefSeinen.current?.slidePrev();
+  function setPrevSearch() {
+    swiperRefSearch.current?.slidePrev();
   }
 
+  useEffect(() => {
+    fetchAnimeType(genre, type);
+  }, [genre, type, fetchAnimeType]);
+
   return (
-    <div className="relative mt-10 md:mt-15">
-      <h2 className="text-white text-xl mb-3">Seinen</h2>
+    <div className="relative mt-10 md:mt-15 mx-10 xl:mx-50 lg:mx-20">
       <div className="relative">
         {/* Bouton gauche */}
         <RxChevronLeft
-          onClick={setPrevSeinen}
+          onClick={setPrevSearch}
           className="hidden lg:flex absolute -left-12 top-1/2 -translate-y-1/2 bg-[var(--color-secondary)] rounded-full w-6 h-6 z-10 cursor-pointer"
         />
 
         {/* Bouton droit */}
         <RxChevronRight
-          onClick={setNextSeinen}
+          onClick={setNextSearch}
           className="hidden lg:flex absolute -right-12 top-1/2 -translate-y-1/2 bg-[var(--color-secondary)] rounded-full w-6 h-6 z-10 cursor-pointer"
         />
         <Swiper
           onSwiper={(swiper) => {
-            swiperRefSeinen.current = swiper;
+            swiperRefSearch.current = swiper;
           }}
           slidesPerView={6}
           spaceBetween={20}
@@ -67,13 +67,13 @@ function SeinenCarousel() {
           }}
           className="mySwiper"
         >
-          {seinenAnime.length > 0 ? (
-            seinenAnime.map((anime) => (
+          {animeSearch.length > 0 ? (
+            animeSearch.map((anime) => (
               <SwiperSlide
                 key={anime.id}
                 style={{ width: "300px", cursor: "pointer" }}
               >
-                <div className="relative">
+                <div>
                   <Link to={"/anime"} onClick={() => handleClick(anime)}>
                     <img
                       src={anime.portrait}
@@ -81,15 +81,10 @@ function SeinenCarousel() {
                       className="w-full rounded-sm"
                     />
                   </Link>
-
-                  <div className="absolute bottom-1 left-1 z-10">
-                    <FavoriteButton animeId={anime.id} />
-                  </div>
+                  <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
+                    {anime.title}
+                  </p>
                 </div>
-
-                <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
-                  {anime.title}
-                </p>
               </SwiperSlide>
             ))
           ) : (
@@ -101,4 +96,4 @@ function SeinenCarousel() {
   );
 }
 
-export default SeinenCarousel;
+export default SearchCarousel;

@@ -17,12 +17,17 @@ export type Anime = {
   video: string;
   types?: { id: number; name: string }[]; // Récupération des types associés
   genre?: { id: number; name: string }; // Récupération du genre associé
+  type_id?: number;
 };
 
 // Typage de ce que l'on veut que le contexte réalise
 type AnimeContextType = {
   anime: Anime[];
-  setAnime: React.Dispatch<React.SetStateAction<Anime[]>>;
+  animeSearch: Anime[];
+  fetchAnimeType: (
+    genre: number | string,
+    type: number | string,
+  ) => Promise<void>;
   animeSelected: Anime | null;
   setAnimeSelected: (anime: Anime | null) => void;
   fetchAnime: () => Promise<void>;
@@ -36,6 +41,7 @@ const AnimeContext = createContext<AnimeContextType | undefined>(undefined);
 
 export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
   const [anime, setAnime] = useState<Anime[]>([]);
+  const [animeSearch, setAnimeSearch] = useState<Anime[]>([]);
   const [animeSelected, setAnimeSelected] = useState<Anime | null>(() => {
     // Récupération de l'anime sélectionné depuis le localStorage
     // Si l'anime est déjà stocké, on le parse et on le retourne, sinon on retourne null
@@ -56,6 +62,22 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [animeSelected]);
 
+  interface FetchAnimeTypeParams {
+    genre: number | string;
+    type: number | string;
+  }
+
+  const fetchAnimeType = (
+    genre: FetchAnimeTypeParams["genre"],
+    type: FetchAnimeTypeParams["type"],
+  ): Promise<void> => {
+    return fetch(`http://localhost:3310/api/animetype/${genre}/${type}`)
+      .then((res: Response) => res.json())
+      .then((data: Anime[]) => {
+        setAnimeSearch(data);
+      });
+  };
+  console.log(animeSearch);
   const fetchAnime = (): Promise<void> => {
     return fetch("http://localhost:3310/api/anime")
       .then((res) => res.json())
@@ -111,7 +133,8 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
     <AnimeContext.Provider
       value={{
         anime,
-        setAnime,
+        animeSearch,
+        fetchAnimeType,
         animeSelected,
         setAnimeSelected,
         fetchAnime,
