@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 function BurgerProfil({
@@ -10,17 +11,33 @@ function BurgerProfil({
   const location = useLocation();
   const isAccountPage = location.pathname === "/account";
   const isHistoryPage = location.pathname === "/history";
+  const isAdminPage = location.pathname === "/admin";
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("userConnected");
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+
+        if (parsedUser?.id && parsedUser.is_admin === true) {
+          setIsAdmin(true);
+        }
+      } catch (err) {
+        console.error("User is not Admin", err);
+      }
+    }
+  });
 
   return (
     <nav
       className={`
-        fixed top-0 right-0 h-full w-30 z-50
+        fixed top-0 right-0 h-full w-40 z-50
         bg-[var(--color-primary)] text-tertiary
         transform transition-transform duration-300
         ${isOpen ? "translate-x-0" : "translate-x-full"}
       `}
     >
-      {/* Bouton de fermeture */}
       {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
       <button
         onClick={onClose}
@@ -41,6 +58,13 @@ function BurgerProfil({
             HISTORIQUE
           </li>
         </Link>
+        {isAdmin && (
+          <Link to="/admin" onClick={onClose}>
+            <li className={`pt-4  ${isAdminPage ? "text-secondary" : ""}`}>
+              ADMIN
+            </li>
+          </Link>
+        )}
       </ul>
     </nav>
   );

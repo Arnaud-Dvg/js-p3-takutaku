@@ -43,7 +43,10 @@ function UserManagement() {
   const fetchUsers = () => {
     fetch("http://localhost:3310/api/user_with_abonnement")
       .then((res) => res.json())
-      .then((data) => setUsers(data));
+      .then((data) => {
+        console.log("Données reçues:", data); // 👈 ajoute ça
+        setUsers(data);
+      });
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

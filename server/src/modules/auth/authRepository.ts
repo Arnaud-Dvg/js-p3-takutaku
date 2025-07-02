@@ -8,19 +8,24 @@ type Auth = {
   mail: string;
   password: string;
   abonnement_id: number;
+  is_admin: boolean;
+  is_actif: boolean;
 };
 
 class authRepository {
   async create(user: Omit<Auth, "id">) {
     // Création d'un nouvel utilisateur
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO Users (firstname, lastname, mail, password, abonnement_id) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO Users (firstname, lastname, mail, password, abonnement_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
         user.firstname,
         user.lastname,
         user.mail,
         user.password,
         user.abonnement_id,
+        // Ajout des champs is_admin et is_actif avec des valeurs par défaut
+        user.is_admin ?? false, // Par défaut, les nouveaux utilisateurs ne sont pas administrateurs
+        user.is_actif ?? true, // Par défaut, les nouveaux utilisateurs sont actifs
       ],
     );
     // Retourne l'ID du nouvel utilisateur inséré

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useUserContext } from "../../../context/UserContext";
+import { useAuthContext } from "../../../context/AuthContext";
 import BurgerProfil from "../UserMenu/BurgerProfil";
 import BurgerButton from "./BurgerButton";
 
@@ -8,7 +8,7 @@ function NavBar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const toggleMenu = () => setIsNavOpen((prev) => !prev);
-  const { connected } = useUserContext();
+  const { connected } = useAuthContext();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ function NavBar() {
   const isFavoritePage = location.pathname === "/favorite";
 
   const handleClick = () => {
-    const storedUser = localStorage.getItem("Utilisateur connecté");
+    const storedUser = localStorage.getItem("userConnected");
     if (!storedUser) {
       navigate("/login");
     } else {
