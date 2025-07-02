@@ -28,16 +28,4 @@ export const checkToken = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-export const isAdmin = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): void => {
-  if (req.body.userID) {
-    next();
-  } else {
-    res.status(401).send({ message: "Unauthorized" });
-  }
-}; // ici middleware pour restreindre l'accès aux utilisateur n'étant pas admin
-
-export default { checkToken, isAdmin };
+export default { checkToken };

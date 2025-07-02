@@ -36,8 +36,8 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
       lastname: user.lastname,
       mail: user.mail,
       abonnement_id: user.abonnement_id,
-      is_admin: false,
-      is_actif: true,
+      is_admin: Boolean(user.is_admin),
+      is_actif: Boolean(user.is_actif),
     },
   });
 };
@@ -54,6 +54,8 @@ const signUp = async (request: Request, response: Response): Promise<any> => {
     mail,
     password,
     abonnement_id,
+    is_admin: false, // Par défaut, les nouveaux utilisateurs ne sont pas administrateurs
+    is_actif: true, // Par défaut, les nouveaux utilisateurs sont actifs
   });
   // Si la creation echoue (retour falsy), on envoie une erreur 400 au client
   if (!userId) {

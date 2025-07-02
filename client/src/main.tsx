@@ -43,7 +43,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: <Admin />,
+        element: (
+          <PrivateRoute adminOnly>
+            <Admin />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/anime",
