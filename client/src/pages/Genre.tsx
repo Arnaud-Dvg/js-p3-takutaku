@@ -9,8 +9,8 @@ function Genre() {
   return (
     <>
       <ButtonsPageGenre setGenre={setGenre} setType={setType} />
-      {genre && genre !== "all" || type && type!== "all" ? (
-        <SearchCarousel genre={Number(genre)} type={String(type)} />
+      {(genre && genre !== "all") || (type && type !== "all") ? (
+        <SearchCarousel genre={genre} type={type} />
       ) : (
         <CarouselGenre />
       )}

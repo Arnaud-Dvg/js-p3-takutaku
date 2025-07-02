@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,7 +7,7 @@ import type { Anime } from "../../../context/AnimeContext";
 import { useAnimeContext } from "../../../context/AnimeContext";
 
 interface propsFilter {
-  genre: number;
+  genre: string;
   type: string;
 }
 
@@ -29,13 +29,10 @@ function SearchCarousel({ genre, type }: propsFilter) {
 
   useEffect(() => {
     fetchAnimeType(genre, type);
-  }, [genre, type]);
+  }, [genre, type, fetchAnimeType]);
 
   return (
     <div className="relative mt-10 md:mt-15 mx-10 xl:mx-50 lg:mx-20">
-      <h2 className="text-white text-xl mb-3">
-        {genre} - {type}
-      </h2>
       <div className="relative">
         {/* Bouton gauche */}
         <RxChevronLeft
@@ -71,26 +68,25 @@ function SearchCarousel({ genre, type }: propsFilter) {
           className="mySwiper"
         >
           {animeSearch.length > 0 ? (
-            animeSearch
-              .map((anime, index) => (
-                <SwiperSlide
-                  key={index}
-                  style={{ width: "300px", cursor: "pointer" }}
-                >
-                  <div>
-                    <Link to={"/anime"} onClick={() => handleClick(anime)}>
-                      <img
-                        src={anime.portrait}
-                        alt={anime.title}
-                        className="w-full rounded-sm"
-                      />
-                    </Link>
-                    <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
-                      {anime.title}
-                    </p>
-                  </div>
-                </SwiperSlide>
-              ))
+            animeSearch.map((anime) => (
+              <SwiperSlide
+                key={anime.id}
+                style={{ width: "300px", cursor: "pointer" }}
+              >
+                <div>
+                  <Link to={"/anime"} onClick={() => handleClick(anime)}>
+                    <img
+                      src={anime.portrait}
+                      alt={anime.title}
+                      className="w-full rounded-sm"
+                    />
+                  </Link>
+                  <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
+                    {anime.title}
+                  </p>
+                </div>
+              </SwiperSlide>
+            ))
           ) : (
             <p>Chargement...</p>
           )}

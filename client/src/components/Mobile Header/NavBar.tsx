@@ -26,11 +26,11 @@ function NavBar() {
           {!isSearchOpen && (
             <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
               <Link to={"/"}>
-              <img
-                src="/logo_taku.png"
-                className="h-12 object-cover"
-                alt="Logo Taku Taku"
-              />
+                <img
+                  src="/logo_taku.png"
+                  className="h-12 object-cover"
+                  alt="Logo Taku Taku"
+                />
               </Link>
             </div>
           )}

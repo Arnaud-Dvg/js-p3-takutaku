@@ -1,9 +1,9 @@
+import SelectPicture from "../components/account/ChooseProfilePicture";
 import LogOutButton from "../components/account/LogOutButton";
 import ProfilePicture from "../components/account/ProfilePicture";
 import ProfileSettings from "../components/account/ProfileSettings";
 import Abonnement from "../components/home/Abonnement";
-import SelectPicture from "../components/account/ChooseProfilePicture";
-        
+
 function Account() {
   return (
     <section className="mx-6 flex flex-col items-center justify-center">
@@ -14,7 +14,6 @@ function Account() {
       <ProfileSettings />
       <Abonnement />
     </section>
-
   );
 }
 

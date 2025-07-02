@@ -71,25 +71,47 @@ class AnimeRepository {
     // Return the array of items
     return rows as Anime[];
   }
-  async readAllType(genre, type) {
-    genre = genre !== "all";
-    type = type !== "all";
+
+  async readAllType(genre: string, type: string) {
     const where = [];
-    if (genre) {
-      where.push("a.genre_id = ?") 
+    const values = [];
+
+    console.log("📥 Paramètres reçus :", { genre, type });
+
+    if (genre === "all") {
+      where.push("a.genre_id IN (?, ?, ?)");
+      values.push(1, 2, 3);
+    } else {
+      console.log("🔢 Type genre :", typeof genre, genre);
+      where.push("a.genre_id = ?");
+      values.push(Number(genre));
     }
-    if (type) {
-      where.push("a.type_id = ?")
+
+    if (type !== "all") {
+      console.log("🔢 Type type :", typeof type, type);
+      where.push("t.id = ?");
+      values.push(Number(type));
     }
-    const whereSQl = where.length > 0 ? `where ${where.join(" and")}` : ""
-    // Exécute la requête SQL pour lire tout le tableau de la table "Anime"
-    const [rows] = await databaseClient.query<Rows>(
-      `select a.id, a.title, a.synopsis, a.genre_id, t.id, a.portrait, group_concat(t.id) as tid from Anime a inner join Anime_type at on a.id = at.anime_id inner join Type t on at.type_id = t.id ${whereSQl} group by a.id, a.title, a.synopsis, a.genre_id, a.portrait`,
-      [genre, type],
-    );
-    console.log(rows.length);
-    
-    // Return the array of items
+
+    const whereSQL = where.length > 0 ? `WHERE ${where.join(" AND ")}` : "";
+
+    console.log("📄 SQL WHERE :", whereSQL);
+    console.log("📦 Values SQL :", values);
+
+    const query = `
+    SELECT 
+      a.id, a.title, a.synopsis, a.genre_id, a.portrait, 
+      GROUP_CONCAT(t.id) as tid 
+    FROM Anime a 
+    INNER JOIN Anime_type at ON a.id = at.anime_id 
+    INNER JOIN Type t ON at.type_id = t.id 
+    ${whereSQL}
+    GROUP BY a.id, a.title, a.synopsis, a.genre_id, a.portrait
+  `;
+
+    const [rows] = await databaseClient.query<Rows>(query, values);
+    console.log("✅ Résultats trouvés :", rows.length);
+
     return rows as Anime[];
   }
 

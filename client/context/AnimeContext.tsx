@@ -20,6 +20,11 @@ export type Anime = {
 // Typage de ce que l'on veut que le contexte réalise
 type AnimeContextType = {
   anime: Anime[];
+  animeSearch: Anime[];
+  fetchAnimeType: (
+    genre: number | string,
+    type: number | string,
+  ) => Promise<void>;
   animeSelected: Anime | null;
   setAnimeSelected: (anime: Anime | null) => void;
   fetchAnime: () => Promise<void>;
@@ -54,14 +59,22 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [animeSelected]);
 
-  const fetchAnimeType = (genre, type): Promise<void> => {
+  interface FetchAnimeTypeParams {
+    genre: number | string;
+    type: number | string;
+  }
+
+  const fetchAnimeType = (
+    genre: FetchAnimeTypeParams["genre"],
+    type: FetchAnimeTypeParams["type"],
+  ): Promise<void> => {
     return fetch(`http://localhost:3310/api/animetype/${genre}/${type}`)
-      .then((res) => res.json())
-      .then((data) => {
+      .then((res: Response) => res.json())
+      .then((data: Anime[]) => {
         setAnimeSearch(data);
       });
   };
-  console.log(animeSearch)
+  console.log(animeSearch);
   const fetchAnime = (): Promise<void> => {
     return fetch("http://localhost:3310/api/anime")
       .then((res) => res.json())

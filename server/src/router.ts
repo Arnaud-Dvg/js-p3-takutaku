@@ -13,7 +13,7 @@ const router = express.Router();
 import animeAction from "../src/modules/anime/animeAction";
 
 router.get("/api/anime", animeAction.browse);
-router.get("/api/animetype/:genre/:type", animeAction.browseType)
+router.get("/api/animetype/:genre/:type", animeAction.browseType);
 router.get("/api/anime/:id", animeAction.read);
 router.post("/api/anime", animeAction.add);
 router.put("/api/anime/:id", animeAction.edit);

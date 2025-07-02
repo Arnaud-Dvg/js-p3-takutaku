@@ -31,7 +31,7 @@ const browse: RequestHandler = async (req, res, next) => {
 };
 const browseType: RequestHandler = async (req, res, next) => {
   try {
-    let {genre,type} = req.params;
+    const { genre, type } = req.params;
     // Fetch tout les animes
     const animes = await animeRepository.readAllType(genre, type);
     // Reponse avec les animes au format JSON
@@ -147,4 +147,12 @@ const browseWithGenre: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, add, destroy, edit, browseWithGenre, browseType };
+export default {
+  browse,
+  read,
+  add,
+  destroy,
+  edit,
+  browseWithGenre,
+  browseType,
+};
