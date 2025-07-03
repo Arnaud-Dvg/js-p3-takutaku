@@ -11,120 +11,84 @@ function FavoriteButton({
   onUnfavorite?: () => void;
 }) {
   const { user } = useUserContext();
-  const { connected } = useAuthContext(); // Récupère l'utilisateur connecté et son état de connexion, indispensable pour vérifier si l'utilisateur peut ajouter un favori
+  const { connected } = useAuthContext(); // Récupère l'utilisateur connecté et son état de connexion
   const [isFavorite, setIsFavorite] = useState(false); // État local pour savoir si l'anime est un favori
-  const [relationExists, setRelationExists] = useState(false); // État local pour savoir si la relation entre l'utilisateur et l'anime existe déjà
 
+  // Récupère l'état initial du favori lors du montage du composant
   useEffect(() => {
-    const fetchRelation = async () => {
-      if (!connected || !user) return;
-      // Vérifie si l'utilisateur est connecté et a un ID
+    const fetchFavorite = async () => {
+      if (!connected || !user) return; // S'assure que l'utilisateur est bien connecté
+
       try {
-        const response = await fetch(
+        const res = await fetch(
           `${import.meta.env.VITE_API_URL}/api/users_anime/${user.id}/${animeId}`,
           {
             headers: {
-              Authorization: `Bearer ${user.token}`, // Envoie le token de l'utilisateur pour authentification
+              Authorization: `Bearer ${user.token}`, // Authentification par token
               "Content-Type": "application/json",
             },
           },
         );
-        // Récupère la relation entre l'utilisateur et l'anime
-        if (response.status === 404) {
-          // Cas normal : aucune relation encore créée
-          setIsFavorite(false);
-          setRelationExists(false);
-          return;
-        }
 
-        if (!response.ok) {
-          // Cas d'erreur serveur ou autre
-          throw new Error(`Erreur serveur: ${response.status}`);
-        }
+        if (!res.ok) throw new Error(`Erreur: ${res.status}`);
 
-        const data = await response.json();
-        setIsFavorite(data.is_favorite);
-        setRelationExists(true);
-      } catch (error) {
-        console.error("Erreur lors de la récupération de la relation :", error);
+        const data = await res.json();
+        setIsFavorite(data.is_favorite); // Met à jour l'état local en fonction de la base
+      } catch (err) {
+        console.error(
+          "Erreur lors du chargement de la relation favorite :",
+          err,
+        );
+        setIsFavorite(false); // En cas d'erreur, on part du principe que ce n'est pas un favori
       }
     };
-    fetchRelation();
+
+    fetchFavorite();
   }, [connected, user, animeId]);
 
-  // Gere le click sur le bouton favori
-  const handleFavoriteToggle = async () => {
-    if (!connected || !user) return; // Securité l'utilisateur doit être connecté pour pouvoir ajouter un favori
+  // Gère le clic sur l'icône de favori
+  const handleToggle = async () => {
+    if (!connected || !user) return; // Vérifie que l'utilisateur est connecté
+
+    const newValue = !isFavorite; // Valeur à appliquer après le clic
+
     try {
-      if (!relationExists) {
-        // Crée la relation avec is_favorite = true
-        console.log("Sending:", {
-          users_id: user.id,
-          anime_id: animeId,
-          is_favorite: true,
-        });
-
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users_anime`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${user.token}`, // Envoie le token de l'utilisateur pour authentification
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              users_id: user.id,
-              anime_id: animeId,
-              is_favorite: true,
-            }), // Envoie dans le body les infos de la relation, c'est ce qui va crée la ligne dans la table users_anime
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users_anime/${user.id}/${animeId}`,
+        {
+          method: "PUT", // Le backend gère maintenant création ET modification via PUT (upsert)
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+          body: JSON.stringify({ is_favorite: newValue }), // Nouvelle valeur de is_favorite
+        },
+      );
 
-        if (!response.ok) throw new Error("Erreur création favori");
+      if (!res.ok) throw new Error("Erreur lors de la mise à jour du favori");
 
-        setIsFavorite(true);
-        setRelationExists(true); // MAJ localement pour que l'icone change immédiatement
-      } else {
-        // Modifie is_favorite
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users_anime/${user.id}/${animeId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              is_favorite: !isFavorite,
-            }),
-          },
-        ); // Tu modifies la ligne avec le nouvel etat de is_favorite
+      setIsFavorite(newValue); // Met à jour immédiatement l'UI
 
-        if (!response.ok) throw new Error("Erreur modification favori");
-
-        setIsFavorite((prev) => {
-          const updated = !prev;
-          if (!updated && onUnfavorite) {
-            onUnfavorite(); // Si l'utilisateur retire le favori, appel callback
-          }
-          return updated;
-        });
+      if (!newValue && onUnfavorite) {
+        // Si on a retiré le favori, on déclenche un callback vers le parent
+        // setTimeout évite une erreur de mise à jour pendant le render
+        setTimeout(() => onUnfavorite(), 0);
       }
-    } catch (error) {
-      console.error("Erreur lors du toggle favori :", error);
+    } catch (err) {
+      console.error("Erreur lors du toggle du favori :", err);
     }
   };
 
   return (
     <button
       type="button"
-      onClick={handleFavoriteToggle}
+      onClick={handleToggle}
       className="bg-black bg-opacity-60 p-1 rounded-full text-secondary hover:text-secondary transition"
       title="Ajouter aux favoris"
     >
       {isFavorite ? (
-        <FaHeart className="text-base" />
+        <FaHeart className="text-base text-secondary" />
       ) : (
-        <FaRegHeart className="text-base" />
+        <FaRegHeart className="text-base text-secondary" />
       )}
     </button>
   );
