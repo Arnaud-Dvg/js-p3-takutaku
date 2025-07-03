@@ -50,7 +50,6 @@ const read: RequestHandler = async (req, res, next) => {
 
 const edit: RequestHandler = async (req, res, next) => {
   try {
-    console.log(req.body);
     //Mettre à jour une information spécifique en fonction de l'ID fourni
     const user = {
       id: Number(req.params.id),

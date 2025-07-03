@@ -42,7 +42,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await response.json();
-      console.log(data);
       // Crée un utilisateur minimal pour le context
       const formattedUser: User = {
         id: data.user.id,
