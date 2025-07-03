@@ -94,9 +94,11 @@ function Favorite() {
                 <FavoriteButton
                   animeId={anime.anime_id}
                   onUnfavorite={() => {
-                    setFavorites((prev) =>
-                      prev.filter((item) => item.anime_id !== anime.anime_id),
-                    );
+                    setTimeout(() => {
+                      setFavorites((prev) =>
+                        prev.filter((item) => item.anime_id !== anime.anime_id),
+                      );
+                    }, 0);
                   }}
                 />
               </div>

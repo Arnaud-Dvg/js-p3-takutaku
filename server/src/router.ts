@@ -53,7 +53,7 @@ router.put("/api/episode/:id", episodeAction.edit);
 router.delete("/api/episode/:id", episodeAction.destroy);
 
 // Routes for the abonnement module
-import abonnementAction from "./modules/Abonnement/abonnementAction";
+import abonnementAction from "./modules/abonnement/abonnementAction";
 router.get("/api/abonnement", abonnementAction.browse);
 router.get("/api/abonnement/:id", abonnementAction.read);
 router.post("/api/abonnement", abonnementAction.add);

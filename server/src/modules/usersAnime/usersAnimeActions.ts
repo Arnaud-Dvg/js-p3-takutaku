@@ -26,8 +26,11 @@ const read: RequestHandler = async (req, res, next) => {
     const userId = Number(req.params.userId);
     const animeId = Number(req.params.animeId);
     const favori = await usersAnimeRepository.read(userId, animeId);
-    if (!favori) res.sendStatus(404);
-    else res.json(favori);
+    if (!favori) {
+      res.status(200).json({ is_favorite: false });
+    } else {
+      res.status(200).json(favori);
+    }
   } catch (error) {
     next(error);
   }
@@ -40,14 +43,33 @@ const edit: RequestHandler = async (req, res, next) => {
     const anime_id = Number(req.params.animeId);
     const { is_favorite } = req.body;
 
+    // On vérifie si la relation existe déjà
+    const existing = await usersAnimeRepository.read(users_id, anime_id);
+
+    if (!existing) {
+      // Elle n'existe pas → on la crée (upsert logique)
+      await usersAnimeRepository.create({
+        users_id,
+        anime_id,
+        is_favorite,
+      });
+
+      res.status(201).json({ created: true });
+      return;
+    }
+
+    // Sinon, on la met à jour
     const affectedRows = await usersAnimeRepository.update({
       users_id,
       anime_id,
       is_favorite,
     });
 
-    if (!affectedRows) res.sendStatus(404);
-    else res.sendStatus(204);
+    if (!affectedRows) {
+      res.sendStatus(500); // en théorie impossible ici
+      return;
+    }
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }

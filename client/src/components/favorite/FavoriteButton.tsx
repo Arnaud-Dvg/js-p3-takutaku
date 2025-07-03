@@ -22,16 +22,29 @@ function FavoriteButton({
       try {
         const response = await fetch(
           `${import.meta.env.VITE_API_URL}/api/users_anime/${user.id}/${animeId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`, // Envoie le token de l'utilisateur pour authentification
+              "Content-Type": "application/json",
+            },
+          },
         );
         // Récupère la relation entre l'utilisateur et l'anime
-        if (response.ok) {
-          const data = await response.json();
-          setIsFavorite(data.is_favorite);
-          setRelationExists(true); // Si la ligne existe, tu stockes l'état is_favorite et tu notes que la relation existe
-        } else {
+        if (response.status === 404) {
+          // Cas normal : aucune relation encore créée
           setIsFavorite(false);
-          setRelationExists(false); // Aucune relation trouvée, on va donc devoir faire un POST pour créer la relation
+          setRelationExists(false);
+          return;
         }
+
+        if (!response.ok) {
+          // Cas d'erreur serveur ou autre
+          throw new Error(`Erreur serveur: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setIsFavorite(data.is_favorite);
+        setRelationExists(true);
       } catch (error) {
         console.error("Erreur lors de la récupération de la relation :", error);
       }
