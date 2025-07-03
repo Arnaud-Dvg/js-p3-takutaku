@@ -22,7 +22,7 @@ function History() {
       try {
         if (!user) return;
         const res = await fetch(
-          `http://localhost:3310/api/user/${user.id}/history`,
+          `${import.meta.env.VITE_API_URL}/api/user/${user.id}/history`,
         );
         const data = await res.json();
         setViewedAnime(data);

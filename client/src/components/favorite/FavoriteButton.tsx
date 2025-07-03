@@ -15,44 +15,41 @@ function FavoriteButton({
   const [isFavorite, setIsFavorite] = useState(false); // État local pour savoir si l'anime est un favori
   const [relationExists, setRelationExists] = useState(false); // État local pour savoir si la relation entre l'utilisateur et l'anime existe déjà
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const fetchRelation = async () => {
-      if (!connected || !user) return;
-      // Vérifie si l'utilisateur est connecté et a un ID
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users_anime/${user.id}/${animeId}`,
+        if (!user) return;
+        // Vérifie si l'utilisateur est connecté et a un ID
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/favorite_anime/${user.id}`,
         );
-        // Récupère la relation entre l'utilisateur et l'anime
-        if (response.ok) {
-          const data = await response.json();
-          setIsFavorite(data.is_favorite);
-          setRelationExists(true); // Si la ligne existe, tu stockes l'état is_favorite et tu notes que la relation existe
-        } else {
-          setIsFavorite(false);
-          setRelationExists(false); // Aucune relation trouvée, on va donc devoir faire un POST pour créer la relation
+        const data = await res.json();
+
+        if (res.ok && Array.isArray(data)) {
+          const found = data.find((fav) => fav.anime_id === animeId);
+          if (found) {
+            setIsFavorite(true);
+            setRelationExists(true);
+          } else {
+            setIsFavorite(false);
+            setRelationExists(false);
+          }
         }
       } catch (error) {
         console.error("Erreur lors de la récupération de la relation :", error);
       }
     };
     fetchRelation();
-  }, [connected, user, animeId]);
+  }, [connected, user]);
 
   // Gere le click sur le bouton favori
   const handleFavoriteToggle = async () => {
     if (!connected || !user) return; // Securité l'utilisateur doit être connecté pour pouvoir ajouter un favori
     try {
       if (!relationExists) {
-        // Crée la relation avec is_favorite = true
-        console.log("Sending:", {
-          users_id: user.id,
-          anime_id: animeId,
-          is_favorite: true,
-        });
-
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users_anime`,
+          `${import.meta.env.VITE_API_URL}/api/favorite_anime`,
           {
             method: "POST",
             headers: {
@@ -62,8 +59,7 @@ function FavoriteButton({
             body: JSON.stringify({
               users_id: user.id,
               anime_id: animeId,
-              is_favorite: true,
-            }), // Envoie dans le body les infos de la relation, c'est ce qui va crée la ligne dans la table users_anime
+            }), // Envoie dans le body les infos de la relation, c'est ce qui va crée la ligne dans la table _anime
           },
         );
 
@@ -72,29 +68,21 @@ function FavoriteButton({
         setIsFavorite(true);
         setRelationExists(true); // MAJ localement pour que l'icone change immédiatement
       } else {
-        // Modifie is_favorite
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users_anime/${user.id}/${animeId}`,
+          `${import.meta.env.VITE_API_URL}/api/favorite_anime/${user.id}/${animeId}`,
           {
-            method: "PUT",
+            method: "DELETE",
             headers: {
-              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.token}`, // Envoie le token de l'utilisateur pour authentification
             },
-            body: JSON.stringify({
-              is_favorite: !isFavorite,
-            }),
           },
-        ); // Tu modifies la ligne avec le nouvel etat de is_favorite
+        );
 
-        if (!response.ok) throw new Error("Erreur modification favori");
+        if (!response.ok) throw new Error("Erreur suppression favori");
 
-        setIsFavorite((prev) => {
-          const updated = !prev;
-          if (!updated && onUnfavorite) {
-            onUnfavorite(); // Si l'utilisateur retire le favori, appel callback
-          }
-          return updated;
-        });
+        setIsFavorite(false);
+        setRelationExists(false); // MAJ localement pour que l'icone change immédiatement
+        if (onUnfavorite) onUnfavorite(); // Notifie le parent si un callback est fourni
       }
     } catch (error) {
       console.error("Erreur lors du toggle favori :", error);

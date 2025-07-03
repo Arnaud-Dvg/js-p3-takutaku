@@ -27,7 +27,7 @@ function AnimeManagement() {
 
   // Fetch qui récupère tous les animés avec le genre
   const fetchAnimes = () => {
-    fetch("http://localhost:3310/api/anime_with_genre")
+    fetch(`${import.meta.env.VITE_API_URL}/api/anime_with_genre`)
       .then((res) => res.json())
       .then((data) => setAnimes(data));
   };
