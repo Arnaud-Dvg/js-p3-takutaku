@@ -19,6 +19,9 @@ import Login from "./pages/Login";
 import Page404 from "./pages/Page404";
 import Watch from "./pages/Watch";
 
+import PrivateRoute from "./components/ProtectRoute/PrivateRoute";
+import PrivateRouteAdmin from "./components/ProtectRoute/PrivateRouteAdmin";
+
 const router = createBrowserRouter([
   {
     element: <App />,
@@ -34,11 +37,19 @@ const router = createBrowserRouter([
 
       {
         path: "/account",
-        element: <Account />,
+        element: (
+          <PrivateRoute>
+            <Account />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/admin",
-        element: <Admin />,
+        element: (
+          <PrivateRouteAdmin>
+            <Admin />
+          </PrivateRouteAdmin>
+        ),
       },
       {
         path: "/anime",
@@ -54,7 +65,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/favorite",
-        element: <Favorite />,
+        element: (
+          <PrivateRoute>
+            <Favorite />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/genre",
@@ -62,7 +77,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/history",
-        element: <History />,
+        element: (
+          <PrivateRoute>
+            <History />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/legal-notices",
@@ -70,7 +89,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/watch",
-        element: <Watch />,
+        element: (
+          <PrivateRoute>
+            <Watch />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",

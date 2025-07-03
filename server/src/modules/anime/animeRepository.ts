@@ -76,27 +76,20 @@ class AnimeRepository {
     const where = [];
     const values = [];
 
-    console.log("📥 Paramètres reçus :", { genre, type });
-
     if (genre === "all") {
       where.push("a.genre_id IN (?, ?, ?)");
       values.push(1, 2, 3);
     } else {
-      console.log("🔢 Type genre :", typeof genre, genre);
       where.push("a.genre_id = ?");
       values.push(Number(genre));
     }
 
     if (type !== "all") {
-      console.log("🔢 Type type :", typeof type, type);
       where.push("t.id = ?");
       values.push(Number(type));
     }
 
     const whereSQL = where.length > 0 ? `WHERE ${where.join(" AND ")}` : "";
-
-    console.log("📄 SQL WHERE :", whereSQL);
-    console.log("📦 Values SQL :", values);
 
     const query = `
     SELECT 
@@ -110,7 +103,6 @@ class AnimeRepository {
   `;
 
     const [rows] = await databaseClient.query<Rows>(query, values);
-    console.log("✅ Résultats trouvés :", rows.length);
 
     return rows as Anime[];
   }

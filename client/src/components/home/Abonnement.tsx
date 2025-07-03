@@ -1,9 +1,12 @@
 import { useState } from "react";
+import type { User } from "../../../context/UserContext";
+import { useUserContext } from "../../../context/UserContext";
 import CreateAccount from "./CreateAccount";
 
 function Abonnement() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
+  const { user } = useUserContext() as { user: User | null };
 
   const handleSubscribeClick = (plan: string) => {
     setSelectedPlan(plan); // Met à jour l'offre choisie
@@ -46,7 +49,7 @@ function Abonnement() {
                 <button
                   type="button"
                   onClick={() => handleSubscribeClick("Découverte")}
-                  className="mt-4  bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
+                  className={`mt-4  bg-secondary text-black py-1 px-7 lg:px-15 rounded-full ${user?.abonnement_id === 1 ? "hidden" : ""}`}
                 >
                   S'abonner
                 </button>
@@ -95,7 +98,7 @@ function Abonnement() {
                 <button
                   type="button"
                   onClick={() => handleSubscribeClick("Premium")}
-                  className="mt-4 bg-secondary text-black py-1 px-7 lg:px-15 rounded-full"
+                  className={`mt-4 bg-secondary text-black py-1 px-7 lg:px-15 rounded-full ${user?.abonnement_id === 2 ? "hidden" : ""}`}
                 >
                   S'abonner
                 </button>
