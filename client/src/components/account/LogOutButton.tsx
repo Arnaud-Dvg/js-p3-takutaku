@@ -7,7 +7,7 @@ function LogOutButton() {
     <button
       type="button"
       onClick={handleLogOut}
-      className="mt-4 bg-secondary font-semibold text-primary py-1 px-7 lg:px-15 rounded-full cursor-pointer transition-all duration-200 hover:bg-secondary/80 active:bg-secondary/90"
+      className="mt-4 bg-secondary font-semibold text-primary py-1 px-7 lg:px-15 rounded-full cursor-pointer"
     >
       SE DECONNECTER
     </button>
