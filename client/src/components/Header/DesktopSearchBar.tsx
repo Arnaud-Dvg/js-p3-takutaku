@@ -20,7 +20,7 @@ function DesktopSearchBar() {
   };
 
   return (
-    <div className="flex items-center min-w-[150px] md:w-100 w-62 md:h-full h-6 rounded-full bg-white">
+    <div className="flex items-center min-w-[200px] md:w-90 w-62 h-10 md:h-full rounded-full bg-white">
       <input
         className=" w-full px-4 text-gray-800 outline-none focus:outline-none "
         type="search"

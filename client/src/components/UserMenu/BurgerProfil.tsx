@@ -41,7 +41,7 @@ function BurgerProfil({
       {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 text-2xl text-tertiary"
+        className="absolute top-4 right-4 text-2xl text-tertiary cursor-pointer"
       >
         <span className="absolute  h-0.5 w-8 bg-tertiary rotate-45 top-4 right-0" />
         <span className="absolute  h-0.5 w-8 bg-tertiary -rotate-45 top-4 right-0" />

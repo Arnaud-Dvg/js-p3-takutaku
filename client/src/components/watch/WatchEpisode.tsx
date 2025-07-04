@@ -87,7 +87,7 @@ function WatchEpisode({ episodeSelected }: WatchEpisodeProps) {
           <button
             type="button"
             onClick={handleWatchAnime}
-            className="text-secondary"
+            className="text-secondary cursor-pointer"
           >
             <BsPlayCircleFill className="block absolute inset-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl lg:text-8xl bg-tertiary/70 rounded-full" />
           </button>

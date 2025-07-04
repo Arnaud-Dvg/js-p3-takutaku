@@ -44,7 +44,7 @@ function ButtonGenre({ setGenre }: setGenreProps) {
       <button
         type="button"
         onClick={toggleDropdown}
-        className="group transition-all duration-200 w-[150px] py-2 flex flex-row items-center justify-center bg-secondary gap-2 rounded-lg font-semibold text-sm"
+        className="group transition-all duration-200 w-[150px] py-2 flex flex-row items-center justify-center bg-secondary gap-2 rounded-lg font-semibold text-sm cursor-pointer"
       >
         <span>
           {filteredGenre === "all"
@@ -52,7 +52,7 @@ function ButtonGenre({ setGenre }: setGenreProps) {
             : genres.find((g) => g.id === filteredGenre)?.name.toUpperCase()}
         </span>
         <svg
-          className={`transition-transform duration-300 cursor-pointer ${
+          className={`transition-transform duration-300 ${
             isOpen ? "rotate-180" : "rotate-90"
           }`}
           xmlns="http://www.w3.org/2000/svg"
