@@ -91,7 +91,7 @@ function UserManagement() {
         {/* Bouton voir/masquer les users */}
         <button
           type="button"
-          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full flex items-center gap-1"
+          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full flex items-center gap-1 cursor-pointer"
           onClick={() => setListe(!liste)}
         >
           {liste ? (
@@ -133,7 +133,11 @@ function UserManagement() {
                 <div>{user.is_admin}</div>
                 <div>
                   {/* Bouton "change" relié à la fonction modification */}
-                  <button type="button" onClick={() => setEditUser(user)}>
+                  <button
+                    type="button"
+                    className="cursor-pointer"
+                    onClick={() => setEditUser(user)}
+                  >
                     <img
                       src="./public/change.png"
                       alt="modifier"
@@ -145,6 +149,7 @@ function UserManagement() {
                   {/* Bouton poubelle relié à la fonction delete */}
                   <button
                     type="button"
+                    className="cursor-pointer"
                     onClick={() => {
                       if (user.id !== undefined) {
                         handleDeleteUser(user.id);
@@ -166,7 +171,7 @@ function UserManagement() {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full"
+              className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full cursor-pointer"
             >
               + Nouvel utilisateur
             </button>
@@ -299,7 +304,7 @@ function UserManagement() {
                 <img src="/favicon.ico" alt="Mascotte" className="h-15" />
                 <button
                   type="submit"
-                  className="text-secondary font-bold text-lg hover:text-secondary pb-10"
+                  className="text-secondary font-bold text-lg hover:text-secondary pb-10 cursor-pointer"
                 >
                   Modifier
                 </button>
@@ -310,7 +315,7 @@ function UserManagement() {
             <button
               type="button"
               onClick={() => setEditUser(null)}
-              className="absolute top-2 right-3 text-white text-xl font-bold"
+              className="absolute top-2 right-3 text-white text-xl font-bold cursor-pointer"
             >
               &times;
             </button>
@@ -454,7 +459,7 @@ function UserManagement() {
                   });
                   setOpen(false);
                 }}
-                className="text-secondary font-bold text-lg hover:text-secondary pb-10 "
+                className="text-secondary font-bold text-lg hover:text-secondary pb-10 cursor-pointer"
               >
                 Ajouter
               </button>
@@ -464,7 +469,7 @@ function UserManagement() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="absolute top-2 right-3 text-white text-xl font-bold"
+              className="absolute top-2 right-3 text-white text-xl font-bold cursor-pointer"
             >
               &times;
             </button>

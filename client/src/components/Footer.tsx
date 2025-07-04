@@ -148,7 +148,7 @@ function Footer() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="text-secondary font-semibold text-lg hover:text-secondary pb-10 "
+                  className="text-secondary font-semibold text-lg hover:text-secondary pb-10 cursor-pointer"
                 >
                   {loading ? "Envoi en cours..." : "Envoyer"}
                 </button>
@@ -159,7 +159,7 @@ function Footer() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="absolute top-2 right-3 text-white text-xl font-bold"
+              className="absolute top-2 right-3 text-white text-xl font-bold cursor-pointer"
             >
               &times;
             </button>

@@ -20,7 +20,7 @@ function Abonnement() {
 
   return (
     <>
-      <section className="grid grid-cols-2 gap-3 md:gap-30 lg:gap-40 xl:gap-60 xxl:gap-80 max-w-4xl mx-auto md:mx-14 lg:mx-auto text-tertiary">
+      <section className="flex flex-col md:grid md:grid-cols-2 gap-10 md:gap-30 lg:gap-40 xl:gap-60 xxl:gap-80 max-w-4xl mx-auto md:mx-14 lg:mx-auto text-tertiary">
         {/* Offre Découverte */}
         <section className="border-5 border-secondary p-4 flex flex-col justify-between shadow-lg">
           <section>
@@ -49,7 +49,7 @@ function Abonnement() {
                 <button
                   type="button"
                   onClick={() => handleSubscribeClick("Découverte")}
-                  className={`mt-4  bg-secondary text-black py-1 px-7 lg:px-15 rounded-full ${user?.abonnement_id === 1 ? "hidden" : ""}`}
+                  className={`mt-4  bg-secondary text-black py-1 px-7 lg:px-15 rounded-full cursor-pointer ${user?.abonnement_id === 1 ? "hidden" : ""}`}
                 >
                   S'abonner
                 </button>
@@ -98,7 +98,7 @@ function Abonnement() {
                 <button
                   type="button"
                   onClick={() => handleSubscribeClick("Premium")}
-                  className={`mt-4 bg-secondary text-black py-1 px-7 lg:px-15 rounded-full ${user?.abonnement_id === 2 ? "hidden" : ""}`}
+                  className={`mt-4 cursor-pointe bg-secondary text-black py-1 px-7 lg:px-15 rounded-full cursor-pointer ${user?.abonnement_id === 2 ? "hidden" : ""}`}
                 >
                   S'abonner
                 </button>

@@ -84,7 +84,7 @@ function Header() {
           </ul>
         </nav>
         <div className="flex justify-end flex-1">
-          <button type="button" className="w-9 h-9 p-1 z-10">
+          <button type="button" className="w-9 h-9 p-1 z-10 cursor-pointer">
             <img
               src={!connected ? "/avatar.svg" : "/profilpicture.png"}
               alt="Avatar Icon"

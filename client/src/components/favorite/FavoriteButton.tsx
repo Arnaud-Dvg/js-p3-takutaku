@@ -93,7 +93,7 @@ function FavoriteButton({
     <button
       type="button"
       onClick={handleFavoriteToggle}
-      className="bg-black bg-opacity-60 p-1 rounded-full text-secondary hover:text-secondary transition"
+      className="bg-black bg-opacity-60 p-1 rounded-full text-secondary hover:text-secondary transition cursor-pointer"
       title="Ajouter aux favoris"
     >
       {isFavorite ? (

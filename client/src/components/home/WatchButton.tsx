@@ -14,7 +14,7 @@ function WatchButton({ anime }: Props) {
   };
 
   return (
-    <div className="mt-2 lg:mt-0 flex justify-center lg:justify-end">
+    <div className="mt-2 lg:mt-0 flex justify-center">
       <Link to="/watch">
         <button
           type="button"

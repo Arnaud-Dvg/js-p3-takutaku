@@ -50,7 +50,7 @@ function AnimeManagement() {
         {/* Bouton voir/masquer les animés */}
         <button
           type="button"
-          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full flex items-center gap-1"
+          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full flex items-center gap-1 cursor-pointer"
           onClick={() => setListe(!liste)}
         >
           {liste ? (
@@ -89,7 +89,7 @@ function AnimeManagement() {
                   <img
                     src="./public/change.png"
                     alt="modifier"
-                    className="w-4"
+                    className="w-4 cursor-pointer"
                   />
                 </button>
               </div>
@@ -198,7 +198,7 @@ function AnimeManagement() {
                 <img src="/favicon.ico" alt="Mascotte" className="h-15" />
                 <button
                   type="submit"
-                  className="text-secondary font-bold text-lg hover:text-secondary pb-10"
+                  className="text-secondary font-bold text-lg hover:text-secondary pb-10 cursor-pointer"
                 >
                   Modifier
                 </button>
@@ -209,7 +209,7 @@ function AnimeManagement() {
             <button
               type="button"
               onClick={() => setEditAnime(null)}
-              className="absolute top-2 right-3 text-white text-xl font-bold"
+              className="absolute top-2 right-3 text-white text-xl font-bold cursor-pointer"
             >
               &times;
             </button>

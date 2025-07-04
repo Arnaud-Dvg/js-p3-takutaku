@@ -76,7 +76,7 @@ function EpisodeList({
               onClick={() => {
                 onEpisodeSelect(episode);
               }}
-              className={`flex flex-col items-start justify-start text-left
+              className={`flex flex-col items-start justify-start text-left cursor-pointer
     ${episodeSelected?.id === episode.id ? "font-semibold text-secondary" : "hover:font-semibold text-tertiary"}
   `}
             >

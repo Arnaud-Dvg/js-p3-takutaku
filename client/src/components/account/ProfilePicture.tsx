@@ -8,7 +8,7 @@ function ProfilePicture() {
       />
       <button
         type="button"
-        className="border-1 border-tertiary rounded-full text-secondary my-2 p-2"
+        className="border-1 border-tertiary rounded-full text-secondary my-2 p-2 cursor-pointer"
       >
         Modifier ma photo de profil
       </button>
