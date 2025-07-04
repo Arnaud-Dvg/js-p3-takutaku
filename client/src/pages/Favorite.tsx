@@ -27,7 +27,7 @@ function Favorite() {
       // Il exécute que si l'utilisateur est connecté et a un ID
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/users_anime/${user.id}`,
+          `${import.meta.env.VITE_API_URL}/api/favorite_anime/${user.id}`,
         );
 
         if (!response.ok) {
@@ -35,14 +35,14 @@ function Favorite() {
         }
 
         const data = await response.json();
-
-        // On filtre uniquement les favoris marqués (is_favorite: true)
-
-        const filtered = data.filter(
-          (item: { is_favorite: boolean }) => item.is_favorite,
-        ); // Filtre les favoris pour ne garder que ceux marqués comme favoris
-
-        setFavorites(filtered); // Met à jour l'état avec les favoris filtrés
+        if (Array.isArray(data)) {
+          setFavorites(data); // Met à jour l'état avec les favoris récupérés
+        } else {
+          console.error(
+            "Les données des favoris ne sont pas un tableau :",
+            data,
+          );
+        }
       } catch (error) {
         console.error("Erreur fetch favoris :", error);
       } finally {

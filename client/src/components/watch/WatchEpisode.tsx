@@ -51,14 +51,17 @@ function WatchEpisode({ episodeSelected }: WatchEpisodeProps) {
     }
 
     try {
-      const response = await fetch("http://localhost:3310/api/add_to_history", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: user.id,
-          animeId: animeSelected.id,
-        }),
-      }); // Ici j'envoie une requête POST qui ajoute une ligne dans la table de jointure Users_Anime qui contient dans le body de la requête l'ID de l'utilisateur connecté ainsi que l'ID de l'animé qu'il souhaite regarder
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/add_to_history`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: user.id,
+            animeId: animeSelected.id,
+          }),
+        },
+      ); // Ici j'envoie une requête POST qui ajoute une ligne dans la table de jointure Users_Anime qui contient dans le body de la requête l'ID de l'utilisateur connecté ainsi que l'ID de l'animé qu'il souhaite regarder
 
       if (!response.ok) {
         throw new Error("Échec de l'ajout à l'historique");

@@ -41,7 +41,7 @@ function UserManagement() {
 
   // Fetch qui récupère tous les utilisateurs avec leurs abonnements
   const fetchUsers = () => {
-    fetch("http://localhost:3310/api/user_with_abonnement")
+    fetch(`${import.meta.env.VITE_API_URL}/api/user_with_abonnement`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Données reçues:", data); // 👈 ajoute ça

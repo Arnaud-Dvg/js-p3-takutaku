@@ -79,21 +79,17 @@ import authAction from "./modules/auth/authAction";
 router.post("/api/auth/signin", authAction.signIn);
 router.post("/api/auth/signup", authAction.signUp);
 
-// Routes for the users_anime module / favorites
-import usersAnimeAction from "./modules/usersAnime/usersAnimeActions";
-router.get("/api/users_anime/:userId([0-9]+)", usersAnimeAction.browse);
+// Routes for the favorite_anime / favorites
+import favoriteAnimeAction from "./modules/favoriteAnime/favoriteAnimeAction";
+router.get("/api/favorite_anime/:users_id([0-9]+)", favoriteAnimeAction.browse);
 router.get(
-  "/api/users_anime/:userId([0-9]+)/:animeId([0-9]+)",
-  usersAnimeAction.read,
+  "/api/favorite_anime/:users_id([0-9]+)/:anime_id([0-9]+)",
+  favoriteAnimeAction.read,
 );
-router.post("/api/users_anime", usersAnimeAction.add);
-router.put(
-  "/api/users_anime/:userId([0-9]+)/:animeId([0-9]+)",
-  usersAnimeAction.edit,
-);
+router.post("/api/favorite_anime", favoriteAnimeAction.add);
 router.delete(
-  "/api/users_anime/:userId([0-9]+)/:animeId([0-9]+)",
-  usersAnimeAction.destroy,
+  "/api/favorite_anime/:users_id([0-9]+)/:anime_id([0-9]+)",
+  favoriteAnimeAction.destroy,
 );
 
 export default router;

@@ -17,11 +17,14 @@ function ProfileSettings() {
   const handleChangeUser = async (id: number, user: User) => {
     try {
       await updateUser(id, user);
-      const res = await fetch(`http://localhost:3310/api/user/${id}`, {
-        headers: {
-          Authorization: localStorage.getItem("token") || "",
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/user/${id}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token") || "",
+          },
         },
-      });
+      );
       const data = await res.json();
       setEditUser(data);
       setEditMode(false);
