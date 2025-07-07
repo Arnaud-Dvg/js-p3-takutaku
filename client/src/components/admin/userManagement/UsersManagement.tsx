@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoChevronDown } from "react-icons/io5";
 import { IoChevronUp } from "react-icons/io5";
+import { toast } from "react-toastify";
 import { useUserContext } from "../../../../context/UserContext";
 
 type User = {
@@ -44,7 +45,6 @@ function UserManagement() {
     fetch(`${import.meta.env.VITE_API_URL}/api/user_with_abonnement`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Données reçues:", data); // 👈 ajoute ça
         setUsers(data);
       });
   };
@@ -59,10 +59,11 @@ function UserManagement() {
     deleteUser(id)
       .then(() => {
         fetchUsers();
+        toast.success("Suppression de l'utilisateur réussie");
       })
       .catch((err) => {
-        console.error(err);
-        alert("Suppression echoué");
+        console.error("Erreur lors de la suppression de l'utilisateur :", err);
+        toast.error("Suppression de l'utilisateur échouée");
       });
   };
 
@@ -71,10 +72,11 @@ function UserManagement() {
     createUser(user)
       .then(() => {
         fetchUsers();
+        toast.success("Création de l'utilisateur réussie");
       })
       .catch((err) => {
-        console.error("Erreur lors de la création :", err);
-        alert("Création échouée");
+        console.error("Erreur lors de la création de l'utilisateur :", err);
+        toast.error("Création de l'utilisateur échouée");
       });
   };
 
@@ -193,7 +195,7 @@ function UserManagement() {
             </section>
 
             {/* Titre */}
-            <h2 className="text-2xl font-semibold text-center mb-6">
+            <h2 className="text-2xl text-center mb-6">
               Modifier un utilisateur
             </h2>
             {/* Formulaire */}
@@ -205,9 +207,11 @@ function UserManagement() {
                     .then(() => {
                       fetchUsers();
                       setEditUser(null);
+                      toast.success("Modification de l'utilisateur réussie");
                     })
                     .catch((err) => {
                       console.error("Erreur lors de la modif :", err);
+                      toast.error("Modification de l'utilisateur échouée");
                     });
                 }
               }}

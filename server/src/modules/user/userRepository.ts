@@ -31,7 +31,6 @@ class userRepository {
         ],
       );
       // Retourne l'ID du nouveau user inséré
-      console.log("Utilisateur inséré avec ID :", result.insertId);
       return result.insertId;
     } catch (error) {
       console.error("Erreur d'insertion dans la base :", error);
@@ -123,7 +122,6 @@ class userRepository {
       );
       //Si on trouve déjà l'animé alors on ne l'ajoute pas à l'historique
       if ((existing as Rows).length > 0) {
-        console.log("Animé déjà dans l'historique, pas de duplication");
         return { message: "Déjà présent" };
       }
 

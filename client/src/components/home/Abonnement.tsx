@@ -20,14 +20,14 @@ function Abonnement() {
 
   return (
     <>
-      <section className="flex flex-col md:grid md:grid-cols-2 gap-10 md:gap-30 lg:gap-40 xl:gap-60 xxl:gap-80 max-w-4xl mx-auto md:mx-14 lg:mx-auto text-tertiary">
+      <section className="flex flex-col md:grid md:grid-cols-2 gap-10 md:gap-20 lg:gap-40 xl:gap-60 xxl:gap-80 max-w-4xl mx-4 md:mx-14 lg:mx-auto text-tertiary">
         {/* Offre Découverte */}
         <section className="border-5 border-secondary p-4 flex flex-col justify-between shadow-lg">
           <section>
-            <h3 className="text-lg lg:text-xl mb-4 mt-2 md:mt-4 md:mb-10 lg:mb-16 text-center">
+            <h3 className="text-lg lg:text-xl mb-8 mt-2 md:mt-4 md:mb-10 lg:mb-16 text-center">
               Offre Découverte
             </h3>
-            <section className="md:ml-4">
+            <section className="ml-4">
               <p className="font-semibold lg:ml-5 lg:mb-4 md:mb-6 mb-8">
                 2 mois offert <br />
                 puis <span className="text-secondary">10.99€</span> par mois
@@ -42,10 +42,10 @@ function Abonnement() {
               </ul>
             </section>
             <section>
-              <p className="mt-21 lg:mt-16 text-sm font-semibold text-tertiary text-center">
+              <p className="mt-16 lg:mt-14 text-sm font-semibold text-tertiary text-center">
                 Parfait pour découvrir nos animés sans engagement !
               </p>
-              <section className="flex justify-center mt-6 ">
+              <section className="flex justify-center mt-6 mb-3 ">
                 <button
                   type="button"
                   onClick={() => handleSubscribeClick("Découverte")}
@@ -61,16 +61,16 @@ function Abonnement() {
         {/* Offre Premium */}
         <section className="border-5 border-secondary p-4 flex flex-col justify-between shadow-lg">
           <section>
-            <h3 className="text-lg lg:text-xl mb-4 mt-2 md:mt-4 md:mb-5 lg:mb-10 text-center">
+            <h3 className="text-lg lg:text-xl mb-8 mt-2 md:mt-4 md:mb-5 lg:mb-10 text-center">
               Offre Premium
               <br />
               “Sans Pub”
             </h3>
-            <section className="md:ml-4 lg:mb-4">
+            <section className="ml-4 lg:mb-4">
               <p className="font-semibold mb-4 lg:ml-5 lg:mb-4 md:mb-6">
                 Prix : <span className="text-secondary">20.99€ </span> par mois
               </p>
-              <ul className="mt-14 md:mt-8 lg:ml-4 space-y-2 text-sm">
+              <ul className="mt-8 lg:ml-4 space-y-2 text-sm">
                 <li>• Accès complet au catalogue</li>
                 <li>
                   • <span className="text-secondary">Sans publicité</span>

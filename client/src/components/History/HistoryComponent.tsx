@@ -51,8 +51,6 @@ function History() {
     }
   }, [connected]);
 
-  console.log("connected:", connected);
-
   return (
     <div className="relative mt-10 md:mt-15">
       <h2 className="text-white text-xl mb-3">Historique de Visionnage</h2>

@@ -1,6 +1,7 @@
 import emailjs from "emailjs-com";
 import { useRef, useState } from "react";
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 
 function Footer() {
   const [open, setOpen] = useState(false);
@@ -20,14 +21,14 @@ function Footer() {
     emailjs
       .sendForm(serviceId, templateId, form.current, publicKey)
       .then(
-        (result) => {
-          console.log(result.text);
-          alert("Votre message a bien été envoyé !");
+        () => {
+          toast.success("Votre message a bien été envoyé 🎉");
           form.current?.reset();
         },
-        (error) => {
-          console.log(error.text);
-          alert("Une erreur est survenue, veuillez réessayer plus tard.");
+        () => {
+          toast.error(
+            "Une erreur est survenue, veuillez réessayer plus tard ❌",
+          );
         },
       )
       .finally(() => {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaCog } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { useUserContext } from "../../../context/UserContext";
 import type { User } from "../../../context/UserContext";
 
@@ -28,9 +29,9 @@ function ProfileSettings() {
       const data = await res.json();
       setEditUser(data);
       setEditMode(false);
+      toast.success("Modification enregistrée avec succès");
     } catch (err) {
-      console.error("Erreur lors de la modif :", err);
-      alert("Modification échouée");
+      toast.error("Modification échouée");
     }
   };
 

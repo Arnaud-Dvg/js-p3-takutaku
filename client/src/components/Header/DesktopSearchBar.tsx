@@ -14,13 +14,11 @@ function DesktopSearchBar() {
     const found = result[0];
     if (found) {
       navigate(`/anime/${found.id}`);
-    } else {
-      alert("Aucun animé trouvé.");
     }
   };
 
   return (
-    <div className="flex items-center min-w-[200px] md:w-90 w-62 h-10 md:h-full rounded-full bg-white">
+    <div className="flex items-center min-w-[200px] md:w-90 w-62 h-10 md:h-full rounded-full bg-tertiary">
       <input
         className=" w-full px-4 text-gray-800 outline-none focus:outline-none "
         type="search"
@@ -28,10 +26,15 @@ function DesktopSearchBar() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Rechercher par titre..."
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSearch();
+          }
+        }}
       />
       <button
-        type="submit"
-        className=" rounded px-4 py-3 text-white"
+        type="button"
+        className=" rounded px-4 py-3 text-tertiary"
         onClick={handleSearch}
       >
         <svg

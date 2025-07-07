@@ -9,11 +9,17 @@ import { useAnimeContext } from "../../../context/AnimeContext";
 interface propsFilter {
   genre: string;
   type: string;
+  filteredAnime: Anime[];
 }
 
-function SearchCarousel({ genre, type }: propsFilter) {
-  const { animeSearch, fetchAnimeType, setAnimeSelected, getAnimebyId } =
-    useAnimeContext();
+function SearchCarousel({ genre, type, filteredAnime }: propsFilter) {
+  const {
+    animeSearch,
+    setAnimeSearch,
+    fetchAnimeType,
+    setAnimeSelected,
+    getAnimebyId,
+  } = useAnimeContext();
   const swiperRefSearch = useRef<SwiperType | null>(null);
 
   const handleClick = async (anime: Anime) => {
@@ -34,8 +40,12 @@ function SearchCarousel({ genre, type }: propsFilter) {
   }
 
   useEffect(() => {
-    fetchAnimeType(genre, type);
-  }, [genre, type, fetchAnimeType]);
+    if (filteredAnime.length < 0) {
+      fetchAnimeType(genre, type);
+    } else {
+      setAnimeSearch(filteredAnime);
+    }
+  }, [genre, type, fetchAnimeType, filteredAnime, setAnimeSearch]);
 
   return (
     <div className="relative mt-10 md:mt-15 mx-10 xl:mx-50 lg:mx-20">
@@ -87,7 +97,7 @@ function SearchCarousel({ genre, type }: propsFilter) {
                       className="w-full rounded-sm"
                     />
                   </Link>
-                  <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
+                  <p className="text-[0.6rem] md:text-[0.8rem] font-light text-tertiary text-center mt-2">
                     {anime.title}
                   </p>
                 </div>
