@@ -40,7 +40,7 @@ function SearchCarousel({ genre, type, filteredAnime }: propsFilter) {
   }
 
   useEffect(() => {
-    if (filteredAnime.length < 0) {
+    if (filteredAnime.length === 0) {
       fetchAnimeType(genre, type);
     } else {
       setAnimeSearch(filteredAnime);
