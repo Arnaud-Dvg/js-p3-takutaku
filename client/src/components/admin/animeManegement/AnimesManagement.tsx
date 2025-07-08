@@ -43,7 +43,7 @@ function AnimeManagement() {
       <h1 className="text-[var(--color-secondary)] pl-10 text-xl pt-20">
         Gestion des animés
       </h1>
-      <p className="text-white pt-4 pl-10">
+      <p className="text-tertiary pt-4 pl-10">
         {/* Affichage du nombre de d'animé créé */}
         Nombre total d'animés : {animes.length}
       </p>
@@ -51,7 +51,7 @@ function AnimeManagement() {
         {/* Bouton voir/masquer les animés */}
         <button
           type="button"
-          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full flex items-center gap-1 cursor-pointer"
+          className="bg-[var(--color-secondary)] text-primary font-semibold py-1 px-2 rounded-full flex items-center gap-1 cursor-pointer"
           onClick={() => setListe(!liste)}
         >
           {liste ? (
@@ -79,7 +79,7 @@ function AnimeManagement() {
           {animes.map((anime) => (
             <div
               key={anime.id}
-              className="grid grid-cols-[2fr_1fr_1fr_1fr_1fr] py-1 text-sm text-white min-w-[900px] items-center"
+              className="grid grid-cols-[2fr_1fr_1fr_1fr_1fr] py-1 text-sm text-tertiary min-w-[900px] items-center"
             >
               <div>{anime.title}</div>
               <div>{anime.genre_name}</div>
@@ -101,8 +101,8 @@ function AnimeManagement() {
 
       {/* Pop-Up pour la modification des animés */}
       {editAnime && (
-        <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
-          <section className="relative bg-black text-white rounded-lg w-full max-w-lg p-8">
+        <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
+          <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
             {/* Logo TakuTaku */}
             <section className="text-center mb-10">
               <img
@@ -143,7 +143,7 @@ function AnimeManagement() {
                   onChange={(e) =>
                     setEditAnime({ ...editAnime, title: e.target.value })
                   }
-                  className="w-1/2 bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                  className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
                 />
               </section>
 
@@ -157,7 +157,7 @@ function AnimeManagement() {
                 onChange={(e) =>
                   setEditAnime({ ...editAnime, synopsis: e.target.value })
                 }
-                className="w-full h-32 bg-black border border-white text-white px-4 py-2 rounded-3xl text-sm"
+                className="w-full h-32 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-3xl text-sm"
               />
 
               {/* Genre */}
@@ -171,7 +171,7 @@ function AnimeManagement() {
                     genre_name: Number(e.target.value),
                   })
                 }
-                className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl text-sm"
+                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
               >
                 <option value="">-- Choisir un genre --</option>
                 <option value="3">Seinen</option>
@@ -192,7 +192,7 @@ function AnimeManagement() {
                   onChange={(e) =>
                     setEditAnime({ ...editAnime, date: e.target.value })
                   }
-                  className="w-1/2 bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                  className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
                 />
               </section>
 
@@ -212,7 +212,7 @@ function AnimeManagement() {
             <button
               type="button"
               onClick={() => setEditAnime(null)}
-              className="absolute top-2 right-3 text-white text-xl font-bold cursor-pointer"
+              className="absolute top-2 right-3 text-tertiary text-xl font-bold cursor-pointer"
             >
               &times;
             </button>

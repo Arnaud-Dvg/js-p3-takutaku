@@ -1,20 +1,34 @@
 import { useState } from "react";
 import { FaCreditCard } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuthContext } from "../../../context/AuthContext";
+import { useUserContext } from "../../../context/UserContext";
 
 interface PaymentPopUpProps {
+  newaccount: {
+    firstname: string;
+    lastname: string;
+    mail: string;
+    password: string;
+  };
   selectedPlan: string;
   email: string;
   onClose: () => void;
 }
 
 const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
+  newaccount,
   selectedPlan,
   email,
   onClose,
 }) => {
-  const navigate = useNavigate();
+  const { handleLogin, connected } = useAuthContext();
+  const { user, createUser, updateUser } = useUserContext();
+
+  const abonnementMap: Record<string, number> = {
+    Découverte: 1,
+    Premium: 2,
+  };
 
   const [formData, setFormData] = useState({
     cardNumber: "",
@@ -22,6 +36,25 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
     expiry: "",
     cvv: "",
   });
+
+  const handleCreateAccount = async () => {
+    const abonnement_id = abonnementMap[selectedPlan];
+    if (!abonnement_id) return;
+
+    const userToCreate = {
+      ...newaccount,
+      is_admin: false,
+      is_actif: true,
+      abonnement_id,
+      token: "",
+    };
+
+    await createUser(userToCreate);
+    await handleLogin({
+      mail: newaccount.mail,
+      password: newaccount.password,
+    });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -84,7 +117,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
     setFormData((prev) => ({ ...prev, [name]: formattedValue }));
   };
 
-  const handlePayment = (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePayment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { cardNumber, nameOnCard, expiry, cvv } = formData;
 
@@ -115,15 +148,29 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
       return;
     }
 
+    // Si l'utilisateur n'est pas connecté, on crée le compte
+    if (!connected) {
+      handleCreateAccount();
+    }
+
+    // Si l'utilisateur est connecté, on peut procéder au paiement et switcher l'abonnement
+    if (connected && user) {
+      const updatedUser = {
+        ...user,
+        abonnement_id: selectedPlan === "Découverte" ? 1 : 2,
+      };
+      await updateUser(user.id, updatedUser);
+      localStorage.setItem("userConnected", JSON.stringify(updatedUser));
+    }
+
     // Tout est OK
     toast.success("Paiement effectué avec succès !");
     onClose();
-    navigate("/");
   };
 
   return (
-    <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
-      <section className="relative bg-black text-white rounded-lg w-full max-w-lg p-8">
+    <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
+      <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
         {/* Logo */}
         <section className="text-center mb-10">
           <img
@@ -142,8 +189,8 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
           </p>
         </section>
 
-        <form className="space-y-4 text-black" onSubmit={handlePayment}>
-          <section className="flex items-center bg-white rounded px-3 py-2">
+        <form className="space-y-4 text-primary" onSubmit={handlePayment}>
+          <section className="flex items-center bg-tertiary rounded px-3 py-2">
             <FaCreditCard className="text-gray-500 mr-2" />
             <input
               type="text"
@@ -165,7 +212,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
             placeholder="Nom sur la carte"
             value={formData.nameOnCard}
             onChange={handleChange}
-            className="w-full px-3 py-2 rounded bg-white outline-none"
+            className="w-full px-3 py-2 rounded bg-tertiary outline-none"
           />
 
           <section className="flex gap-4">
@@ -175,7 +222,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
               placeholder="MM/AA"
               value={formData.expiry}
               onChange={handleChange}
-              className="w-1/2 px-3 py-2 rounded bg-white outline-none"
+              className="w-1/2 px-3 py-2 rounded bg-tertiary outline-none"
             />
             <input
               type="text"
@@ -183,25 +230,18 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
               placeholder="CVV"
               value={formData.cvv}
               onChange={handleChange}
-              className="w-1/2 px-3 py-2 rounded bg-white outline-none"
+              className="w-1/2 px-3 py-2 rounded bg-tertiary outline-none"
             />
           </section>
 
           <button
             type="submit"
-            className="mt-4 w-full border border-white text-white py-2 rounded-full hover:bg-secondary hover:text-black transition"
+            className="mt-4 w-full border border-tertiary text-tertiary py-2 rounded-full hover:bg-secondary hover:text-black transition"
           >
             Valider le paiement
           </button>
         </form>
 
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-2 right-4 text-gray-400 text-xl hover:text-white"
-        >
-          &times;
-        </button>
         {/* Mascotte */}
         <section className="flex justify-between items-end mt-4">
           <img src="/favicon.ico" alt="Mascotte" className="h-15" />
@@ -209,8 +249,13 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
         {/* Bouton fermer */}
         <button
           type="button"
-          onClick={onClose}
-          className="absolute top-2 right-4 text-gray-400 text-xl hover:text-white"
+          onClick={() => {
+            onClose();
+            toast.error(
+              "Echec lors du paiement, le compte n'a pas pu être créé.",
+            );
+          }}
+          className="absolute top-2 right-4 text-gray-400 text-xl hover:text-tertiary"
         >
           &times;
         </button>

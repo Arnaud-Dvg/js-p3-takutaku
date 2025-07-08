@@ -35,7 +35,7 @@ function SeinenCarousel() {
 
   return (
     <div className="relative mt-10 md:mt-15">
-      <h2 className="text-white text-xl mb-3">Seinen</h2>
+      <h2 className="text-tertiary text-xl mb-3">Seinen</h2>
       <div className="relative">
         {/* Bouton gauche */}
         <RxChevronLeft
@@ -90,13 +90,13 @@ function SeinenCarousel() {
                   </div>
                 </div>
 
-                <p className="text-[0.6rem] md:text-[0.8rem] font-light text-white text-center mt-2">
+                <p className="text-[0.6rem] md:text-[0.8rem] font-light text-tertiary text-center mt-2">
                   {anime.title}
                 </p>
               </SwiperSlide>
             ))
           ) : (
-            <p>Chargement...</p>
+            <p>Aucun animé trouvé</p>
           )}
         </Swiper>
       </div>

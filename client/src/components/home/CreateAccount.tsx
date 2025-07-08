@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useAuthContext } from "../../../context/AuthContext";
-import { useUserContext } from "../../../context/UserContext";
+import { toast } from "react-toastify";
 import PaymentPopUp from "./PayementPopUp";
 
 interface CreateAccountProps {
@@ -16,14 +15,6 @@ function CreateAccount({
   selectedPlan,
   setSelectedPlan,
 }: CreateAccountProps) {
-  const { handleLogin } = useAuthContext();
-  const { createUser } = useUserContext();
-
-  const abonnementMap: Record<string, number> = {
-    Découverte: 1,
-    Premium: 2,
-  };
-
   const [newaccount, setNewAccount] = useState({
     firstname: "",
     lastname: "",
@@ -45,23 +36,6 @@ function CreateAccount({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const abonnement_id = abonnementMap[selectedPlan];
-    if (!abonnement_id) return;
-
-    const userToCreate = {
-      ...newaccount,
-      is_admin: false,
-      is_actif: true,
-      abonnement_id,
-      token: "",
-    };
-
-    await createUser(userToCreate);
-    await handleLogin({
-      mail: newaccount.mail,
-      password: newaccount.password,
-    });
-
     setShowPayment(true); // affiche le paiement intégré
   };
 
@@ -75,13 +49,14 @@ function CreateAccount({
     <>
       {showPayment ? (
         <PaymentPopUp
+          newaccount={newaccount}
           selectedPlan={selectedPlan}
           email={newaccount.mail}
           onClose={closeAll}
         />
       ) : (
-        <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
-          <section className="relative bg-black text-white rounded-lg w-full max-w-lg p-8">
+        <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
+          <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
             {/* Logo */}
             <section className="text-center mb-10">
               <img
@@ -104,7 +79,7 @@ function CreateAccount({
                 value={newaccount.lastname}
                 onChange={handleChange}
                 required
-                className="bg-black border-b border-gray-500 py-1 px-2 placeholder-white focus:outline-none"
+                className="bg-primary border-b border-gray-500 py-1 px-2 placeholder-tertiary focus:outline-none"
               />
               <input
                 type="text"
@@ -113,7 +88,7 @@ function CreateAccount({
                 value={newaccount.firstname}
                 onChange={handleChange}
                 required
-                className="bg-black border-b border-gray-500 py-1 px-2 placeholder-white focus:outline-none"
+                className="bg-primary border-b border-gray-500 py-1 px-2 placeholder-tertiary focus:outline-none"
               />
               <input
                 type="email"
@@ -122,7 +97,7 @@ function CreateAccount({
                 value={newaccount.mail}
                 onChange={handleChange}
                 required
-                className="bg-black border-b border-gray-500 py-1 px-2 placeholder-white focus:outline-none"
+                className="bg-primary border-b border-gray-500 py-1 px-2 placeholder-tertiary focus:outline-none"
               />
               <input
                 type="password"
@@ -131,7 +106,7 @@ function CreateAccount({
                 value={newaccount.password}
                 onChange={handleChange}
                 required
-                className="bg-black border-b border-gray-500 py-1 px-2 placeholder-white focus:outline-none"
+                className="bg-primary border-b border-gray-500 py-1 px-2 placeholder-tertiary focus:outline-none"
               />
 
               {/* Choix d'abonnement */}
@@ -165,9 +140,9 @@ function CreateAccount({
 
               <button
                 type="submit"
-                className="mt-4 w-full border border-white text-white py-2 rounded-full hover:bg-secondary hover:text-black transition"
+                className="mt-4 w-full border border-tertiary text-tertiary py-2 rounded-full hover:bg-secondary hover:text-primary transition"
               >
-                Valider
+                Procéder au paiement
               </button>
             </form>
 
@@ -178,8 +153,11 @@ function CreateAccount({
             {/* Bouton fermer */}
             <button
               type="button"
-              onClick={onClose}
-              className="absolute top-2 right-4 text-gray-400 text-xl hover:text-white"
+              onClick={() => {
+                onClose();
+                toast.error("Echec lors de la création du compte.");
+              }}
+              className="absolute top-2 right-4 text-gray-400 text-xl hover:text-tertiary"
             >
               &times;
             </button>

@@ -1,21 +1,24 @@
 import { useState } from "react";
+import { useAuthContext } from "../../../context/AuthContext";
 import type { User } from "../../../context/UserContext";
 import { useUserContext } from "../../../context/UserContext";
 import CreateAccount from "./CreateAccount";
+import PaymentPopUp from "./PayementPopUp";
 
 function Abonnement() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
   const { user } = useUserContext() as { user: User | null };
+  const { connected } = useAuthContext() as { connected: boolean };
 
   const handleSubscribeClick = (plan: string) => {
-    setSelectedPlan(plan); // Met à jour l'offre choisie
+    setSelectedPlan(plan);
     setIsSignupOpen(true);
   };
 
   const handleCloseSignup = () => {
     setIsSignupOpen(false);
-    setSelectedPlan(""); // Réinitialiser si nécessaire
+    setSelectedPlan("");
   };
 
   return (
@@ -98,7 +101,7 @@ function Abonnement() {
                 <button
                   type="button"
                   onClick={() => handleSubscribeClick("Premium")}
-                  className={`mt-4 cursor-pointe bg-secondary text-black py-1 px-7 lg:px-15 rounded-full cursor-pointer ${user?.abonnement_id === 2 ? "hidden" : ""}`}
+                  className={`mt-4 cursor-pointer bg-secondary text-primary py-1 px-7 lg:px-15 rounded-full ${user?.abonnement_id === 2 ? "hidden" : ""}`}
                 >
                   S'abonner
                 </button>
@@ -107,13 +110,23 @@ function Abonnement() {
           </section>
         </section>
       </section>
-      {/* Popup avec props complètes */}
-      <CreateAccount
-        isOpen={isSignupOpen}
-        onClose={handleCloseSignup}
-        selectedPlan={selectedPlan}
-        setSelectedPlan={setSelectedPlan}
-      />
+
+      {/* Affichage conditionnel du bon popup */}
+      {isSignupOpen && connected ? (
+        <PaymentPopUp
+          newaccount={{ firstname: "", lastname: "", mail: "", password: "" }}
+          selectedPlan={selectedPlan}
+          email={user?.mail ?? ""}
+          onClose={handleCloseSignup}
+        />
+      ) : isSignupOpen ? (
+        <CreateAccount
+          isOpen={true}
+          onClose={handleCloseSignup}
+          selectedPlan={selectedPlan}
+          setSelectedPlan={setSelectedPlan}
+        />
+      ) : null}
     </>
   );
 }

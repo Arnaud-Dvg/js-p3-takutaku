@@ -85,7 +85,7 @@ function UserManagement() {
       <h1 className="text-[var(--color-secondary)] pt-6 pl-10 text-xl">
         Gestion des utilisateurs
       </h1>
-      <p className="text-white pt-4 pl-10">
+      <p className="text-tertiary pt-4 pl-10">
         {/* Affichage du nombre de compte créé */}
         Nombre total de comptes : {users.length}
       </p>
@@ -93,7 +93,7 @@ function UserManagement() {
         {/* Bouton voir/masquer les users */}
         <button
           type="button"
-          className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full flex items-center gap-1 cursor-pointer"
+          className="bg-[var(--color-secondary)] text-primary font-semibold py-1 px-2 rounded-full flex items-center gap-1 cursor-pointer"
           onClick={() => setListe(!liste)}
         >
           {liste ? (
@@ -125,7 +125,7 @@ function UserManagement() {
             {users.map((user) => (
               <div
                 key={user.id}
-                className="grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] py-1 text-sm text-white min-w-[900px] items-center"
+                className="grid grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr] py-1 text-sm text-tertiary min-w-[900px] items-center"
               >
                 <div>
                   {user.firstname} {user.lastname}
@@ -173,7 +173,7 @@ function UserManagement() {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="bg-[var(--color-secondary)] text-black font-semibold py-1 px-2 rounded-full cursor-pointer"
+              className="bg-[var(--color-secondary)] text-primary font-semibold py-1 px-2 rounded-full cursor-pointer"
             >
               + Nouvel utilisateur
             </button>
@@ -183,8 +183,8 @@ function UserManagement() {
 
       {/* Pop-Up pour la modification des users */}
       {editUser && (
-        <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
-          <section className="relative bg-black text-white rounded-lg w-full max-w-lg p-8">
+        <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
+          <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
             {/* Logo TakuTaku */}
             <section className="text-center mb-10">
               <img
@@ -227,7 +227,7 @@ function UserManagement() {
                   onChange={(e) =>
                     setEditUser({ ...editUser, firstname: e.target.value })
                   }
-                  className="w-1/2 bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                  className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
                 />
                 <input
                   type="text"
@@ -238,7 +238,7 @@ function UserManagement() {
                   onChange={(e) =>
                     setEditUser({ ...editUser, lastname: e.target.value })
                   }
-                  className="w-1/2 bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                  className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
                 />
               </section>
 
@@ -252,7 +252,7 @@ function UserManagement() {
                 onChange={(e) =>
                   setEditUser({ ...editUser, mail: e.target.value })
                 }
-                className="w-full bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
               />
 
               {/* Abonnement ? */}
@@ -266,7 +266,7 @@ function UserManagement() {
                     abonnement_id: Number(e.target.value),
                   })
                 }
-                className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl text-sm"
+                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
               >
                 <option value="">-- Choisir un abonnement --</option>
                 <option value="2">Premium</option>
@@ -281,7 +281,7 @@ function UserManagement() {
                 onChange={(e) =>
                   setEditUser({ ...editUser, is_admin: e.target.value === "1" })
                 }
-                className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl text-sm"
+                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
               >
                 <option value="">-- Admin ? --</option>
                 <option value="1">Oui</option>
@@ -296,7 +296,7 @@ function UserManagement() {
                 onChange={(e) =>
                   setEditUser({ ...editUser, is_actif: e.target.value === "1" })
                 }
-                className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl text-sm"
+                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
               >
                 <option value="">-- Actif ? --</option>
                 <option value="1">Oui</option>
@@ -319,7 +319,7 @@ function UserManagement() {
             <button
               type="button"
               onClick={() => setEditUser(null)}
-              className="absolute top-2 right-3 text-white text-xl font-bold cursor-pointer"
+              className="absolute top-2 right-3 text-tertiary text-xl font-bold cursor-pointer"
             >
               &times;
             </button>
@@ -329,8 +329,8 @@ function UserManagement() {
 
       {/* Pop-Up d'ajout utilisateur*/}
       {open && (
-        <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
-          <section className="relative bg-black text-white rounded-lg w-full max-w-lg p-8">
+        <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
+          <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
             {/* Logo TakuTaku */}
             <section className="text-center mb-10">
               <img
@@ -356,7 +356,7 @@ function UserManagement() {
                 onChange={(e) =>
                   setNewUser({ ...newUser, lastname: e.target.value })
                 }
-                className="w-1/2 bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
               />
               <input
                 type="text"
@@ -367,7 +367,7 @@ function UserManagement() {
                 onChange={(e) =>
                   setNewUser({ ...newUser, firstname: e.target.value })
                 }
-                className="w-1/2 bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
               />
             </section>
 
@@ -379,7 +379,7 @@ function UserManagement() {
               required
               value={newUser.mail}
               onChange={(e) => setNewUser({ ...newUser, mail: e.target.value })}
-              className="w-full bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+              className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
             />
 
             {/* Mot de passe */}
@@ -392,7 +392,7 @@ function UserManagement() {
               onChange={(e) =>
                 setNewUser({ ...newUser, password: e.target.value })
               }
-              className="w-full bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+              className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
             />
 
             {/* Admin ? */}
@@ -403,7 +403,7 @@ function UserManagement() {
               onChange={(e) =>
                 setNewUser({ ...newUser, is_admin: e.target.value === "1" })
               }
-              className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl text-sm"
+              className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
             >
               <option value="">-- Admin ? --</option>
               <option value="1">Oui</option>
@@ -421,7 +421,7 @@ function UserManagement() {
                   abonnement_id: Number(e.target.value),
                 })
               }
-              className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl text-sm"
+              className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
             >
               <option value="">-- Choisir un abonnement --</option>
               <option value="1">Découverte</option>
@@ -436,7 +436,7 @@ function UserManagement() {
               onChange={(e) =>
                 setNewUser({ ...newUser, is_actif: e.target.value === "1" })
               }
-              className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl text-sm"
+              className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
             >
               <option value="">-- Actif ? --</option>
               <option value="1">Oui</option>
@@ -473,7 +473,7 @@ function UserManagement() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="absolute top-2 right-3 text-white text-xl font-bold cursor-pointer"
+              className="absolute top-2 right-3 text-tertiary text-xl font-bold cursor-pointer"
             >
               &times;
             </button>
