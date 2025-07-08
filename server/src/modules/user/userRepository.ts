@@ -153,6 +153,16 @@ class userRepository {
     );
     return rows;
   }
+
+  // Récupère un utilisateur depuis la base de données par son ID pour le test unitaire de suppresion d'un user
+  async findById(id: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT * FROM Users WHERE id = ?",
+      [id],
+    );
+
+    return (rows[0] as User) || null;
+  }
 }
 
 export default new userRepository();
