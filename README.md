@@ -31,8 +31,6 @@ Node.js + Express
 SQL & NoSQL
 Variables d’environnement (.env)
 
-)
-
 🔧 Installation du projet
 1.Cloner le dépôt :
 git clone https://github.com/wildcodeschool-2025-03/js-p3-takutaku
