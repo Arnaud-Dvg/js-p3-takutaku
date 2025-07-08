@@ -18,7 +18,6 @@ function Anime() {
     }
   }, [id]);
 
-  console.log("animeSelected :", animeSelected);
   if (!animeSelected) {
     return (
       <div className="text-tertiary text-center mt-10">

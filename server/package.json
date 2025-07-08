@@ -7,12 +7,15 @@
     "db:seed": "tsx ./bin/seed",
     "build": "tsx ./bin/migrate",
     "start": "tsx ./src/main",
-    "test": "jest --verbose"
+    "test": "jest --verbose",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write ."
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.0"
   },
   "devDependencies": {

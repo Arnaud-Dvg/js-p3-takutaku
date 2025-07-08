@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoChevronDown } from "react-icons/io5";
 import { IoChevronUp } from "react-icons/io5";
+import { toast } from "react-toastify";
 import { useAnimeContext } from "../../../../context/AnimeContext";
 
 type Anime = {
@@ -112,9 +113,7 @@ function AnimeManagement() {
             </section>
 
             {/* Titre */}
-            <h2 className="text-2xl font-semibold text-center mb-6">
-              Modifier un animé
-            </h2>
+            <h2 className="text-2xl text-center mb-6">Modifier un animé</h2>
             {/* Formulaire */}
             <form
               onSubmit={(e) => {
@@ -124,8 +123,12 @@ function AnimeManagement() {
                     .then(() => {
                       fetchAnimes(); // Recharge la liste
                       setEditAnime(null); // Ferme la pop-up
+                      toast.success("Modification de l'animé réussie");
                     })
-                    .catch((err) => console.error(err));
+                    .catch((err) => {
+                      console.error("Erreur lors de la modification :", err);
+                      toast.error("Modification de l'animé échouée");
+                    });
                 }
               }}
             >

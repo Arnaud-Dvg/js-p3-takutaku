@@ -30,6 +30,7 @@ export type Anime = {
 type AnimeContextType = {
   anime: Anime[];
   animeSearch: Anime[];
+  setAnimeSearch: (animeSearch: Anime[]) => void;
   fetchAnimeType: (
     genre: number | string,
     type: number | string,
@@ -145,6 +146,7 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         anime,
         animeSearch,
+        setAnimeSearch,
         fetchAnimeType,
         animeSelected,
         setAnimeSelected,

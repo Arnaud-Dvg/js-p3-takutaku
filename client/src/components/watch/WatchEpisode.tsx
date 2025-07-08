@@ -40,7 +40,6 @@ function WatchEpisode({ episodeSelected }: WatchEpisodeProps) {
   const handleWatchAnime = async () => {
     if (loading) {
       // Loading est un boolean je vérifie donc s'il est true
-      console.log("⏳ Données utilisateur en cours de chargement..."); // s'il est true (que les données du localStorage ne sont pas encore chargées) j'affiche ce message et j'arrête la fonction
       return;
     }
 
@@ -69,7 +68,6 @@ function WatchEpisode({ episodeSelected }: WatchEpisodeProps) {
 
       setIsVideoPlaying(true);
       videoRef.current?.play(); // je lance la lecture de la vidéo
-      console.log("📺 Visionnage lancé et historique mis à jour !");
     } catch (error) {
       console.error("❌ Erreur lors du visionnage :", error);
     }

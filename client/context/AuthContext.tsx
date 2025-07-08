@@ -58,7 +58,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(formattedUser);
       localStorage.setItem("userConnected", JSON.stringify(formattedUser));
       localStorage.setItem("token", data.token);
-      console.log("🔐 Login réussi :", formattedUser);
       setConnected(true);
       localStorage.setItem("connected", "true"); // Met à jour le statut de connexion dans le localStorage
     } catch (error) {
@@ -89,10 +88,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           // je vérifie que cet objet JS détient un ID
           setUser(parsedUser); // je met à jour l'objet récupéré
           setConnected(true); //je déclare l'utilisateur connecté
-          console.log(
-            "🔁 Données chargées depuis le localStorage :",
-            parsedUser,
-          ); //j'affiche dans la console que tout a été chargé depuis le local storage
         } else {
           console.warn("❗ Format utilisateur invalide dans le localStorage"); // alerte pour aider à debug
         }

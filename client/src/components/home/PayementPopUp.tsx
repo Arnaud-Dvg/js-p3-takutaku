@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaCreditCard } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface PaymentPopUpProps {
   selectedPlan: string;
@@ -24,11 +25,98 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    let formattedValue = value;
+
+    // --- CARD NUMBER ---
+    if (name === "cardNumber") {
+      // Vérifier s'il y a des lettres
+      const hasLetters = /[a-zA-Z]/.test(value);
+      if (hasLetters) {
+        toast.error(
+          "Les lettres ne sont pas autorisées dans le numéro de carte.",
+        );
+      }
+
+      // Supprimer tout sauf les chiffres
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 16);
+      const parts = digitsOnly.match(/.{1,4}/g);
+      formattedValue = parts ? parts.join("-") : "";
+    }
+
+    // --- NAME ON CARD ---
+    if (name === "nameOnCard") {
+      const cleaned = value.replace(/[^a-zA-ZÀ-ÿ\s'-]/g, "");
+
+      if (cleaned.length < value.length) {
+        toast.error("Seules les lettres sont autorisées dans le nom.");
+      }
+
+      formattedValue = cleaned;
+    }
+
+    // --- EXPIRY DATE ---
+    if (name === "expiry") {
+      // Vérifier si la valeur contient des lettres
+      const hasLetters = /[a-zA-Z]/.test(value);
+      if (hasLetters) {
+        toast.error(
+          "Les lettres ne sont pas autorisées dans la date d'expiration.",
+        );
+      }
+      // Supprimer tout sauf les chiffres et le slash
+      const digitsOnly = value.replace(/[^0-9/]/g, "").slice(0, 5);
+      // Formater en MM/AA
+      const digits = digitsOnly.split("/");
+      formattedValue = digits.slice(0, 2).join("/");
+    }
+    // --- CVV ---
+    if (name === "cvv") {
+      // Vérifier si la valeur contient des lettres
+      const hasLetters = /[a-zA-Z]/.test(value);
+      if (hasLetters) {
+        toast.error("Les lettres ne sont pas autorisées dans le CVV.");
+      }
+      // Supprimer tout sauf les chiffres
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 3);
+      // Formater en 3 chiffres
+      formattedValue = digitsOnly;
+    }
+    setFormData((prev) => ({ ...prev, [name]: formattedValue }));
   };
 
-  const handlePayment = () => {
-    // Simulation
+  const handlePayment = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { cardNumber, nameOnCard, expiry, cvv } = formData;
+
+    if (!cardNumber || !nameOnCard || !expiry || !cvv) {
+      toast.error("Tous les champs sont obligatoires.");
+      return;
+    }
+
+    // Supprimer les tirets pour validation brute
+    const rawCardNumber = cardNumber.replace(/\D/g, "");
+    if (rawCardNumber.length !== 16) {
+      toast.error("Le numéro de carte doit contenir 16 chiffres.");
+      return;
+    }
+
+    if (!/^[A-Za-zÀ-ÿ\s'-]{2,}$/.test(nameOnCard.trim())) {
+      toast.error("Nom invalide.");
+      return;
+    }
+
+    if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+      toast.error("Date d’expiration invalide (MM/AA).");
+      return;
+    }
+
+    if (!/^\d{3}$/.test(cvv)) {
+      toast.error("CVV invalide.");
+      return;
+    }
+
+    // Tout est OK
+    toast.success("Paiement effectué avec succès !");
     onClose();
     navigate("/");
   };
@@ -54,15 +142,19 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
           </p>
         </section>
 
-        <form className="space-y-4 text-black">
+        <form className="space-y-4 text-black" onSubmit={handlePayment}>
           <section className="flex items-center bg-white rounded px-3 py-2">
             <FaCreditCard className="text-gray-500 mr-2" />
             <input
               type="text"
               name="cardNumber"
+              inputMode="numeric"
+              autoComplete="cc-number"
               placeholder="Numéro de carte"
               value={formData.cardNumber}
               onChange={handleChange}
+              maxLength={19}
+              minLength={19}
               className="w-full outline-none bg-transparent"
             />
           </section>
@@ -96,8 +188,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
           </section>
 
           <button
-            type="button"
-            onClick={handlePayment}
+            type="submit"
             className="mt-4 w-full border border-white text-white py-2 rounded-full hover:bg-secondary hover:text-black transition"
           >
             Valider le paiement

@@ -22,7 +22,6 @@ function LogIn() {
       navigate("/"); // redirection ici
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
-      alert("Une erreur est survenue.");
     }
   };
 
@@ -76,6 +75,15 @@ function LogIn() {
         <div className="flex justify-between items-end mt-4">
           <img src="/favicon.ico" alt="Mascotte" className="h-15" />
         </div>
+
+        {/* Bouton fermer */}
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="absolute top-2 right-4 text-gray-400 text-xl hover:text-tertiary"
+        >
+          &times;
+        </button>
 
         {isSignupOpen && (
           <CreateAccount
