@@ -104,7 +104,7 @@ function SearchCarousel({ genre, type, filteredAnime }: propsFilter) {
               </SwiperSlide>
             ))
           ) : (
-            <p>Chargement...</p>
+            <p className="text-tertiary">Aucun animé trouvé</p>
           )}
         </Swiper>
       </div>

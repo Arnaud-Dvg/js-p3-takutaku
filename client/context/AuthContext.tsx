@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         firstname: data.user.firstname,
         lastname: data.user.lastname,
         mail: data.user.mail,
-        password: "", // tu peux laisser vide
+        password: "",
         abonnement_id: data.user.abonnement_id,
         is_admin: data.user.is_admin ?? false,
         is_actif: data.user.is_actif ?? true,
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("userConnected");
     localStorage.removeItem("token");
     localStorage.setItem("connected", "false");
-    window.location.href = "/"; // Redirige vers la page d'accueil après la déconnexion
+    window.location.href = "/";
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

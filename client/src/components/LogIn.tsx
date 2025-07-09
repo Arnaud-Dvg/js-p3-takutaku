@@ -31,8 +31,8 @@ function LogIn() {
   };
 
   return (
-    <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
-      <section className="relative bg-black text-white rounded-lg w-full max-w-lg p-8">
+    <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
+      <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
         <h1 className="text-center text-2xl mb-25">Connexion</h1>
 
         <form onSubmit={handleClick}>
@@ -42,7 +42,7 @@ function LogIn() {
             placeholder="Adresse e-mail"
             required
             onChange={(e) => setMail(e.target.value)}
-            className="border-b border-white bg-transparent py-2 mb-6 text-white placeholder-white focus:outline-none w-full"
+            className="border-b border-tertiary bg-transparent py-2 mb-6 text-tertiary placeholder-tertiary focus:outline-none w-full"
           />
 
           <input
@@ -51,12 +51,12 @@ function LogIn() {
             placeholder="Mot de passe"
             required
             onChange={(e) => setPassword(e.target.value)}
-            className="border-b border-white bg-transparent py-2 mb-6 text-white placeholder-white focus:outline-none w-full"
+            className="border-b border-tertiary bg-transparent py-2 mb-6 text-tertiary placeholder-tertiary focus:outline-none w-full"
           />
 
           <button
             type="submit"
-            className="border border-white text-white my-10 py-2 rounded-full w-full mb-6 hover:bg-secondary hover:text-black transition"
+            className="border border-tertiary text-tertiary my-10 py-2 rounded-full w-full mb-6 hover:bg-secondary hover:text-primary transition"
           >
             Se connecter
           </button>

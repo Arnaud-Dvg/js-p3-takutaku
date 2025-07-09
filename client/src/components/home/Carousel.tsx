@@ -71,7 +71,7 @@ function Carousel() {
         <DesktopSearchBar />
       </div>
       {/* Calque de flou par-dessus l'image de fond */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-xs z-0 scale-y-[1.05]" />
+      <div className="absolute inset-0 bg-primary/50 backdrop-blur-xs z-0 scale-y-[1.05]" />
 
       {/* Contenu principal au-dessus du flou */}
       <div className="relative z-10 pt-20">
@@ -169,7 +169,7 @@ function Carousel() {
           </Swiper>
         </div>
         {selectAnime[animeIndex] && (
-          <div className="relative z-10 text-center text-white p-4">
+          <div className="relative z-10 text-center text-tertiary p-4">
             <h2 className="relative z-10 text-center text-[1.7rem] lg:text-4xl text-tertiary p-4">
               {selectAnime[animeIndex].title}
             </h2>

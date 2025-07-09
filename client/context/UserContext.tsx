@@ -33,7 +33,15 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const fetchUser = async (): Promise<void> => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user`);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/user/${user?.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+            "Content-Type": "application/json",
+          },
+        },
+      );
       const data = await res.json();
       setUser(data);
     } catch (error) {
@@ -75,6 +83,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.token}`,
         },
         body: JSON.stringify(updateData),
       },
@@ -82,7 +91,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     if (!response.ok) {
       throw new Error("Echec de la mise à jour de l'utilisateur");
     }
-    await fetchUser();
+
+    const updatedUser = await response.json();
+
+    // Mets à jour directement le contexte avec les nouvelles infos, en gardant le token actuel intact
+    setUser((prevUser) => {
+      return { ...prevUser, ...updatedUser, token: prevUser?.token || "" };
+    });
   };
 
   // Fonction pour la suppression de la base de donnée des utilisateurs pour la page Admin

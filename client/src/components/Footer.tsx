@@ -37,7 +37,7 @@ function Footer() {
   };
 
   return (
-    <section className="text-white flex flex-row justify-between items-end mt-10 px-2">
+    <section className="text-tertiary flex flex-row justify-between items-end mt-10 px-2">
       {/* Gauche */}
       <section className="text-xs md:text-sm pb-1 w-14 md:w-28">
         © 2025 TakuTaku
@@ -79,8 +79,8 @@ function Footer() {
       </section>
 
       {open && (
-        <section className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 px-4">
-          <section className="relative bg-black text-white rounded-lg w-full max-w-lg p-8">
+        <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
+          <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
             {/* Logo TakuTaku */}
             <section className="text-center mb-10">
               <img
@@ -105,14 +105,14 @@ function Footer() {
                   name="nom"
                   placeholder="Nom"
                   required
-                  className="w-1/2 bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                  className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
                 />
                 <input
                   type="text"
                   name="prenom"
                   placeholder="Prénom"
                   required
-                  className="w-1/2 bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                  className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
                 />
               </section>
 
@@ -122,7 +122,7 @@ function Footer() {
                 name="email"
                 placeholder="E-mail"
                 required
-                className="w-full bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
               />
 
               {/* Objet */}
@@ -131,7 +131,7 @@ function Footer() {
                 name="objet"
                 placeholder="Objet"
                 required
-                className="w-full bg-black border border-white text-white px-4 py-2 rounded-full text-sm"
+                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
               />
 
               {/* Message */}
@@ -140,7 +140,7 @@ function Footer() {
                 placeholder="Message"
                 required
                 rows={10}
-                className="w-full bg-black border border-white text-white px-4 py-2 rounded-2xl  text-sm"
+                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl  text-sm"
               />
 
               {/* Mascotte + Bouton envoyer */}
@@ -160,7 +160,7 @@ function Footer() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="absolute top-2 right-3 text-white text-xl font-bold cursor-pointer"
+              className="absolute top-2 right-3 text-tertiary text-xl font-bold cursor-pointer"
             >
               &times;
             </button>

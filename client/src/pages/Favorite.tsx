@@ -55,7 +55,7 @@ function Favorite() {
 
   if (!connected) {
     return (
-      <p className="text-white text-center mt-10">
+      <p className="text-tertiary text-center mt-10">
         Veuillez vous connecter pour voir vos favoris.
       </p>
     ); // Si l'utilisateur n'est pas connecté, on affiche un message
@@ -63,13 +63,15 @@ function Favorite() {
 
   if (loading) {
     return (
-      <p className="text-white text-center mt-10">Chargement des favoris...</p>
+      <p className="text-tertiary text-center mt-10">
+        Chargement des favoris...
+      </p>
     ); // Si les favoris sont en cours de chargement, on affiche un message
   }
 
   if (favorites.length === 0) {
     return (
-      <p className="text-white text-center mt-10">
+      <p className="text-tertiary text-center mt-10">
         Vous n'avez aucun favori pour le moment.
       </p>
     ); // Si aucun favori n'est trouvé, on affiche un message
@@ -77,7 +79,7 @@ function Favorite() {
 
   return (
     <section className="px-4 py-8">
-      <h1 className="text-white text-xl mb-6">Mes Favoris</h1>
+      <h1 className="text-tertiary text-xl mb-6">Mes Favoris</h1>
       <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {favorites.map((anime) => (
           <div key={anime.anime_id} className="relative group">
@@ -102,7 +104,9 @@ function Favorite() {
               </div>
             </div>
 
-            <p className="text-xs text-white text-center mt-2">{anime.title}</p>
+            <p className="text-xs text-tertiary text-center mt-2">
+              {anime.title}
+            </p>
           </div>
         ))}
       </section>
