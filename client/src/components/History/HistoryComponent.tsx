@@ -14,7 +14,6 @@ function History() {
   const [viewedAnime, setViewedAnime] = useState<Anime[]>([]);
   const { setAnimeSelected } = useAnimeContext();
   const swiperRefShojo = useRef<SwiperType | null>(null);
-
   const { user } = useUserContext();
 
   useEffect(() => {
@@ -36,10 +35,14 @@ function History() {
 
   const handleClick = (anime: Anime) => {
     setAnimeSelected(anime);
+    console.log("Anime sélectionné:", anime);
+    localStorage.setItem("selectedAnime", JSON.stringify(anime));
   };
+
   function setNextAnimeSelected() {
     swiperRefShojo.current?.slideNext();
   }
+
   function setPrevAnimeSelected() {
     swiperRefShojo.current?.slidePrev();
   }

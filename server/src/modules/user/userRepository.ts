@@ -141,9 +141,7 @@ class userRepository {
     const [rows] = await databaseClient.query(
       `
     SELECT 
-      a.id AS anime_id,
-      a.title,
-      a.portrait
+     a.*
     FROM users_anime AS ua
     INNER JOIN anime AS a ON a.id = ua.anime_id
     WHERE ua.users_id = ?

@@ -68,7 +68,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const createdUser = await response.json();
-      setUser(createdUser);
+
+      if (user?.id === createdUser.id) {
+        // C’est le user connecté → on peut le mettre à jour
+        setUser({ ...createdUser, token: user?.token });
+      }
+
       setConnected(true);
     } catch (error) {
       console.error("Erreur lors de la création de l'utilisateur :", error);
@@ -97,10 +102,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
     const updatedUser = await response.json();
 
-    // Mets à jour directement le contexte avec les nouvelles infos, en gardant le token actuel intact
-    setUser((prevUser) => {
-      return { ...prevUser, ...updatedUser, token: prevUser?.token || "" };
-    });
+    if (user?.id === id) {
+      // C’est le user connecté → on peut le mettre à jour
+      setUser({ ...updatedUser, token: user.token });
+    }
   };
 
   // Fonction pour la suppression de la base de donnée des utilisateurs pour la page Admin
@@ -117,7 +122,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
           `Echec de la suppression de l'utilisateur avec l'id ${id}: ${response.statusText}`,
         );
       }
-      await fetchUser();
+      const data = await response.json();
+      if (user?.id === id) {
+        // C’est le user connecté → on peut le mettre à jour
+        setUser({ ...data, token: user.token });
+      }
     } catch (error) {
       console.error("Erreur lors de la suppression de l'utilisateur :", error);
     }

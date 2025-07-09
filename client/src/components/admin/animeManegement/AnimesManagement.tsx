@@ -17,13 +17,13 @@ type Anime = {
 };
 
 function AnimeManagement() {
-  // État pour stocker la liste des utilisateurs
+  // État pour stocker la liste des animes
   const [animes, setAnimes] = useState<Anime[]>([]);
   // État pour afficher/masquer la liste
   const [liste, setListe] = useState(false);
-  // État pour l'utilisateur en cours de modification
+  // État pour l'anime en cours de modification
   const [editAnime, setEditAnime] = useState<Anime | null>(null);
-  // Méthodes depuis le contexte utilisateur
+  // Méthodes depuis le contexte anime
   const { updateAnime } = useAnimeContext();
 
   // Fetch qui récupère tous les animés avec le genre

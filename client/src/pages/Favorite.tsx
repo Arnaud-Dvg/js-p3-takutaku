@@ -12,6 +12,8 @@ function Favorite() {
   const { setAnimeSelected, getAnimebyId } = useAnimeContext();
   const [favorites, setFavorites] = useState<Anime[]>([]); // Tableau pour stocker les favoris
   const [loading, setLoading] = useState(true); // Pour gérer l'état de chargement
+
+  // Fonction pour gérer le clic sur un anime
   const handleClick = async (anime: Anime) => {
     const fullAnime = await getAnimebyId(anime.anime_id);
     if (fullAnime) {
@@ -93,14 +95,7 @@ function Favorite() {
               </Link>
 
               <div className="absolute bottom-1 left-1">
-                <FavoriteButton
-                  animeId={anime.anime_id}
-                  onUnfavorite={() => {
-                    setFavorites((prev) =>
-                      prev.filter((item) => item.anime_id !== anime.anime_id),
-                    );
-                  }}
-                />
+                <FavoriteButton animeId={anime.anime_id} />
               </div>
             </div>
 

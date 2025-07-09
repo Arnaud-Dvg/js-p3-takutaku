@@ -10,6 +10,7 @@ type Anime = {
   date: number;
   is_published: boolean;
   genre_id: number;
+  genre_name?: string;
   paysage: string;
   video: string;
   types?: { id: number; name: string }[];
@@ -116,7 +117,7 @@ class AnimeRepository {
         anime.portrait,
         anime.date,
         anime.is_published,
-        anime.genre_id,
+        anime.genre_name,
         anime.paysage,
         anime.video,
         anime.id,
