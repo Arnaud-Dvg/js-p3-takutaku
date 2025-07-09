@@ -10,7 +10,6 @@ type Anime = {
   date: number;
   is_published: boolean;
   genre_id: number;
-  users_created: number;
   paysage: string;
   video: string;
   types?: { id: number; name: string }[];
@@ -21,7 +20,7 @@ class AnimeRepository {
   async create(anime: Omit<Anime, "id">) {
     // Création d'un nouvel animé
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO Anime (title, synopsis, portrait, date, is_published, genre_id, users_created, paysage, video) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO Anime (title, synopsis, portrait, date, is_published, genre_id, paysage, video) values (?, ?, ?, ?, ?, ?, ?, ?)",
       [
         anime.title,
         anime.synopsis,
@@ -29,7 +28,6 @@ class AnimeRepository {
         anime.date,
         anime.is_published,
         anime.genre_id,
-        anime.users_created,
         anime.paysage,
         anime.video,
       ],
@@ -111,7 +109,7 @@ class AnimeRepository {
   async update(anime: Anime) {
     // Exécute la requête SQL pour lire tout le tableau de la table "Anime"
     const [result] = await databaseClient.query<Result>(
-      "UPDATE Anime set title = ?, synopsis = ?, portrait = ?, date = ?, is_published = ?, genre_id = ?, users_created = ?, paysage = ?, video = ? WHERE id = ?",
+      "UPDATE Anime set title = ?, synopsis = ?, portrait = ?, date = ?, is_published = ?, genre_id = ?, paysage = ?, video = ? WHERE id = ?",
       [
         anime.title,
         anime.synopsis,
@@ -119,7 +117,6 @@ class AnimeRepository {
         anime.date,
         anime.is_published,
         anime.genre_id,
-        anime.users_created,
         anime.paysage,
         anime.video,
         anime.id,

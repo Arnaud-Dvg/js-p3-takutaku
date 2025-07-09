@@ -22,7 +22,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
   email,
   onClose,
 }) => {
-  const { handleLogin, connected } = useAuthContext();
+  const { connected } = useAuthContext();
   const { user, createUser, updateUser } = useUserContext();
 
   const abonnementMap: Record<string, number> = {
@@ -50,10 +50,6 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
     };
 
     await createUser(userToCreate);
-    await handleLogin({
-      mail: newaccount.mail,
-      password: newaccount.password,
-    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

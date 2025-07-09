@@ -1,5 +1,4 @@
 import databaseClient from "../../../database/client";
-
 import type { Result, Rows } from "../../../database/client";
 
 type User = {
@@ -152,6 +151,34 @@ class userRepository {
       [userId],
     );
     return rows;
+  }
+
+  async signIn(mail: string, password: string) {
+    // Exécute la requête SQL pour lire un utilisateur par son mail et mot de passe
+    const [rows] = await databaseClient.query<Rows>(
+      "select * FROM Users where mail = ?",
+      [mail],
+    );
+    //Retourne la première ligne du résultat de la requête ou undefined si aucun utilisateur n'est trouvé
+    return rows[0] as User | undefined;
+  }
+
+  async signUp(
+    firstname: string,
+    lastname: string,
+    mail: string,
+    passHash: string,
+    abonnement_id: number,
+    is_admin: boolean, // Par défaut, les nouveaux utilisateurs ne sont pas administrateurs
+    is_actif: boolean, // Par défaut, les nouveaux utilisateurs sont actifs
+  ) {
+    // Exécute la requête SQL pour créer un nouvel utilisateur
+    const [result] = await databaseClient.query<Result>(
+      "INSERT INTO Users (firstname, lastname, mail, password, abonnement_id, is_admin, is_actif) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [firstname, lastname, mail, passHash, abonnement_id, is_admin, is_actif],
+    );
+    // Retourne l'ID du nouvel utilisateur inséré
+    return result.insertId;
   }
 }
 

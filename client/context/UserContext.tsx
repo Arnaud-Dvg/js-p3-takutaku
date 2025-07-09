@@ -52,13 +52,16 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   // Fonction qui gère la création de compte utilisateur
   const createUser = async (newUser: Omit<User, "id">): Promise<void> => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/auth/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newUser),
         },
-        body: JSON.stringify(newUser),
-      });
+      );
 
       if (!response.ok) {
         throw new Error(`Erreur HTTP : ${response.status}`);
