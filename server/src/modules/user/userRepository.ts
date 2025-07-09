@@ -151,7 +151,6 @@ class userRepository {
     return rows;
   }
 
-
   async signIn(mail: string, password: string) {
     // Exécute la requête SQL pour lire un utilisateur par son mail et mot de passe
     const [rows] = await databaseClient.query<Rows>(
@@ -187,6 +186,7 @@ class userRepository {
     );
 
     return (rows[0] as User) || null;
+
   }
 }
 
