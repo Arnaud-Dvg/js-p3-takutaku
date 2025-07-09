@@ -29,7 +29,7 @@ test("create retourne l'ID inséré (number)", async () => {
   const fakeUser = {
     firstname: "Test",
     lastname: "User",
-    mail: "test.user@example.com",
+    mail: `delete.test.${Date.now()}@example.com`, // ← unique à chaque exécution
     password: "securepass",
     is_admin: false,
     is_actif: true,
@@ -44,4 +44,35 @@ test("create retourne l'ID inséré (number)", async () => {
 
   // Vérifie que l'ID retourné est strictement positif (donc insertion réussie)
   expect(result).toBeGreaterThan(0);
+});
+
+// Test unitaire de la méthode "delete" du userRepo
+// et vérification si le user existe toujours ou pas
+test("Test delete", async () => {
+  // Création d'un faux user pour pouvoir faire le test du delete (c'est du copier/coller du test Create)
+  const fakeUser = {
+    firstname: "Test",
+    lastname: "User",
+    mail: `delete.test.${Date.now()}@example.com`, // ← unique à chaque exécution
+    password: "securepass",
+    is_admin: false,
+    is_actif: true,
+    abonnement_id: 1,
+  };
+
+  const createId = await userRepository.create(fakeUser);
+
+  expect(typeof createId).toBe("number");
+
+  expect(createId).toBeGreaterThan(0);
+
+  // Deuxième partie du test, supression du user
+
+  const deleteUser = await userRepository.delete(createId);
+  // Vérifie qu'au moins un enregistrement a été supprimé (le retour est souvent un count ou booléen)
+  expect(deleteUser).toBeGreaterThan(0);
+
+  const user = await userRepository.findById(createId);
+  // Vérifie que l'utilisateur supprimé n'existe plus dans la base
+  expect(user).toBeNull();
 });

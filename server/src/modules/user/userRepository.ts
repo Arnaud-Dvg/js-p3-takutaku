@@ -151,6 +151,7 @@ class userRepository {
     return rows;
   }
 
+
   async signIn(mail: string, password: string) {
     // Exécute la requête SQL pour lire un utilisateur par son mail et mot de passe
     const [rows] = await databaseClient.query<Rows>(
@@ -177,6 +178,15 @@ class userRepository {
     );
     // Retourne l'ID du nouvel utilisateur inséré
     return result.insertId;
+
+  // Récupère un utilisateur depuis la base de données par son ID pour le test unitaire de suppresion d'un user
+  async findById(id: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT * FROM Users WHERE id = ?",
+      [id],
+    );
+
+    return (rows[0] as User) || null;
   }
 }
 
