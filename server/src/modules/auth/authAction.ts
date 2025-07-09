@@ -1,6 +1,7 @@
+import bcrypt from "bcryptjs";
 import type { Request, Response } from "express";
 import jwt, { sign } from "jsonwebtoken";
-import authRepository from "./authRepository";
+import userRepository from "../user/userRepository";
 
 // Clé secrète pour signer les tokens et verifier leur authenticité (obligatoire pour la sécurité, à mettre dans .env ne doit pas être exposée)
 const tokenKey = process.env.JWT_SECRET;
@@ -14,13 +15,20 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
   // Récupération des données envoyées depuis le client via le formulaire et insertion dans le corps de la requête
   const { mail, password } = request.body;
   // Appel du repository pour vérifier si un utilisateur existe dans la base de donnees
-  const user = await authRepository.signIn(mail, password);
+  const user = await userRepository.signIn(mail, password);
 
   if (!user) {
-    // Si l'utilisateur n'existe pas ou que les identifiants sont incorrects, on envoie une erreur 401 au client
-    return response
-      .status(401)
-      .send({ message: "Cet utilisateur n'existe pas" });
+    return response.status(401).send({ message: "Erreur d'authentification" });
+  }
+
+  // Vérifier le mot de passe
+  const isPasswordValid = bcrypt.compareSync(password, user.password || "");
+
+  console.log("isPasswordValid", isPasswordValid, password, user.password);
+
+  // Si le mot de passe est incorrect, renvoyer une erreur 401
+  if (!isPasswordValid) {
+    return response.status(401).send({ message: "Mot de passe incorrect" });
   }
 
   // Si un user est trouvé, récupération du token de l'utilisateur
@@ -46,38 +54,39 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const signUp = async (request: Request, response: Response): Promise<any> => {
   // Récupération des données envoyées depuis le client via le formulaire et insertion dans le corps de la requête
-  const { firstname, lastname, mail, password, abonnement_id } = request.body;
-  // Appel du repository pour creer un utilisateur dans la base de donnees
-  const userId = await authRepository.create({
+  const {
     firstname,
     lastname,
     mail,
     password,
     abonnement_id,
-    is_admin: false, // Par défaut, les nouveaux utilisateurs ne sont pas administrateurs
-    is_actif: true, // Par défaut, les nouveaux utilisateurs sont actifs
-  });
-  // Si la creation echoue (retour falsy), on envoie une erreur 400 au client
-  if (!userId) {
-    return response
-      .status(400)
-      .send({ message: "Erreur dans la création de l'utilisateur" });
-  }
-  // Récupérer le user fraîchement créé (important !)
-  const user = await authRepository.signIn(mail, password);
+    is_actif,
+    is_admin,
+  } = request.body;
+  const passHash = bcrypt.hashSync(password, 8);
 
+  const user = await userRepository.signUp(
+    firstname,
+    lastname,
+    mail,
+    passHash,
+    abonnement_id,
+    is_admin,
+    is_actif,
+  );
+  console.log("user", user);
   if (!user) {
     return response
       .status(500)
       .send({ message: "Utilisateur créé mais non retrouvé" });
   }
   // Si un user est cree, un token lui est attribue qui permet de l'identifier lors des futures requetes
-  const token = jwt.sign({ id: userId }, tokenKey);
+  const token = jwt.sign({ user }, tokenKey);
   // Envoie au client un message de succees, le token dauthentification (JWT) et l'identifiant du nouvel utilisateur
   // Renvoyer tout l'objet user + token
   response.send({
-    ...user,
-    token,
+    user: user,
+    token: token,
   });
 };
 

@@ -18,7 +18,6 @@ export type Anime = {
   date: string;
   is_published: boolean;
   genre_id: number;
-  users_created: number;
   paysage: string;
   video: string;
   types?: { id: number; name: string }[]; // Récupération des types associés
