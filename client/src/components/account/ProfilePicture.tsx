@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserContext } from "../../../context/UserContext";
 import type { User } from "../../../context/UserContext";
 
@@ -15,33 +15,35 @@ function ProfilePicture() {
   const [selectedPicture, setSelectedPicture] = useState<number | null>(null);
 
   // Pour l'affichage de la picture selon le user
-  const getUrlPicture = useCallback(async () => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/user/readUrlPicture/${user?.id}`,
-        {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${user?.token}`,
-          },
-        },
-      );
-      const urlPicture = await response.json();
-      const url = urlPicture.profil_picture;
-      setUrlPicture(url);
-    } catch (error) {
-      console.error(
-        "Erreur lors de la récupération de l'URL de la photo de profil",
-        error,
-      );
-      setUrlPicture("");
-    }
-  }, [user?.id, user?.token]);
-
   useEffect(() => {
-    getUrlPicture();
-  }, [getUrlPicture]);
+    const getUrlPicture = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/user/readUrlPicture/${user?.id}`,
+          {
+            method: "GET",
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Bearer ${user?.token}`,
+            },
+          },
+        );
+        const urlPicture = await response.json();
+        const url = urlPicture.profil_picture;
+        setUrlPicture(url);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération de l'URL de la photo de profil",
+          error,
+        );
+        setUrlPicture("");
+      }
+    };
+    if (user) {
+      getUrlPicture();
+      setSelectedPicture(user.profil_picture_id);
+    }
+  }, [user]);
 
   // Pour l'affichage des pictures
   useEffect(() => {

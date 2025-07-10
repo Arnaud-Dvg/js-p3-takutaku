@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../context/AuthContext";
 import { useUserContext } from "../../../context/UserContext";
@@ -16,33 +16,34 @@ function NavBar() {
   const [urlPicture, setUrlPicture] = useState("");
 
   // Pour l'affichage de la picture selon le user
-  const getUrlPicture = useCallback(async () => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/user/readUrlPicture/${user?.id}`,
-        {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${user?.token}`,
-          },
-        },
-      );
-      const urlPicture = await response.json();
-      const url = urlPicture.profil_picture;
-      setUrlPicture(url);
-    } catch (error) {
-      console.error(
-        "Erreur lors de la récupération de l'URL de la photo de profil",
-        error,
-      );
-      setUrlPicture("");
-    }
-  }, [user?.id, user?.token]);
-
   useEffect(() => {
-    getUrlPicture();
-  }, [getUrlPicture]);
+    const getUrlPicture = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/user/readUrlPicture/${user?.id}`,
+          {
+            method: "GET",
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Bearer ${user?.token}`,
+            },
+          },
+        );
+        const urlPicture = await response.json();
+        const url = urlPicture.profil_picture;
+        setUrlPicture(url);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération de l'URL de la photo de profil",
+          error,
+        );
+        setUrlPicture("");
+      }
+    };
+    if (user) {
+      getUrlPicture();
+    }
+  }, [user]);
 
   const isHomePage = location.pathname === "/";
   const isGenrePage = location.pathname === "/genre";
