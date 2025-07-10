@@ -10,7 +10,8 @@ interface Anime {
   portrait: string;
   date: number;
   is_published: boolean;
-  genre_id: number;
+  genre_id?: number;
+  genre_name?: string;
   paysage: string;
   video: string;
 }
@@ -65,6 +66,7 @@ const read: RequestHandler = async (req, res, next) => {
 const edit: RequestHandler = async (req, res, next) => {
   try {
     // Mettre à jour une catégorie spécifique en fonction de l'identifiant fourni.
+    console.log("Body reçu:", req.body);
     const anime = {
       id: Number(req.params.id),
       title: req.body.title,
@@ -72,6 +74,7 @@ const edit: RequestHandler = async (req, res, next) => {
       portrait: req.body.portrait,
       date: req.body.date,
       is_published: req.body.is_published,
+      genre_name: req.body.genre_name,
       genre_id: req.body.genre_id,
       paysage: req.body.paysage,
       video: req.body.video,
@@ -96,14 +99,15 @@ const edit: RequestHandler = async (req, res, next) => {
 const add: RequestHandler = async (req, res, next) => {
   try {
     // Extraire les données de l'élément du corps de la requête
-    const newAnime: Anime = {
-      id: Number(req.params.id),
+    // Préparer un nouvel anime sans l'id et avec genre_id obligatoire
+    const newAnime = {
       title: req.body.title,
       synopsis: req.body.synopsis,
       portrait: req.body.portrait,
       date: req.body.date,
       is_published: req.body.is_published,
-      genre_id: req.body.genre_id,
+      genre_name: req.body.genre_name,
+      genre_id: Number(req.body.genre_id),
       paysage: req.body.paysage,
       video: req.body.video,
     };

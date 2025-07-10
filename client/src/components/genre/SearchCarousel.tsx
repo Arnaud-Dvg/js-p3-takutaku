@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper/types";
 import type { Anime } from "../../../context/AnimeContext";
 import { useAnimeContext } from "../../../context/AnimeContext";
+import FavoriteButton from "../favorite/FavoriteButton";
 
 interface propsFilter {
   genre: string;
@@ -97,6 +98,9 @@ function SearchCarousel({ genre, type, filteredAnime }: propsFilter) {
                       className="w-full rounded-sm"
                     />
                   </Link>
+                  <div className="absolute bottom-1 left-1 z-10">
+                    <FavoriteButton animeId={anime.id} />
+                  </div>
                   <p className="text-[0.6rem] md:text-[0.8rem] font-light text-tertiary text-center mt-2">
                     {anime.title}
                   </p>

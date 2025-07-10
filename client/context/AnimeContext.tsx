@@ -121,23 +121,50 @@ export const AnimeProvider = ({ children }: { children: React.ReactNode }) => {
       });
   };
 
-  const updateAnime = (
+  const updateAnime = async (
     id: number,
     updateData: Partial<Anime>,
   ): Promise<void> => {
-    return fetch(`${import.meta.env.VITE_API_URL}/api/anime/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/anime/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData),
       },
-      body: JSON.stringify(updateData),
-    }).then(() => fetchAnime());
+    );
+    if (!response.ok) {
+      throw new Error(
+        `Erreur lors de la mise à jour de l'anime avec l'ID ${id}`,
+      );
+    }
+    setAnime((prev) =>
+      prev.map((anime) =>
+        anime.id === id ? { ...anime, ...updateData } : anime,
+      ),
+    );
   };
 
-  const deleteAnime = (id: number): Promise<void> => {
-    return fetch(`${import.meta.env.VITE_API_URL}/api/anime/${id}`, {
-      method: "DELETE",
-    }).then(() => fetchAnime());
+  const deleteAnime = async (id: number): Promise<void> => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/anime/${id}`,
+        {
+          method: "DELETE",
+        },
+      );
+      if (!response.ok) {
+        throw new Error(
+          `Erreur lors de la suppression de l'anime avec l'ID ${id}`,
+        );
+      }
+      const deletedAnime = await response.json();
+      setAnime((prev) => prev.filter((anime) => anime.id !== deletedAnime.id));
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'anime :", error);
+    }
   };
 
   return (

@@ -20,7 +20,7 @@ function PopulaireCarousel() {
       getAnimebyId(1),
       getAnimebyId(2),
       getAnimebyId(16),
-      getAnimebyId(20),
+      getAnimebyId(12),
       getAnimebyId(5),
     ]).then((data) => {
       setSelectAnime(data.filter((anime): anime is Anime => anime !== null));
