@@ -11,6 +11,7 @@ export type User = {
   is_actif: boolean;
   abonnement_id: number;
   token: string;
+  profil_picture_id: number;
 };
 
 // Typage du context User

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../context/AuthContext";
+import { useUserContext } from "../../../context/UserContext";
 
 //NavBar Desktop
 import NavBar from "../Mobile Header/NavBar";
@@ -14,6 +15,37 @@ function Header() {
   const isGenrePage = location.pathname === "/genre";
   const isFavoritePage = location.pathname === "/favorite";
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
+  const { user } = useUserContext();
+  const [urlPicture, setUrlPicture] = useState("");
+
+  // Pour l'affichage de la picture selon le user
+  const getUrlPicture = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/user/readUrlPicture/${user?.id}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${user?.token}`,
+          },
+        },
+      );
+      const urlPicture = await response.json();
+      const url = urlPicture.profil_picture;
+      setUrlPicture(url);
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération de l'URL de la photo de profil",
+        error,
+      );
+      setUrlPicture("");
+    }
+  }, [user?.id, user?.token]);
+
+  useEffect(() => {
+    getUrlPicture();
+  }, [getUrlPicture]);
 
   const handleClick = () => {
     const storedUser = localStorage.getItem("userConnected");
@@ -86,9 +118,9 @@ function Header() {
         <div className="flex justify-end flex-1">
           <button type="button" className="w-9 h-9 p-1 z-10 cursor-pointer">
             <img
-              src={!connected ? "/avatar.svg" : "/profilpicture.png"}
-              alt="Avatar Icon"
-              className={!connected ? "" : "rounded-full"}
+              src={!connected ? "/avatar.svg" : urlPicture}
+              alt="Profile Pic"
+              className="rounded-full w-20 cursor-pointer"
               onClick={handleClick}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {

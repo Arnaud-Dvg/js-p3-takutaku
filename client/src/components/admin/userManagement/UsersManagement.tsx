@@ -14,6 +14,7 @@ type User = {
   is_actif: boolean;
   abonnement_id: number;
   abonnement_name?: string;
+  profil_picture_id: number;
   token: string;
 };
 
@@ -37,6 +38,7 @@ function UserManagement() {
     is_admin: false,
     is_actif: true,
     abonnement_id: 1,
+    profil_picture_id: 1, // Valeur par défaut pour l'image de profil
     token: "",
   });
 
@@ -448,8 +450,7 @@ function UserManagement() {
               <img src="/favicon.ico" alt="Mascotte" className="h-15" />
               <button
                 type="button"
-                onClick={(e) => {
-                  e.preventDefault();
+                onClick={() => {
                   handleCreateUser(newUser);
                   setNewUser({
                     firstname: "",
@@ -459,8 +460,10 @@ function UserManagement() {
                     is_admin: false,
                     is_actif: true,
                     abonnement_id: 2,
+                    profil_picture_id: 1, // Reset to default value
                     token: "",
                   });
+                  setOpen(false);
                   setOpen(false);
                 }}
                 className="text-secondary font-bold text-lg hover:text-secondary pb-10 cursor-pointer"

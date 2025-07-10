@@ -46,6 +46,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
       is_admin: false,
       is_actif: true,
       abonnement_id,
+      profil_picture_id: 1,
       token: "",
     };
 
