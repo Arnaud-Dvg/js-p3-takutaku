@@ -12,7 +12,7 @@ function ProfilePicture() {
   const { user, setUser } = useUserContext();
   const [profilePictures, setProfilePictures] = useState<ProfilPicture[]>([]);
   const [urlPicture, setUrlPicture] = useState("");
-  const [selectedPicture, setSelectedPicture] = useState<number | null>(null);
+  const [selectedPicture, setSelectedPicture] = useState<number | null>(user?.profil_picture_id || null);
 
   // Pour l'affichage de la picture selon le user
   useEffect(() => {
@@ -68,10 +68,17 @@ function ProfilePicture() {
         setProfilePictures([]);
       }
     };
-    if (choosePicture) {
       getProfilPictures();
-    }
-  }, [choosePicture]);
+  }, []);
+
+  // Pour la sélection de la picture : on vérifie si l'url de la picture correspond à une picture de la liste
+  // et on met à jour l'ID de la picture sélectionnée 
+  useEffect(() => {
+  setSelectedPicture(
+    profilePictures.find((picture) => picture.profil_picture === urlPicture)?.id ?? null
+  );
+}, [urlPicture, profilePictures]);
+
 
   // Pour la modification de la picture
   const handlePictureChange = async (user: User, profil_picture_id: number) => {
