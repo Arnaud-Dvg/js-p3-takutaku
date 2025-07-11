@@ -1,4 +1,5 @@
 import express from "express";
+import { checkEmailExists } from "./middleware/checkEmailExists";
 import security from "./middleware/security";
 import { checkToken } from "./middleware/security";
 
@@ -62,7 +63,6 @@ router.delete("/api/abonnement/:id", abonnementAction.destroy);
 
 // Routes for the user module
 import userAction from "./modules/user/userAction";
-
 router.get("/api/user", userAction.browse);
 router.get("/api/user/:id([0-9]+)", checkToken, userAction.read);
 router.post("/api/user", userAction.add);
@@ -80,7 +80,7 @@ router.get("/api/user/readUrlPicture/:id", userAction.readUrlPicture);
 //Routes for the authenfication module
 import authAction from "./modules/auth/authAction";
 router.post("/api/auth/signin", authAction.signIn);
-router.post("/api/auth/signup", authAction.signUp);
+router.post("/api/auth/signup", checkEmailExists, authAction.signUp);
 
 // Routes for the favorite_anime / favorites
 import favoriteAnimeAction from "./modules/favoriteAnime/favoriteAnimeAction";

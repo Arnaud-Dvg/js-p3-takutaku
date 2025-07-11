@@ -213,6 +213,15 @@ class userRepository {
     );
     return rows[0];
   }
+
+  // Vérification de l'existence de l'e-mail en BDD pour le middleware checkEmailExists
+  async findByEmail(mail: string) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT id FROM Users WHERE mail = ?",
+      [mail],
+    );
+    return rows[0];
+  }
 }
 
 export default new userRepository();

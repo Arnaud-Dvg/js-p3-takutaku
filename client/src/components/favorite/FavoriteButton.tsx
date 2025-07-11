@@ -1,4 +1,5 @@
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { useAuthContext } from "../../../context/AuthContext";
 import { useFavoriteContext } from "../../../context/FavoriteContext";
 
@@ -7,8 +8,11 @@ function FavoriteButton({ animeId }: { animeId: number }) {
   const { isFavorite, toggleFavorite } = useFavoriteContext();
 
   const handleClick = async () => {
-    if (!connected || !animeId) return;
+    if (!connected || !animeId) {
+      toast.error("Veuillez vous connecter");
+    }
     await toggleFavorite(animeId);
+    return;
   };
 
   return (

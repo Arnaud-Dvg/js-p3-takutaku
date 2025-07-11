@@ -51,6 +51,8 @@ function CreateAccount({
         <PaymentPopUp
           newaccount={newaccount}
           selectedPlan={selectedPlan}
+          setSelectedPlan={setSelectedPlan}
+          setShowPayment={setShowPayment}
           email={newaccount.mail}
           onClose={closeAll}
         />
