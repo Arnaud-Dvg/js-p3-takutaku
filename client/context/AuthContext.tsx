@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         is_admin: data.user.is_admin ?? false,
         is_actif: data.user.is_actif ?? true,
         token: data.token,
+        profil_picture_id: data.user.profil_picture_id ?? 1,
       };
 
       setUser(formattedUser);

@@ -10,6 +10,12 @@ type User = {
   is_admin: boolean;
   is_actif: boolean;
   abonnement_id: number;
+  profil_picture_id: number;
+};
+
+type ProfilPicture = {
+  id: number;
+  profil_picture: string;
 };
 
 class userRepository {
@@ -187,6 +193,35 @@ class userRepository {
 
     return (rows[0] as User) || null;
 
+  }
+
+  //   Pour le changement de l'image de profil
+  async updateProfilPicture(id: number, profil_picture_id: number) {
+    // Exécute la requête SQL pour lire tout le tableau de la table "User"
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE Users SET profil_picture_id = ? WHERE id = ?",
+      [profil_picture_id, id],
+    );
+    // Retourne le tableau des users mis à jour
+    return result.affectedRows;
+  }
+
+  async readAllPicture() {
+    // Exécute la requête SQL pour lire tout le tableau de la table "ProfilPicture"
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT * FROM ProfilPicture",
+    );
+    // Retournes le tableau d'éléments
+    return rows as ProfilPicture[];
+  }
+
+  // Pour récupérer le bon id picture selon l'id du user
+  async readUrlPicture(userId: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT profil_picture FROM ProfilPicture AS pp INNER JOIN Users AS u ON pp.id=u.profil_picture_id WHERE u.id = ?",
+      [userId],
+    );
+    return rows[0];
   }
 }
 

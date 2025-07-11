@@ -18,6 +18,12 @@ CREATE TABLE Type (
   name VARCHAR(100) NOT NULL
 );
 
+-- Table ProfilPicture
+CREATE TABLE ProfilPicture (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  profil_picture TEXT
+);
+
 -- Table Users (user est réservé, donc on peut nommer users)
 CREATE TABLE Users (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -28,7 +34,9 @@ CREATE TABLE Users (
   is_admin BOOLEAN NOT NULL DEFAULT FALSE,
   is_actif BOOLEAN NOT NULL DEFAULT TRUE,
   abonnement_id INT NOT NULL,
-  FOREIGN KEY (abonnement_id) REFERENCES Abonnement(id)
+  profil_picture_id INT DEFAULT 1,
+  FOREIGN KEY (abonnement_id) REFERENCES Abonnement(id),
+  FOREIGN KEY (profil_picture_id) REFERENCES ProfilPicture(id)
 );
 
 -- Table Anime
@@ -115,13 +123,23 @@ INSERT INTO Type (name) VALUES
 ('Tranche de vie'),
 ('Thriller');
 
+-- Insertion des images de profil
+INSERT INTO ProfilPicture (profil_picture) VALUES
+('https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/profilpicture/connectedavatar.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwcm9maWxwaWN0dXJlL2Nvbm5lY3RlZGF2YXRhci5zdmciLCJpYXQiOjE3NTIxMzIzNTgsImV4cCI6NDkwNTczMjM1OH0.0ABjsw40Fl9Mrkn1offOA4SjHz9QtkDw3DIa2rokUYs'),
+('https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/profilpicture/profilpicture.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwcm9maWxwaWN0dXJlL3Byb2ZpbHBpY3R1cmUucG5nIiwiaWF0IjoxNzUyMTMyMzc5LCJleHAiOjQ5MDU3MzIzNzl9.4T5W9N7-NB7OCMa_zObmDUiMNSwgq5nB-z8Rg7uQAxc'),
+('https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/profilpicture/profilpicture2.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwcm9maWxwaWN0dXJlL3Byb2ZpbHBpY3R1cmUyLnBuZyIsImlhdCI6MTc1MjEzMjM5MCwiZXhwIjo0OTA1NzMyMzkwfQ.BAYzBJZgohLyinJ89Nt_8TG2jqMNWYCXqQ-dN8b3c1Q'),
+('https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/profilpicture/profilpicture3.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwcm9maWxwaWN0dXJlL3Byb2ZpbHBpY3R1cmUzLnBuZyIsImlhdCI6MTc1MjEzMjQwMSwiZXhwIjo0OTA1NzMyNDAxfQ.MqgZpLjnOnmcU8_go6HvwKA3UCnid8hphXEzp5UKBHE'),
+('https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/profilpicture/profilpicture4.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwcm9maWxwaWN0dXJlL3Byb2ZpbHBpY3R1cmU0LnBuZyIsImlhdCI6MTc1MjEzMjQxMiwiZXhwIjo0OTA1NzMyNDEyfQ.Xe87dBUa3BkZ0AGr1ZiRVASFYATK4uLqE3sPY42lpoI'),
+('https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/profilpicture/profilpicture5.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwcm9maWxwaWN0dXJlL3Byb2ZpbHBpY3R1cmU1LnBuZyIsImlhdCI6MTc1MjEzMjQyNiwiZXhwIjo0OTA1NzMyNDI2fQ.oKel3q4h7GTvBvVudxKdJnmCD4g7ui-q98kM08rLA5o'),
+('https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/profilpicture/404.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwcm9maWxwaWN0dXJlLzQwNC5wbmciLCJpYXQiOjE3NTIxMzI0MzcsImV4cCI6NDkwNTczMjQzN30.57fP7IHhHjyE35ZlUL2qkGSM7nfWBhjpVPeIsFR8Vnc');
+
 -- Insertion des users
-INSERT INTO users (firstname ,lastname, mail, password, is_admin, is_actif, abonnement_id) VALUES
-('Alexandra', 'PASTOR', 'pastoralex@free.fr', '$2b$08$hdkfbZv5/xo8VQAUZGp79O4WyQGoA5Gx3wQe8BhJelRs4KJALDEvO' , TRUE, TRUE, 2),
-('Yavuz', 'Kutuk', 'yavuz@gmail.com', '$2b$08$kgew14Ch8BPmszzE4MsS9OiE77jZfzKTYXN//AXdIBJyWhxrYYNIe', FALSE, TRUE, 1),
-('Thibaud', 'GUADAGNA', 'thibaud.guadagna@gmail.com', '$2b$08$M8.KFaiBotYnZjmnprNUT.qCEfQ0Xlp8/JcsyBKna1WFbq1rxX9lq', TRUE, TRUE, 2),
-('Arnaud', 'Devoge', 'arnoo.54@hotmail.fr','$2b$08$G8qk50iPoG00Sefa0BPpc.HkHW64IVXQeN35Mlhnz0fhQshiwWbmi', TRUE , TRUE, 2),
-('Nathan', 'Durnerin', 'durnerin.nathan01@gmail.com', '$2b$08$UtoztNueI3QVTFR5sP3vY.cnUHXOXGqnFpkdt2Ce0TH5Pivpalmwa', TRUE, TRUE, 2);
+INSERT INTO users (firstname ,lastname, mail, password, is_admin, is_actif, abonnement_id, profil_picture_id) VALUES
+('Alexandra', 'PASTOR', 'pastoralex@free.fr', '$2b$08$hdkfbZv5/xo8VQAUZGp79O4WyQGoA5Gx3wQe8BhJelRs4KJALDEvO' , TRUE, TRUE, 2, 1),
+('Yavuz', 'Kutuk', 'yavuz@gmail.com', '$2b$08$kgew14Ch8BPmszzE4MsS9OiE77jZfzKTYXN//AXdIBJyWhxrYYNIe', FALSE, TRUE, 1, 1),
+('Thibaud', 'GUADAGNA', 'thibaud.guadagna@gmail.com', '$2b$08$M8.KFaiBotYnZjmnprNUT.qCEfQ0Xlp8/JcsyBKna1WFbq1rxX9lq', TRUE, TRUE, 2, 1),
+('Arnaud', 'Devoge', 'arnoo.54@hotmail.fr','$2b$08$G8qk50iPoG00Sefa0BPpc.HkHW64IVXQeN35Mlhnz0fhQshiwWbmi', TRUE , TRUE, 2, 1),
+('Nathan', 'Durnerin', 'durnerin.nathan01@gmail.com', '$2b$08$UtoztNueI3QVTFR5sP3vY.cnUHXOXGqnFpkdt2Ce0TH5Pivpalmwa', TRUE, TRUE, 2, 1);
 
 
 -- Insertion des animes

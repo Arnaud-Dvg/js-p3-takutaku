@@ -34,6 +34,7 @@ test("create retourne l'ID inséré (number)", async () => {
     is_admin: false,
     is_actif: true,
     abonnement_id: 1,
+    profil_picture_id: 1,
   };
 
   // Appelle la méthode create() pour insérer l'utilisateur dans la base

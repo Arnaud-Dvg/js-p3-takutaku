@@ -66,13 +66,16 @@ import userAction from "./modules/user/userAction";
 router.get("/api/user", userAction.browse);
 router.get("/api/user/:id([0-9]+)", checkToken, userAction.read);
 router.post("/api/user", userAction.add);
-router.put("/api/user/:id", userAction.edit);
-router.delete("/api/user/:id", userAction.destroy);
+router.put("/api/user/profil_picture", userAction.editProfilPicture);
+router.put("/api/user/:id([0-9]+)", userAction.edit);
+router.delete("/api/user/:id([0-9]+)", userAction.destroy);
 router.get("/api/user_abonnement", userAction.browse);
 router.get("/api/user_with_abonnement", userAction.browseWithAbonnement);
 router.get("/api/read_all_with_anime", userAction.readAllWithUsers);
 router.post("/api/add_to_history", userAction.addToHistory);
-router.get("/api/user/:id/history", userAction.readUserHistory);
+router.get("/api/user/:id([0-9]+)/history", userAction.readUserHistory);
+router.get("/api/user/readAllProfilPicture", userAction.readAllProfilPicture);
+router.get("/api/user/readUrlPicture/:id", userAction.readUrlPicture);
 
 //Routes for the authenfication module
 import authAction from "./modules/auth/authAction";

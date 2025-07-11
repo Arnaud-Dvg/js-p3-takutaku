@@ -12,6 +12,7 @@ interface User {
   is_admin: boolean;
   is_actif: boolean;
   abonnement_id: number;
+  profil_picture_id: number;
 }
 
 //Le B DU Bread (Read All)
@@ -59,6 +60,7 @@ const edit: RequestHandler = async (req, res, next) => {
       is_admin: req.body.is_admin,
       is_actif: req.body.is_actif,
       abonnement_id: req.body.abonnement_id,
+      profil_picture_id: req.body.profil_picture_id,
     };
     const affectedRows = await userRepository.update(user);
     // Si l'information n'est pas trouvée, répondre avec statut 404
@@ -86,6 +88,7 @@ const add: RequestHandler = async (req, res, next) => {
       is_admin: req.body.is_admin,
       is_actif: req.body.is_actif,
       abonnement_id: req.body.abonnement_id,
+      profil_picture_id: req.body.profil_picture_id,
     };
     // Création d'un user
     const insertId = await userRepository.create(newUser);
@@ -154,6 +157,54 @@ const readUserHistory: RequestHandler = async (req, res, next) => {
   }
 };
 
+// Pour la modification de l'image de profil
+const editProfilPicture: RequestHandler = async (req, res, next) => {
+  try {
+    //Mettre à jour uniquement l'image de profil en fonction de l'ID fourni
+    const id = Number(req.body.id);
+    const profil_picture_id = req.body.profil_picture_id;
+    const affectedRows = await userRepository.updateProfilPicture(
+      id,
+      profil_picture_id,
+    );
+    // Si l'information n'est pas trouvée, répondre avec statut 404
+    //Sinon répondre avec l'information au format JSON
+    if (affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.json({ id, profil_picture_id });
+    }
+  } catch (err) {
+    // Transmission de toute erreur au middleware pour gestion des erreurs
+    console.error("Erreur de mise à jour de l'image de profil :", err);
+    next(err);
+  }
+};
+
+// Pour lire toutes les images de profil
+const readAllProfilPicture: RequestHandler = async (req, res, next) => {
+  try {
+    //Fetch des images de profil
+    const pictures = await userRepository.readAllPicture();
+    //réponse des informations des images de profil au format JSON
+    res.json(pictures);
+  } catch (err) {
+    //Transmission des erreurs au middleware pour gestion des erreurs
+    next(err);
+  }
+};
+
+// Pour récupérer le bon id de la picture selon l'id du user
+const readUrlPicture: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.id);
+    const urlPicture = await userRepository.readUrlPicture(userId);
+    res.json(urlPicture);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   browse,
   read,
@@ -164,4 +215,7 @@ export default {
   readAllWithUsers,
   addToHistory,
   readUserHistory,
+  editProfilPicture,
+  readAllProfilPicture,
+  readUrlPicture,
 };
