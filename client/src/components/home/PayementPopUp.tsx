@@ -3,6 +3,7 @@ import { FaCreditCard } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useAuthContext } from "../../../context/AuthContext";
 import { useUserContext } from "../../../context/UserContext";
+import CreateAccount from "./CreateAccount";
 
 interface PaymentPopUpProps {
   newaccount: {
@@ -12,13 +13,17 @@ interface PaymentPopUpProps {
     password: string;
   };
   selectedPlan: string;
+  setSelectedPlan: (plan: string) => void;
   email: string;
   onClose: () => void;
+  setShowPayment: (show: boolean) => void;
 }
 
 const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
   newaccount,
   selectedPlan,
+  setSelectedPlan,
+  setShowPayment,
   email,
   onClose,
 }) => {
@@ -37,9 +42,9 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
     cvv: "",
   });
 
-  const handleCreateAccount = async () => {
+  const handleCreateAccount = async (): Promise<boolean> => {
     const abonnement_id = abonnementMap[selectedPlan];
-    if (!abonnement_id) return;
+    if (!abonnement_id) return false;
 
     const userToCreate = {
       ...newaccount,
@@ -50,7 +55,14 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
       token: "",
     };
 
-    await createUser(userToCreate);
+    const response = await createUser(userToCreate);
+
+    if (!response.success) {
+      toast.error(response.message || "Erreur lors de la création du compte.");
+      return false;
+    }
+
+    return true;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -147,7 +159,8 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
 
     // Si l'utilisateur n'est pas connecté, on crée le compte
     if (!connected) {
-      handleCreateAccount();
+      const creationSuccess = await handleCreateAccount();
+      if (!creationSuccess) return;
     }
 
     // Si l'utilisateur est connecté, on peut procéder au paiement et switcher l'abonnement
@@ -163,6 +176,12 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
     // Tout est OK
     toast.success("Paiement effectué avec succès !");
     onClose();
+  };
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+
+  const handleCloseSignup = () => {
+    setIsSignupOpen(false);
+    setSelectedPlan("");
   };
 
   return (
@@ -237,6 +256,18 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
           >
             Valider le paiement
           </button>
+          <div className="w-full flex justify-end mb-6">
+            <button
+              type="button"
+              onClick={() => {
+                setIsSignupOpen(true);
+                setShowPayment(false);
+              }}
+              className="text-yellow-400 font-semibold hover:text-yellow-300 my-5"
+            >
+              Retour à la création de compte
+            </button>
+          </div>
         </form>
 
         {/* Mascotte */}
@@ -256,6 +287,14 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
         >
           &times;
         </button>
+        {isSignupOpen && (
+          <CreateAccount
+            isOpen={isSignupOpen}
+            onClose={handleCloseSignup}
+            selectedPlan={selectedPlan}
+            setSelectedPlan={setSelectedPlan}
+          />
+        )}
       </section>
     </section>
   );

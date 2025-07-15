@@ -18,7 +18,9 @@ export type User = {
 type UserContextType = {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  createUser: (newUser: Omit<User, "id">) => Promise<void>;
+  createUser: (
+    newUser: Omit<User, "id">,
+  ) => Promise<{ success: boolean; message?: string }>;
   connected: boolean;
   setConnected: React.Dispatch<React.SetStateAction<boolean>>;
   fetchUser: () => Promise<void>;
@@ -51,7 +53,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Fonction qui gère la création de compte utilisateur
-  const createUser = async (newUser: Omit<User, "id">): Promise<void> => {
+  const createUser = async (
+    newUser: Omit<User, "id">,
+  ): Promise<{ success: boolean; message?: string }> => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/auth/signup`,
@@ -64,8 +68,15 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         },
       );
 
+      if (response.status === 409) {
+        return {
+          success: false,
+          message: "Cette adresse e-mail est déjà utilisée.",
+        };
+      }
+
       if (!response.ok) {
-        throw new Error(`Erreur HTTP : ${response.status}`);
+        return { success: false, message: `Erreur HTTP : ${response.status}` };
       }
 
       const createdUser = await response.json();
@@ -76,8 +87,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       setConnected(true);
+
+      return { success: true };
     } catch (error) {
       console.error("Erreur lors de la création de l'utilisateur :", error);
+      return { success: false, message: "Erreur serveur lors de la création." };
     }
   };
 
