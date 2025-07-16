@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAnimeContext } from "../../context/AnimeContext";
+import Note from "../components/Note/Note";
 import WatchButton from "../components/home/WatchButton";
 
 function Anime() {
@@ -53,6 +54,9 @@ function Anime() {
           ))}
         </ul>
 
+        <div className="flex justify-center items-center">
+          <Note />
+        </div>
         <div className="flex flex-col items-start mx-8 my-5 text-sm">
           <p className="mb-4">{animeSelected.synopsis}</p>
 
@@ -97,6 +101,9 @@ function Anime() {
               </ul>
             </div>
             <WatchButton anime={animeSelected} />
+          </div>
+          <div>
+            <Note />
           </div>
         </section>
       </section>

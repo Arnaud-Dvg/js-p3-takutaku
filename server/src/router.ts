@@ -95,4 +95,15 @@ router.delete(
   favoriteAnimeAction.destroy,
 );
 
+//Routes for the note module
+import noteAction from "./modules/note/noteAction";
+router.get("/api/note", noteAction.browse);
+router.get(
+  "/api/note/:anime_id([0-9]+)/:users_id([0-9]+)",
+  noteAction.readUserNote,
+);
+router.get("/api/note/:anime_id([0-9]+)/average", noteAction.readAverage);
+router.post("/api/note", noteAction.add);
+router.put("/api/note/:anime_id([0-9]+)/:users_id([0-9]+)", noteAction.edit);
+
 export default router;
