@@ -59,6 +59,7 @@ test("Test delete", async () => {
     is_admin: false,
     is_actif: true,
     abonnement_id: 1,
+    profil_picture_id: 1,
   };
 
   const createId = await userRepository.create(fakeUser);

@@ -53,6 +53,16 @@ CREATE TABLE Anime (
   FOREIGN KEY (genre_id) REFERENCES Genre(id) ON DELETE RESTRICT
 );
 
+-- Table Note
+CREATE TABLE Note (
+id INT PRIMARY KEY AUTO_INCREMENT,
+users_id INT NOT NULL,
+anime_id INT NOT NULL, 
+note INT CHECK (note BETWEEN 0 AND 5),
+FOREIGN KEY (users_id) REFERENCES Users(id) ON DELETE CASCADE,
+FOREIGN KEY (anime_id) REFERENCES Anime(id) ON DELETE CASCADE
+);
+
 -- Table Season
 CREATE TABLE Season (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -141,7 +151,6 @@ INSERT INTO users (firstname ,lastname, mail, password, is_admin, is_actif, abon
 ('Arnaud', 'Devoge', 'arnoo.54@hotmail.fr','$2b$08$G8qk50iPoG00Sefa0BPpc.HkHW64IVXQeN35Mlhnz0fhQshiwWbmi', TRUE , TRUE, 2, 1),
 ('Nathan', 'Durnerin', 'durnerin.nathan01@gmail.com', '$2b$08$UtoztNueI3QVTFR5sP3vY.cnUHXOXGqnFpkdt2Ce0TH5Pivpalmwa', TRUE, TRUE, 2, 1);
 
-
 -- Insertion des animes
 INSERT INTO Anime (title, synopsis, portrait, date, is_published, genre_id, paysage, video) VALUES
 ('Eclipse Chronicles', 'Dans un monde où la magie suit le cycle lunaire, une éclipse éternelle approche. Kaen, orphelin marqué par la Lune Sombre, hérite de la Moondrake Blade, une arme capable de briser les lois de l’univers. Pour empêcher le retour du Dieu-Dragon, il devra affronter des ordres secrets, sa propre malédiction… et percer le secret des Gardiens de l’Éclipse.', 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/poster/portrait/eclipse_chronicle_portrait.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3N0ZXIvcG9ydHJhaXQvZWNsaXBzZV9jaHJvbmljbGVfcG9ydHJhaXQucG5nIiwiaWF0IjoxNzUxMzYzNDE2LCJleHAiOjIwNjY3MjM0MTZ9.nf6kEwESlxSNGlPi99_KpObHdRmQU3MBFCn3iY6xoZc',  '2025', FALSE, 1, 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/poster/paysage/eclipse_chronicle_paysage.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3N0ZXIvcGF5c2FnZS9lY2xpcHNlX2Nocm9uaWNsZV9wYXlzYWdlLndlYnAiLCJpYXQiOjE3NTEzNjMyMjcsImV4cCI6MjA2NjcyMzIyN30.x-fSbJCBSdK0JH2mlQV5RpqIuFIvRixhI3GURiqAbIs', 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/video/eclipsechronicles.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlby9lY2xpcHNlY2hyb25pY2xlcy5tcDQiLCJpYXQiOjE3NTEzNjQ4NTYsImV4cCI6MjA2NjcyNDg1Nn0.Qz66JtS6qR-Av9CXcQUj1Hv1EeY2uZNLXa5rwp-vcdk'),
@@ -166,6 +175,49 @@ Au cœur de cette ville rongée par la peur et les complots, Kaito, un adolescen
 ('Pulse Circuit', 'Dans les rues saturées de néons de Neon City, Riku, jeune prodige des courses illégales, découvre un ancien Circuit cybernétique décuplant ses réflexes. Devenu Pulsar, il doit affronter rivaux, dangers technologiques et secrets enfouis… tout en protégeant ceux qui comptent.', 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/poster/portrait/pulsecircuitPORTRAIT1.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3N0ZXIvcG9ydHJhaXQvcHVsc2VjaXJjdWl0UE9SVFJBSVQxLnBuZyIsImlhdCI6MTc1MTM2NDEyMCwiZXhwIjoyMDY2NzI0MTIwfQ.IYqH3nInUjONQcc93Ytr_Cg0wL9AaT7AgZNLIpJH6qY', '2001', FALSE, 1, 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/poster/paysage/pulsecircuitPAYSAGE2.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3N0ZXIvcGF5c2FnZS9wdWxzZWNpcmN1aXRQQVlTQUdFMi5wbmciLCJpYXQiOjE3NTEzNjQyNjYsImV4cCI6MjA2NjcyNDI2Nn0.EGmbQ4l8qiy8q3sv3vbiqJz-R0t73a2QYcUm4jsyTeA', 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/video/PulseCircuit.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlby9QdWxzZUNpcmN1aXQubXA0IiwiaWF0IjoxNzUxMzY1MTc5LCJleHAiOjE3ODI5MDExNzl9.WcjJYfdTHl78Ss4S_zGb03KjYd2NpYx3_Vn-aJNLFuM'), 
 ('Rebirth Protocol', 'Dans un monde brisé entre magie et ruines technologiques, le Rebirth Protocol permet à une âme puissante de renaître à chaque génération… en échange de souvenirs effacés. Kael, adolescent sans passé, se réveille dans une cité en ruine, porteur d’un avertissement : Réveille-toi, ou le monde meurt avec toi. Guidé par une invocatrice et un techno-mage, il devra récupérer les fragments de ses vies antérieures pour affronter les Éveillés', 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/poster/portrait/rebirthprotcolPORTRAIT.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3N0ZXIvcG9ydHJhaXQvcmViaXJ0aHByb3Rjb2xQT1JUUkFJVC5wbmciLCJpYXQiOjE3NTEzNjQxMzcsImV4cCI6MjA2NjcyNDEzN30.ZDytAeGp0-DELwiNQ2-jCLipiG4AXCf6-j-kZfavTFg', '2013', FALSE, 1, 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/poster/paysage/rebirthprotocolPAYSAGE.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3N0ZXIvcGF5c2FnZS9yZWJpcnRocHJvdG9jb2xQQVlTQUdFLnBuZyIsImlhdCI6MTc1MTM2NDI5NywiZXhwIjoyMDY2NzI0Mjk3fQ.BqI87aSIFRX3-Q9Xca6JchTvMZn5DGaEhzqLak4TtxI','https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/video/rebirth.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlby9yZWJpcnRoLm1wNCIsImlhdCI6MTc1MTM2NTE1MywiZXhwIjoxNzgyOTAxMTUzfQ.XOHCJJphBuT0mE9pvTCxMUfKVaHpShtpNi9K-tSu7rs'),
 ('Sound Between the Strings', 'Airi, élève discrète, a cessé de jouer du violon depuis l’accident de son frère. Sa rencontre avec Riku, pianiste lumineux, et Hiro, violoncelliste introverti, l’entraîne dans un atelier de musique improvisée où chaque note devient émotion. Entre harmonies fragiles, souvenirs enfouis et sentiments croisés, le trio découvre que la musique ne guérit pas toujours — parfois, elle révèle ce qu’on cache.', 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/poster/portrait/Sound%20Between%20the%20Stringsportrait.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3N0ZXIvcG9ydHJhaXQvU291bmQgQmV0d2VlbiB0aGUgU3RyaW5nc3BvcnRyYWl0LnBuZyIsImlhdCI6MTc1MTM2NDE1NSwiZXhwIjoyMDY2NzI0MTU1fQ.6lw38ghPnIffW4doZpFHyL_1DQ-s-puavDLarHenNrU', '2006', FALSE, 3, 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/poster/paysage/Sound%20Between%20the%20Stringspaysage%20(1).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3N0ZXIvcGF5c2FnZS9Tb3VuZCBCZXR3ZWVuIHRoZSBTdHJpbmdzcGF5c2FnZSAoMSkucG5nIiwiaWF0IjoxNzUxMzY0NDExLCJleHAiOjIwNjY3MjQ0MTF9.yyZ1Msaluba4cXT86EpOfquN_qBuB6KPIMoqsbcsdXQ', 'https://mbfertyaeqebaqqcrryu.supabase.co/storage/v1/object/sign/video/soundbetweenthestringextrait1%20(2).mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9lZGE3ZDRmMy0xYWU0LTQ2ZTktOWIzZi01MmM3MjE5Mzg1MWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlby9zb3VuZGJldHdlZW50aGVzdHJpbmdleHRyYWl0MSAoMikubXA0IiwiaWF0IjoxNzUxMzY0OTk4LCJleHAiOjE3ODI5MDA5OTh9.AZNmdWSPgdGimZzojpbdBCMExqFinf7k_4G9u6VLodY');
+
+-- Insertion des notes
+INSERT INTO Note (users_id, anime_id, note) VALUES 
+(3, 1, 4),
+(3, 2, 5),
+(3, 3, 3),
+(3, 4, 2),
+(3, 5, 5),
+(3, 6, 1),
+(3, 7, 4),
+(3, 8, 3),
+(3, 9, 2),
+(3, 10, 5),
+(3, 11, 4),
+(3, 12, 3),
+(3, 13, 2),
+(3, 14, 1),
+(3, 15, 5),
+(3, 16, 3),
+(3, 17, 4),
+(3, 18, 2),
+(3, 19, 1),
+(3, 20, 5),
+(1, 1, 3),
+(1, 2, 2),
+(1, 3, 4),
+(1, 4, 5),
+(1, 5, 5),
+(1, 6, 2),
+(1, 7, 5),
+(1, 8, 4),
+(1, 9, 3),
+(1, 10, 2),
+(1, 11, 3),
+(1, 12, 1),
+(1, 13, 5),
+(1, 14, 5),
+(1, 15, 1),
+(1, 16, 5),
+(1, 17, 2),
+(1, 18, 5),
+(1, 19, 5),
+(1, 20, 2);
 
 -- Insertion des saisons
 INSERT INTO Season (number, anime_id) VALUES

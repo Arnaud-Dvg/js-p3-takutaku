@@ -183,16 +183,15 @@ class userRepository {
     );
     // Retourne l'ID du nouvel utilisateur inséré
     return result.insertId;
+  }
 
-  // Récupère un utilisateur depuis la base de données par son ID pour le test unitaire de suppresion d'un user
+  // Récupère un utilisateur depuis la base de données par son ID pour le test unitaire de suppression d'un user
   async findById(id: number) {
     const [rows] = await databaseClient.query<Rows>(
       "SELECT * FROM Users WHERE id = ?",
       [id],
     );
-
     return (rows[0] as User) || null;
-
   }
 
   //   Pour le changement de l'image de profil
