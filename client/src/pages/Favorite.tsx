@@ -73,14 +73,14 @@ function Favorite() {
 
   if (favorites.length === 0) {
     return (
-      <p className="text-tertiary text-center mt-10">
+      <p className="text-tertiary text-center mt-25 md:mt-10">
         Vous n'avez aucun favori pour le moment.
       </p>
     ); // Si aucun favori n'est trouvé, on affiche un message
   }
 
   return (
-    <section className="px-4 py-8">
+    <section className="px-4 py-8 mt-20 md:mt-0">
       <h1 className="text-tertiary text-xl mb-6">Mes Favoris</h1>
       <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {favorites.map((anime) => (

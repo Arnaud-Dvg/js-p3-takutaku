@@ -30,7 +30,7 @@ function Anime() {
   return (
     <>
       {/* Affichage mobile et tablette */}
-      <section className="lg:hidden text-tertiary mt-4 md:mt-0">
+      <section className="lg:hidden text-tertiary mt-20 md:mt-0">
         <div className="flex flex-col justify-center items-center gap-2">
           <img
             src={animeSelected.paysage}
@@ -57,7 +57,7 @@ function Anime() {
         <div className="flex justify-center items-center">
           <Note />
         </div>
-        <div className="flex flex-col items-start mx-8 my-5 text-sm">
+        <div className="flex flex-col items-center mx-8 my-5 md:mx-20 text-sm text-justify leading-relaxed">
           <p className="mb-4">{animeSelected.synopsis}</p>
 
           <WatchButton anime={animeSelected} />
@@ -83,15 +83,17 @@ function Anime() {
           </div>
         </section>
 
-        <section className="flex my-8 mx-20 xl:mx-30 gap-8">
+        <section className="flex my-8 mx-20 xl:mx-40 2xl:mx-60 gap-8">
           <img
             src={animeSelected.portrait}
             alt={animeSelected.title}
-            className="w-[150px] object-cover border-1 border-tertiary"
+            className="w-[190px] object-cover border-1 border-tertiary"
           />
           <div className="flex flex-col justify-between">
-            <div className="w-3/4">
-              <p className="mb-4 text-sm">{animeSelected.synopsis}</p>
+            <div className="">
+              <p className="mb-4 text-sm leading-relaxed text-justify">
+                {animeSelected.synopsis}
+              </p>
               <ul className="flex gap-5">
                 {animeSelected.types?.map((type) => (
                   <li key={type.id} className="border-1 rounded-full px-2 py-1">

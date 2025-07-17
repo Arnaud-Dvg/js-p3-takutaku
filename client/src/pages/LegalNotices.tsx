@@ -43,7 +43,7 @@ function LegalNotices() {
   ];
 
   return (
-    <section className="mt-10 md:mt-20 px-5 md:px-10">
+    <section className="mt-25 md:mt-10 px-5 md:px-10">
       <h1 className="text-tertiary text-center text-2xl mb-6">
         Mentions Légales
       </h1>

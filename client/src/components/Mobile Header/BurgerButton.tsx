@@ -6,7 +6,7 @@ type BurgerProps = {
 
 function Burger({ toggleMenu, isOpen }: BurgerProps) {
   return (
-    <section className="z-50 rounded-sm h-9 w-10 cursor-pointer p-1">
+    <section className="z-60 rounded-sm h-9 w-10 cursor-pointer p-2">
       <div onClick={toggleMenu} onKeyDown={toggleMenu}>
         <div className="relative w-11 h-11">
           <span

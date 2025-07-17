@@ -117,11 +117,11 @@ function Header() {
           </ul>
         </nav>
         <div className="flex justify-end flex-1">
-          <button type="button" className="w-9 h-9 p-1 z-10 cursor-pointer">
+          <button type="button" className="p-1 z-10 cursor-pointer">
             <img
               src={!connected ? "/avatar.svg" : urlPicture}
               alt="Profile Pic"
-              className="rounded-full w-20 cursor-pointer"
+              className="rounded-full w-10 h-10 cursor-pointer"
               onClick={handleClick}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {

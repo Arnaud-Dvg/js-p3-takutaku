@@ -64,8 +64,8 @@ function NavBar() {
 
   return (
     <>
-      <section>
-        <section className="relative flex items-center justify-between px-2 py-4">
+      <section className="fixed z-70 w-full bg-primary text-tertiary">
+        <section className="flex items-center justify-between px-2 py-4">
           <BurgerButton toggleMenu={toggleMenu} isOpen={isNavOpen} />
           <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
             <Link to="/">
@@ -76,48 +76,43 @@ function NavBar() {
               />
             </Link>
           </div>
-          <div className="flex items-center space-x-1">
-            <button
-              type="button"
-              className="w-9 h-9 p-1 z-10"
-              onClick={handleClick}
-            >
+          <div className="flex items-center">
+            <button type="button" className="p-1 z-10" onClick={handleClick}>
               <img
                 src={!connected ? "/avatar.svg" : urlPicture}
                 alt="Profile Pic"
-                className="rounded-full w-20 cursor-pointer"
+                className="rounded-full w-10 h-10 cursor-pointer"
               />
             </button>
           </div>
         </section>
 
         <nav
-          className={`fixed left-0 h-full -m-[15px] pt-5 w-1/3 z-40
-        bg-[var(--color-primary)] text-tertiary
-        transform transition-transform duration-300
+          className={`fixed left-0 h-screen pt-5 w-40 z-40
+       text-tertiary
+        transform transition-transform duration-300 border-r border-secondary bg-primary inset-0
         ${isNavOpen ? "translate-x-0" : "-translate-x-full"}`}
         >
-          <ul className="mt-5 px-8">
+          <ul className="mt-11 px-4">
             <Link to="/" onClick={() => setIsNavOpen(false)}>
-              <li className={`pb-5 ${isHomePage ? "text-secondary" : ""}`}>
+              <li className={`pt-4 ${isHomePage ? "text-secondary" : ""}`}>
                 ACCUEIL
               </li>
             </Link>
             <Link to="/genre" onClick={() => setIsNavOpen(false)}>
-              <li className={`pb-5 ${isGenrePage ? "text-secondary" : ""}`}>
+              <li className={`pt-4 ${isGenrePage ? "text-secondary" : ""}`}>
                 GENRES
               </li>
             </Link>
             <Link to="/favorite" onClick={() => setIsNavOpen(false)}>
-              <li className={`pb-5 ${isFavoritePage ? "text-secondary" : ""}`}>
+              <li className={`pt-4 ${isFavoritePage ? "text-secondary" : ""}`}>
                 FAVORIS
               </li>
             </Link>
           </ul>
         </nav>
+        <BurgerProfil isOpen={isBurgerOpen} onClose={handleCloseBurger} />
       </section>
-
-      <BurgerProfil isOpen={isBurgerOpen} onClose={handleCloseBurger} />
     </>
   );
 }

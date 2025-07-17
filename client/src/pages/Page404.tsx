@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 function Page404() {
   return (
-    <section className="flex flex-col items-center justify-center">
+    <section className="flex flex-col items-center justify-center mt-20 md:mt-0">
       <h1 className="text-tertiary text-4xl md:text-5xl mt-16 text-center">
         404 - Page Not Found
       </h1>

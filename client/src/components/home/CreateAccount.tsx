@@ -122,7 +122,7 @@ function CreateAccount({
                       value="Découverte"
                       checked={selectedPlan === "Découverte"}
                       onChange={() => setSelectedPlan("Découverte")}
-                      className="mr-2"
+                      className="mr-2 accent-secondary"
                     />
                     Découverte
                   </label>
@@ -133,7 +133,7 @@ function CreateAccount({
                       value="Premium"
                       checked={selectedPlan === "Premium"}
                       onChange={() => setSelectedPlan("Premium")}
-                      className="mr-2"
+                      className="mr-2 accent-secondary"
                     />
                     Premium
                   </label>

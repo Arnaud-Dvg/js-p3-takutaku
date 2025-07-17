@@ -113,12 +113,16 @@ function ProfilePicture() {
   return (
     <>
       {urlPicture && (
-        <img src={urlPicture} alt="Profile Pic" className="rounded-full w-20" />
+        <img
+          src={urlPicture}
+          alt="Profile Pic"
+          className="rounded-full w-20 h-20"
+        />
       )}
       <button
         type="button"
         onClick={() => setChoosePicture(true)}
-        className="border-1 border-tertiary rounded-full text-secondary my-2 p-2 cursor-pointer"
+        className="rounded-full bg-secondary my-2 p-3 cursor-pointer"
       >
         Modifier ma photo de profil
       </button>

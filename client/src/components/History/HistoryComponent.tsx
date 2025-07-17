@@ -55,7 +55,7 @@ function History() {
   }, [connected]);
 
   return (
-    <div className="relative mt-10 md:mt-15">
+    <div className="relative mt-25 mx-10 lg:mx-20 md:mt-15">
       <h2 className="text-tertiary text-xl mb-3">Historique de Visionnage</h2>
       <div className="relative">
         {/* Bouton gauche */}
