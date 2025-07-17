@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import LogOutButton from "../account/LogOutButton";
 
 function BurgerProfil({
   isOpen,
@@ -65,6 +66,9 @@ function BurgerProfil({
             </li>
           </Link>
         )}
+        <li className="pt-4 hover:text-secondary">
+          <LogOutButton />
+        </li>
       </ul>
     </nav>
   );
