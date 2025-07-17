@@ -10,9 +10,9 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Define item-related routes
+
 // Routes for the anime module
 import animeAction from "../src/modules/anime/animeAction";
-
 router.get("/api/anime", animeAction.browse);
 router.get("/api/animetype/:genre/:type", animeAction.browseType);
 router.get("/api/anime/:id", animeAction.read);
@@ -20,6 +20,7 @@ router.post("/api/anime", animeAction.add);
 router.put("/api/anime/:id", animeAction.edit);
 router.delete("/api/anime/:id", animeAction.destroy);
 router.get("/api/anime_with_genre", animeAction.browseWithGenre);
+router.get("/api/anime_with_note", animeAction.browseWithNote);
 
 //Routes for the genre module
 import genreAction from "./modules/genre/genreAction";

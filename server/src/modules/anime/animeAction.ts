@@ -148,6 +148,16 @@ const browseWithGenre: RequestHandler = async (req, res, next) => {
   }
 };
 
+// Lire TOUS les animés avec la Note en plus
+const browseWithNote: RequestHandler = async (req, res, next) => {
+  try {
+    const animes = await animeRepository.readAllWithNote();
+    res.json(animes);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   browse,
   read,
@@ -156,4 +166,5 @@ export default {
   edit,
   browseWithGenre,
   browseType,
+  browseWithNote,
 };
