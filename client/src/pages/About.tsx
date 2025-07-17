@@ -39,7 +39,7 @@ const articles = [
 function About() {
   return (
     <>
-      <div className="flex items-end justify-center translate-x-4">
+      <div className="flex items-end justify-center mt-20 md:mt-0">
         <h1 className="text-tertiary text-2xl pt-6 text-center z-10">
           A propos de
         </h1>

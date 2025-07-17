@@ -131,7 +131,7 @@ function ProfileSettings() {
           {!editMode && (
             <button
               type="button"
-              className="border border-tertiary rounded-full text-secondary my-2 p-2 cursor-pointer"
+              className="rounded-full text-primary bg-secondary my-2 p-3 cursor-pointer"
               onClick={() => setEditMode(true)}
             >
               Modifier mes informations personnelles

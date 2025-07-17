@@ -27,3 +27,90 @@ h6,
 nav {
   font-family: "Lilita One", sans-serif;
 }
+
+/* CHAOS MODE */
+@keyframes rainbowFlash {
+  0% {
+    background-color: red;
+  }
+  20% {
+    background-color: orange;
+  }
+  40% {
+    background-color: yellow;
+  }
+  60% {
+    background-color: green;
+  }
+  80% {
+    background-color: blue;
+  }
+  100% {
+    background-color: purple;
+  }
+}
+
+@keyframes spinBackground {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes megaShake {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  10% {
+    transform: translate(-5px, -5px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(5px, 5px) rotate(1deg);
+  }
+  30% {
+    transform: translate(-8px, 5px) rotate(-1.5deg);
+  }
+  40% {
+    transform: translate(5px, -8px) rotate(1.5deg);
+  }
+}
+
+@keyframes textFlash {
+  0%,
+  100% {
+    color: #ffffff;
+  }
+  50% {
+    color: #ff00ff;
+  }
+}
+
+.chaos-mode {
+  animation: rainbowFlash 0.2s infinite, spinBackground 1s infinite linear,
+    megaShake 0.3s infinite;
+
+  filter: invert(1) hue-rotate(180deg) contrast(300%) saturate(400%) blur(1px);
+
+  background-image: url("https://media.giphy.com/media/v6aOjy0Qo1fIA/giphy.gif"),
+    url("https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"),
+    url("https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"),
+    url("https://media.giphy.com/media/3o7aD6YZvaXf1TLbJu/giphy.gif"),
+    repeating-linear-gradient(45deg, #ff0 0, #f0f 10px, #0ff 20px);
+
+  background-repeat: repeat;
+  background-size: cover;
+  background-blend-mode: difference;
+  background-attachment: fixed;
+
+  cursor: url("https://cur.cursors-4u.net/others/oth-1/oth77.cur"), crosshair;
+  color: white;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.chaos-mode * {
+  animation: textFlash 0.2s infinite !important;
+}

@@ -8,6 +8,7 @@ function Note() {
   const [userRated, setUserRated] = useState<number | null>(null);
   const { animeSelected } = useAnimeContext();
   const { user } = useUserContext();
+  const [hoveredRating, setHoveredRating] = useState<number | null>(null);
 
   // Pour la récupération de la note moyenne de l'animé
   const fetchNote = useCallback(async () => {
@@ -138,40 +139,46 @@ function Note() {
   return (
     <section className="flex gap-2 w-50">
       <section className="flex space-x-0.5 mb-1">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <button
-            type="button"
-            key={star}
-            onClick={() => toggleRating(star)}
-            className={`transition transform duration-200 hover:scale-110 focus:scale-110 cursor-pointer ${
-              userRated !== null && star <= Math.round(userRated)
-                ? "text-yellow-300"
-                : "text-gray-400"
-            }`}
-          >
-            {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill={
-                userRated !== null && star <= userRated
-                  ? "currentColor"
-                  : "none"
-              }
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+        {[1, 2, 3, 4, 5].map((star) => {
+          // Si hoveredRating n’est pas null ou undefined, utilise-le. Sinon, utilise userRated.
+          const activeRating = hoveredRating ?? userRated;
+          return (
+            <button
+              type="button"
+              key={star}
+              onClick={() => toggleRating(star)}
+              onMouseEnter={() => setHoveredRating(star)}
+              onMouseLeave={() => setHoveredRating(null)}
+              className={`transition transform duration-200 hover:scale-110 focus:scale-110 cursor-pointer ${
+                activeRating !== null && star <= Math.round(activeRating)
+                  ? "text-yellow-300"
+                  : "text-gray-400"
+              }`}
             >
-              <polygon
-                points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02
+              {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill={
+                  activeRating !== null && star <= activeRating
+                    ? "currentColor"
+                    : "none"
+                }
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02
                 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
-              />
-            </svg>
-          </button>
-        ))}
+                />
+              </svg>
+            </button>
+          );
+        })}
       </section>
       {rated > 0 && (
         <p className="text-white mb-1">

@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router";
 import { toast } from "react-toastify";
 
-function Footer() {
+function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
   const [open, setOpen] = useState(false);
   const form = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
@@ -70,11 +70,28 @@ function Footer() {
       </section>
 
       {/* Droite : image */}
-      <section className="mt-4 w-14 md:w-28">
+      <section className="mt-4 w-14 md:w-28 flex justify-end">
+        {/* CHAOS MODE au clic */}
+        {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
         <img
           src="/favicon.ico"
-          alt="Mascotte TakuTaku"
-          className="object-cover h-auto"
+          alt="Mascotte"
+          className="h-15 cursor-pointer  hover:animate-wiggle"
+          onClick={() => {
+            const audio = new Audio(
+              "https://www.myinstants.com/media/sounds/rickroll.mp3",
+            );
+            audio.volume = 0.5;
+            audio.play().catch(() => {
+              console.warn("Lecture bloquée par le navigateur");
+            });
+            setChaosMode(true);
+            setTimeout(() => {
+              setChaosMode(false);
+              audio.pause(); // Stoppe le son après 8s5
+              audio.currentTime = 0;
+            }, 8500);
+          }}
         />
       </section>
 
@@ -140,7 +157,7 @@ function Footer() {
                 placeholder="Message"
                 required
                 rows={10}
-                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl  text-sm"
+                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
               />
 
               {/* Mascotte + Bouton envoyer */}

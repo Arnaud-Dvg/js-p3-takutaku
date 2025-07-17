@@ -12,7 +12,7 @@ function Genre() {
 
   return (
     <>
-      <div className="flex flex-wrap flex-col-reverse gap-y-10 mt-10 items-center xl:justify-between xl:gap-10 xl:mx-50 md:flex-row md:flex-nowrap md:mx-20 md:justify-between">
+      <div className="flex flex-wrap flex-col-reverse gap-y-10 md:mt-10 mt-25 items-center xl:justify-between xl:gap-10 xl:mx-50 md:flex-row md:flex-nowrap md:mx-20 md:justify-between">
         <ButtonsPageGenre
           setGenre={setGenre}
           setType={setType}

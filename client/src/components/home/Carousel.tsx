@@ -62,7 +62,7 @@ function Carousel() {
 
   return (
     <section
-      className="relative bg-cover bg-center transition-[background-image] duration-500 mt-6"
+      className="relative bg-cover bg-center transition-[background-image] duration-500 mt-21 md:mt-0"
       style={{
         backgroundImage: `url(${selectAnime[animeIndex]?.paysage})`,
       }}
@@ -179,10 +179,10 @@ function Carousel() {
                   {selectAnime[animeIndex].synopsis}
                 </p>
               </div>
-              <div className="mt-2 flex justify-center">
+              <div className="flex justify-center">
                 <button
                   type="button"
-                  className="bg-[var(--color-secondary)] my-3 tracking-wider text-[var(--color-primary)] py-1 px-4 rounded-full font-medium text-md"
+                  className="bg-[var(--color-secondary)] my-3 text-[var(--color-primary)] py-1 px-4 rounded-full font-semibold text-lg"
                 >
                   <Link
                     to="/anime"
