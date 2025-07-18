@@ -58,7 +58,7 @@ function CreateAccount({
         />
       ) : (
         <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
-          <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
+          <section className="relative bg-quadrary mt-25 text-tertiary rounded-lg w-full max-w-lg p-8">
             {/* Logo */}
             <section className="text-center mb-10">
               <img
@@ -71,7 +71,7 @@ function CreateAccount({
             <h2 className="text-2xl text-center mb-6">Création de compte</h2>
             {/* Formulaire de création de compte */}
             <form
-              className="flex flex-col space-y-3 text-sm"
+              className="flex flex-col space-y-5 text-sm"
               onSubmit={handleSubmit}
             >
               <input
@@ -81,7 +81,7 @@ function CreateAccount({
                 value={newaccount.lastname}
                 onChange={handleChange}
                 required
-                className="bg-primary border-b border-gray-500 py-1 px-2 placeholder-tertiary focus:outline-none"
+                className="bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none"
               />
               <input
                 type="text"
@@ -90,7 +90,7 @@ function CreateAccount({
                 value={newaccount.firstname}
                 onChange={handleChange}
                 required
-                className="bg-primary border-b border-gray-500 py-1 px-2 placeholder-tertiary focus:outline-none"
+                className="bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none"
               />
               <input
                 type="email"
@@ -99,7 +99,7 @@ function CreateAccount({
                 value={newaccount.mail}
                 onChange={handleChange}
                 required
-                className="bg-primary border-b border-gray-500 py-1 px-2 placeholder-tertiary focus:outline-none"
+                className="bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none"
               />
               <input
                 type="password"
@@ -108,7 +108,7 @@ function CreateAccount({
                 value={newaccount.password}
                 onChange={handleChange}
                 required
-                className="bg-primary border-b border-gray-500 py-1 px-2 placeholder-tertiary focus:outline-none"
+                className="bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none"
               />
 
               {/* Choix d'abonnement */}
@@ -142,7 +142,7 @@ function CreateAccount({
 
               <button
                 type="submit"
-                className="mt-4 w-full border border-tertiary text-tertiary py-2 rounded-full hover:bg-secondary hover:text-primary transition"
+                className="border border-tertiary/30 text-primary bg-secondary my-10 py-2 rounded-md w-full font-semibold mb-6 cursor-pointer"
               >
                 Procéder au paiement
               </button>

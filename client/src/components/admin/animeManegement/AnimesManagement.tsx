@@ -102,7 +102,7 @@ function AnimeManagement() {
       {/* Pop-Up pour la modification des animés */}
       {editAnime && (
         <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
-          <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
+          <section className="relative bg-quadrary text-tertiary rounded-lg w-full max-w-lg p-8">
             {/* Logo TakuTaku */}
             <section className="text-center mb-10">
               <img
@@ -143,7 +143,7 @@ function AnimeManagement() {
                   onChange={(e) =>
                     setEditAnime({ ...editAnime, title: e.target.value })
                   }
-                  className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
+                  className="w-1/2 border border-tertiary/30 bg-primary px-4 py-2 mb-3 text-tertiary rounded-md placeholder-tertiary focus:outline-none"
                 />
               </section>
 
@@ -157,7 +157,7 @@ function AnimeManagement() {
                 onChange={(e) =>
                   setEditAnime({ ...editAnime, synopsis: e.target.value })
                 }
-                className="w-full h-32 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-3xl text-sm"
+                className="w-full h-32 border border-tertiary/30 bg-primary px-4 py-2 mb-3 text-tertiary rounded-md placeholder-tertiary focus:outline-none text-sm"
               />
 
               {/* Genre */}
@@ -171,7 +171,7 @@ function AnimeManagement() {
                     genre_name: Number(e.target.value),
                   })
                 }
-                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
+                className="w-full border border-tertiary/30 bg-primary px-4 py-2 mb-3 text-tertiary rounded-md placeholder-tertiary focus:outline-none text-sm"
               >
                 <option value="">-- Choisir un genre --</option>
                 <option value="3">Seinen</option>
@@ -192,7 +192,7 @@ function AnimeManagement() {
                   onChange={(e) =>
                     setEditAnime({ ...editAnime, date: e.target.value })
                   }
-                  className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
+                  className="w-1/2 border border-tertiary/30 bg-primary px-4 py-2 mb-3 text-tertiary rounded-md placeholder-tertiary focus:outline-none text-sm"
                 />
               </section>
 

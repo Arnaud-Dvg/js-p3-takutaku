@@ -95,7 +95,7 @@ function NavBar() {
         >
           <ul className="mt-11 px-4">
             <Link to="/" onClick={() => setIsNavOpen(false)}>
-              <li className={`pt-4 ${isHomePage ? "text-secondary" : ""}`}>
+              <li className={`pt-4  ${isHomePage ? "text-secondary" : ""}`}>
                 ACCUEIL
               </li>
             </Link>
