@@ -14,6 +14,7 @@ type Anime = {
   paysage: string;
   video: string;
   types?: { id: number; name: string }[];
+  note?: number;
 };
 
 class AnimeRepository {
@@ -145,6 +146,12 @@ class AnimeRepository {
       `SELECT a.id, a.title, a.synopsis, a.portrait, a.date, a.is_published, a.paysage, a.video, g.name AS genre_name
       FROM Anime As a
       LEFT JOIN Genre AS g ON a.genre_id = g.id`,
+    );
+    return rows;
+  }
+  async readAllWithNote() {
+    const [rows] = await databaseClient.query(
+      "SELECT a.id, a.title, ROUND(AVG(n.note), 1) AS note FROM Anime AS a LEFT JOIN Note AS n ON n.anime_id = a.id GROUP BY a.id, a.title ORDER BY note DESC",
     );
     return rows;
   }
