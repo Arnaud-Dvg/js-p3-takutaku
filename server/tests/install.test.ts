@@ -78,3 +78,42 @@ test("Test delete", async () => {
   // Vérifie que l'utilisateur supprimé n'existe plus dans la base
   expect(user).toBeNull();
 });
+
+import type { NextFunction, Request, Response } from "express";
+import type { RowDataPacket } from "mysql2";
+import { checkEmailExists } from "../src/middleware/checkEmailExists";
+
+jest.mock("../src/modules/user/userRepository"); // Pour ce test, je vais remplacer toutes les fonctions de userRepository par des versions simulées(mockées)
+const mockedUserRepo = userRepository as jest.Mocked<typeof userRepository>; //je veux accéder à toute les fonctions du module userRepo, comme des fonctions Jest mockées(simulées)
+
+describe("checkEmailExists", () => {
+  it("doit renvoyer 409 si l'email existe déjà", async () => {
+    // 1. On simule le retour de findByEmail
+    mockedUserRepo.findByEmail.mockResolvedValue({
+      id: 1,
+      mail: "test@test.com",
+    } as unknown as RowDataPacket); // quand j'appelle la fonction findByEmail je retourne un user factice
+
+    // 2. On crée les mocks de req, res, next
+    const req = {
+      body: { mail: "test@test.com" },
+    } as Partial<Request> as Request; //permet de ne pas créer toutes les autres propriétés du vrai Request
+
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn(),
+    } as Partial<Response> as Response; //simule une réponse
+
+    const next = jest.fn() as NextFunction; //simule une fonction next
+
+    // 3. On appelle le middleware
+    await checkEmailExists(req, res, next);
+
+    // 4. On vérifie les effets attendus
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.send).toHaveBeenCalledWith({
+      message: "Adresse e-mail déjà existante",
+    });
+    expect(next).not.toHaveBeenCalled();
+  });
+});

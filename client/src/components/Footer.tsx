@@ -97,7 +97,7 @@ function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
 
       {open && (
         <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
-          <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
+          <section className="relative bg-quadrary text-tertiary rounded-lg w-full max-w-lg p-8">
             {/* Logo TakuTaku */}
             <section className="text-center mb-10">
               <img
@@ -113,7 +113,7 @@ function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
             <form
               ref={form}
               onSubmit={sendEmail}
-              className="flex flex-col gap-2"
+              className="flex flex-col gap-5"
             >
               {/* Nom / Prénom */}
               <section className="flex gap-4">
@@ -122,14 +122,14 @@ function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
                   name="nom"
                   placeholder="Nom"
                   required
-                  className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
+                  className="w-1/2 bg-primary border border-tertiary/30 text-tertiary px-4 py-2 rounded-md text-sm"
                 />
                 <input
                   type="text"
                   name="prenom"
                   placeholder="Prénom"
                   required
-                  className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
+                  className="w-1/2 bg-primary border border-tertiary/30 text-tertiary px-4 py-2 rounded-md text-sm"
                 />
               </section>
 
@@ -139,7 +139,7 @@ function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
                 name="email"
                 placeholder="E-mail"
                 required
-                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
+                className="w-full bg-primary border border-tertiary/30 text-tertiary px-4 py-2 rounded-md text-sm"
               />
 
               {/* Objet */}
@@ -148,7 +148,7 @@ function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
                 name="objet"
                 placeholder="Objet"
                 required
-                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
+                className="w-full bg-primary border border-tertiary/30 text-tertiary px-4 py-2 rounded-md text-sm"
               />
 
               {/* Message */}
@@ -157,7 +157,7 @@ function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
                 placeholder="Message"
                 required
                 rows={10}
-                className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
+                className="w-full bg-primary border border-tertiary/30 text-tertiary px-4 py-2 rounded-md text-sm"
               />
 
               {/* Mascotte + Bouton envoyer */}
@@ -166,7 +166,7 @@ function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="text-secondary font-semibold text-lg hover:text-secondary pb-10 cursor-pointer"
+                  className="bg-secondary text-primary rounded-lg px-2 py-1 font-semibold text-lg mb-10 cursor-pointer hover:rotate-15 duration-200"
                 >
                   {loading ? "Envoi en cours..." : "Envoyer"}
                 </button>

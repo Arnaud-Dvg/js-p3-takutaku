@@ -186,7 +186,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
 
   return (
     <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
-      <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
+      <section className="relative bg-quadrary text-tertiary rounded-lg w-full max-w-lg p-8">
         {/* Logo */}
         <section className="text-center mb-10">
           <img
@@ -252,7 +252,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
 
           <button
             type="submit"
-            className="mt-4 w-full border border-tertiary text-tertiary py-2 rounded-full hover:bg-secondary hover:text-black transition"
+            className="border border-tertiary/30 text-primary bg-secondary my-10 py-2 rounded-md w-full font-semibold mb-6 cursor-pointer"
           >
             Valider le paiement
           </button>
@@ -263,7 +263,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
                 setIsSignupOpen(true);
                 setShowPayment(false);
               }}
-              className="text-yellow-400 font-semibold hover:text-yellow-300 my-5"
+              className="text-primary font-semibold border border-tertiary/30 bg-tertiary my-5 cursor-pointer px-4 py-2 rounded-md"
             >
               Retour à la création de compte
             </button>

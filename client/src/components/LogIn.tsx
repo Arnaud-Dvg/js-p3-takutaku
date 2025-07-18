@@ -32,8 +32,15 @@ function LogIn() {
 
   return (
     <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
-      <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
-        <h1 className="text-center text-2xl mb-25">Connexion</h1>
+      <section className="relative md:mt-0 bg-quadrary text-tertiary rounded-lg w-full max-w-lg p-8">
+        <section className="text-center mb-10">
+          <img
+            src="/logo_taku.png"
+            alt="Logo TakuTaku"
+            className="mx-auto h-15"
+          />
+        </section>
+        <h1 className="text-center text-2xl mb-10">Connexion</h1>
 
         <form onSubmit={handleClick}>
           <input
@@ -42,7 +49,7 @@ function LogIn() {
             placeholder="Adresse e-mail"
             required
             onChange={(e) => setMail(e.target.value)}
-            className="border-b border-tertiary bg-transparent py-2 mb-6 text-tertiary placeholder-tertiary focus:outline-none w-full"
+            className="border border-tertiary/30 bg-primary px-4 py-2 mb-6 text-tertiary rounded-md placeholder-tertiary focus:outline-none w-full"
           />
 
           <input
@@ -51,28 +58,28 @@ function LogIn() {
             placeholder="Mot de passe"
             required
             onChange={(e) => setPassword(e.target.value)}
-            className="border-b border-tertiary bg-transparent py-2 mb-6 text-tertiary placeholder-tertiary focus:outline-none w-full"
+            className="border border-tertiary/30 bg-primary px-4 py-2 mb-6 text-tertiary rounded-md placeholder-tertiary focus:outline-none w-full"
           />
 
           <button
             type="submit"
-            className="border border-tertiary text-tertiary my-10 py-2 rounded-full w-full mb-6 hover:bg-secondary hover:text-primary transition"
+            className="border border-tertiary/30 text-primary bg-secondary my-10 py-2 rounded-md w-full font-semibold mb-6 cursor-pointer"
           >
             Se connecter
           </button>
         </form>
 
-        <div className="w-full flex justify-end mb-6">
+        <div className="w-full flex justify-end">
           <button
             type="button"
             onClick={() => setIsSignupOpen(true)}
-            className="text-yellow-400 font-semibold hover:text-yellow-300 my-5"
+            className="text-primary font-semibold border border-tertiary/30 bg-tertiary my-5 cursor-pointer px-4 py-2 rounded-md"
           >
             Créer un compte
           </button>
         </div>
 
-        <div className="flex justify-between items-end mt-4">
+        <div className="flex justify-between items-end">
           <img src="/favicon.ico" alt="Mascotte" className="h-15" />
         </div>
 
