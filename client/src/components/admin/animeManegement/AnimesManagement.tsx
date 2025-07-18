@@ -9,7 +9,6 @@ type Anime = {
   title: string;
   synopsis: string;
   portrait: string;
-  is_published: boolean;
   paysage: string;
   video: string;
   genre_name: number;

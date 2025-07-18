@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaCreditCard } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuthContext } from "../../../context/AuthContext";
 import { useUserContext } from "../../../context/UserContext";
@@ -29,6 +30,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
 }) => {
   const { connected } = useAuthContext();
   const { user, createUser, updateUser } = useUserContext();
+  const navigate = useNavigate();
 
   const abonnementMap: Record<string, number> = {
     Découverte: 1,
@@ -176,6 +178,7 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
     // Tout est OK
     toast.success("Paiement effectué avec succès !");
     onClose();
+    navigate("/login");
   };
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 

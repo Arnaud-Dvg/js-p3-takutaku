@@ -332,7 +332,7 @@ function UserManagement() {
       {/* Pop-Up d'ajout utilisateur*/}
       {open && (
         <section className="fixed inset-0 z-50 flex items-center justify-center bg-primary bg-opacity-70 px-4">
-          <section className="relative bg-primary text-tertiary rounded-lg w-full max-w-lg p-8">
+          <section className="relative bg-quadrary text-tertiary rounded-lg w-full max-w-lg p-8">
             {/* Logo TakuTaku */}
             <section className="text-center mb-10">
               <img
@@ -358,7 +358,7 @@ function UserManagement() {
                 onChange={(e) =>
                   setNewUser({ ...newUser, lastname: e.target.value })
                 }
-                className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
+                className="w-1/2 bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none mb-3 text-sm"
               />
               <input
                 type="text"
@@ -369,7 +369,7 @@ function UserManagement() {
                 onChange={(e) =>
                   setNewUser({ ...newUser, firstname: e.target.value })
                 }
-                className="w-1/2 bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
+                className="w-1/2 bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none mb-3 text-sm"
               />
             </section>
 
@@ -381,7 +381,7 @@ function UserManagement() {
               required
               value={newUser.mail}
               onChange={(e) => setNewUser({ ...newUser, mail: e.target.value })}
-              className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
+              className="w-full bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none mb-3 text-sm"
             />
 
             {/* Mot de passe */}
@@ -394,7 +394,7 @@ function UserManagement() {
               onChange={(e) =>
                 setNewUser({ ...newUser, password: e.target.value })
               }
-              className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-full text-sm"
+              className="w-full bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none mb-3 text-sm"
             />
 
             {/* Admin ? */}
@@ -405,7 +405,7 @@ function UserManagement() {
               onChange={(e) =>
                 setNewUser({ ...newUser, is_admin: e.target.value === "1" })
               }
-              className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
+              className="w-full bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none mb-3 text-sm"
             >
               <option value="">-- Admin ? --</option>
               <option value="1">Oui</option>
@@ -423,7 +423,7 @@ function UserManagement() {
                   abonnement_id: Number(e.target.value),
                 })
               }
-              className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
+              className="w-full bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none mb-3 text-sm"
             >
               <option value="">-- Choisir un abonnement --</option>
               <option value="1">Découverte</option>
@@ -438,7 +438,7 @@ function UserManagement() {
               onChange={(e) =>
                 setNewUser({ ...newUser, is_actif: e.target.value === "1" })
               }
-              className="w-full bg-primary border border-tertiary text-tertiary px-4 py-2 rounded-2xl text-sm"
+              className="w-full bg-primary border border-tertiary/30 px-4 py-2 placeholder-tertiary rounded-md focus:outline-none mb-3 text-sm"
             >
               <option value="">-- Actif ? --</option>
               <option value="1">Oui</option>

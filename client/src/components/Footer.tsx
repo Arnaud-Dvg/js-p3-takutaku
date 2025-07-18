@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
   const [open, setOpen] = useState(false);
   const form = useRef<HTMLFormElement>(null);
+  const [showChaosGif, setShowChaosGif] = useState(false);
   const [loading, setLoading] = useState(false);
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
   const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -74,7 +75,7 @@ function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
         {/* CHAOS MODE au clic */}
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
         <img
-          src="/favicon.ico"
+          src={showChaosGif ? "/gifTaku.gif" : "/favicon.ico"}
           alt="Mascotte"
           className="h-15 cursor-pointer  hover:animate-wiggle"
           onClick={() => {
@@ -86,8 +87,10 @@ function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
               console.warn("Lecture bloquée par le navigateur");
             });
             setChaosMode(true);
+            setShowChaosGif(true);
             setTimeout(() => {
               setChaosMode(false);
+              setShowChaosGif(false);
               audio.pause(); // Stoppe le son après 8s5
               audio.currentTime = 0;
             }, 8500);
