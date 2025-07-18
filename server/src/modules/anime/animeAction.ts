@@ -9,7 +9,6 @@ interface Anime {
   synopsis: string;
   portrait: string;
   date: number;
-  is_published: boolean;
   genre_id?: number;
   genre_name?: string;
   paysage: string;
@@ -73,7 +72,6 @@ const edit: RequestHandler = async (req, res, next) => {
       synopsis: req.body.synopsis,
       portrait: req.body.portrait,
       date: req.body.date,
-      is_published: req.body.is_published,
       genre_name: req.body.genre_name,
       genre_id: req.body.genre_id,
       paysage: req.body.paysage,
@@ -105,7 +103,6 @@ const add: RequestHandler = async (req, res, next) => {
       synopsis: req.body.synopsis,
       portrait: req.body.portrait,
       date: req.body.date,
-      is_published: req.body.is_published,
       genre_name: req.body.genre_name,
       genre_id: Number(req.body.genre_id),
       paysage: req.body.paysage,

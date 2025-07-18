@@ -90,7 +90,7 @@ function SearchCarousel({ genre, type, filteredAnime }: propsFilter) {
                 key={anime.id}
                 style={{ width: "300px", cursor: "pointer" }}
               >
-                <div>
+                <div className="relative">
                   <Link to="/anime" onClick={() => handleClick(anime)}>
                     <img
                       src={anime.portrait}
@@ -101,10 +101,10 @@ function SearchCarousel({ genre, type, filteredAnime }: propsFilter) {
                   <div className="absolute bottom-1 left-1 z-10">
                     <FavoriteButton animeId={anime.id} />
                   </div>
-                  <p className="text-[0.6rem] md:text-[0.8rem] font-light text-tertiary text-center mt-2">
-                    {anime.title}
-                  </p>
                 </div>
+                <p className="text-[0.6rem] md:text-[0.8rem] font-light text-tertiary text-center mt-2">
+                  {anime.title}
+                </p>
               </SwiperSlide>
             ))
           ) : (

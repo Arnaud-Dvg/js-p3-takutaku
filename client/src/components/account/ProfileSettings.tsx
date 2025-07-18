@@ -100,23 +100,6 @@ function ProfileSettings() {
             />
           </label>
 
-          <label htmlFor="password">
-            Mot de passe : {""}
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="••••••••"
-              value={editUser?.password}
-              onChange={(e) => {
-                if (editUser) {
-                  setEditUser({ ...editUser, password: e.target.value });
-                }
-              }}
-              disabled={!editMode}
-            />
-          </label>
-
           <div className="flex items-center">
             <label htmlFor="subscription">Abonnement : {""}</label>
             <p className="bg-black text-tertiary px-4 py-2 text-sm">

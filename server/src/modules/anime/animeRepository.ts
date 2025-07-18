@@ -8,7 +8,6 @@ type Anime = {
   synopsis: string;
   portrait: string;
   date: number;
-  is_published: boolean;
   genre_id: number;
   genre_name?: string;
   paysage: string;
@@ -22,13 +21,12 @@ class AnimeRepository {
   async create(anime: Omit<Anime, "id">) {
     // Création d'un nouvel animé
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO Anime (title, synopsis, portrait, date, is_published, genre_id, paysage, video) values (?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO Anime (title, synopsis, portrait, date, genre_id, paysage, video) values (?, ?, ?, ?, ?, ?, ?, ?)",
       [
         anime.title,
         anime.synopsis,
         anime.portrait,
         anime.date,
-        anime.is_published,
         anime.genre_id,
         anime.paysage,
         anime.video,
@@ -111,13 +109,12 @@ class AnimeRepository {
   async update(anime: Anime) {
     // Exécute la requête SQL pour lire tout le tableau de la table "Anime"
     const [result] = await databaseClient.query<Result>(
-      "UPDATE Anime set title = ?, synopsis = ?, portrait = ?, date = ?, is_published = ?, genre_id = ?, paysage = ?, video = ? WHERE id = ?",
+      "UPDATE Anime set title = ?, synopsis = ?, portrait = ?, date = ?, genre_id = ?, paysage = ?, video = ? WHERE id = ?",
       [
         anime.title,
         anime.synopsis,
         anime.portrait,
         anime.date,
-        anime.is_published,
         anime.genre_name,
         anime.paysage,
         anime.video,
@@ -143,7 +140,7 @@ class AnimeRepository {
   // Lire TOUS les animés avec le genre en plus
   async readAllWithGenre() {
     const [rows] = await databaseClient.query(
-      `SELECT a.id, a.title, a.synopsis, a.portrait, a.date, a.is_published, a.paysage, a.video, g.name AS genre_name
+      `SELECT a.id, a.title, a.synopsis, a.portrait, a.date, a.paysage, a.video, g.name AS genre_name
       FROM Anime As a
       LEFT JOIN Genre AS g ON a.genre_id = g.id`,
     );

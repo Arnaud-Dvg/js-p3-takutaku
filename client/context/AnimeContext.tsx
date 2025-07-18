@@ -16,7 +16,6 @@ export type Anime = {
   synopsis: string;
   portrait: string;
   date: string;
-  is_published: boolean;
   genre_id: number;
   paysage: string;
   video: string;
