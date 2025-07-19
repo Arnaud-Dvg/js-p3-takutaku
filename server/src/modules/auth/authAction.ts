@@ -24,8 +24,6 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
   // Vérifier le mot de passe
   const isPasswordValid = bcrypt.compareSync(password, user.password || "");
 
-  console.log("isPasswordValid", isPasswordValid, password, user.password);
-
   // Si le mot de passe est incorrect, renvoyer une erreur 401
   if (!isPasswordValid) {
     return response.status(401).send({ message: "Mot de passe incorrect" });
