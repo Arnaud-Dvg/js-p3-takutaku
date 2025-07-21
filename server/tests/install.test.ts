@@ -117,3 +117,30 @@ describe("checkEmailExists", () => {
     expect(next).not.toHaveBeenCalled();
   });
 });
+
+// Test unitaire pour vérifier que la fonction de hachage de mot de passe fonctionne correctement : logique identique à signup dans le module auth
+import bcrypt from "bcryptjs";
+
+describe("hachage de mot de passe", () => {
+  const password = "MonMotDePasse123!";
+
+  it("génère un hash différent du mot de passe original", () => {
+    const hashPassword = bcrypt.hashSync(password, 8);
+    expect(hashPassword).not.toBe(password);
+  });
+
+  it("permet de vérifier le mot de passe via bcrypt.compareSync", () => {
+    const hashPassword = bcrypt.hashSync(password, 8);
+    const isPasswordValid = bcrypt.compareSync(password, hashPassword);
+    expect(isPasswordValid).toBe(true);
+  });
+
+  it("échoue si le mot de passe est incorrect", () => {
+    const hashPassword = bcrypt.hashSync(password, 8);
+    const isPasswordValid = bcrypt.compareSync(
+      "MauvaisMotDePasse",
+      hashPassword,
+    );
+    expect(isPasswordValid).toBe(false);
+  });
+});

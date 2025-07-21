@@ -50,18 +50,24 @@ function BurgerProfil({
 
       <ul className="mt-10 px-4 text-right">
         <Link to="/account" onClick={onClose}>
-          <li className={`mt-20  ${isAccountPage ? "text-secondary" : ""}`}>
+          <li
+            className={`mt-20  ${isAccountPage ? "text-secondary" : "hover:text-secondary"}`}
+          >
             MON COMPTE
           </li>
         </Link>
         <Link to="/history" onClick={onClose}>
-          <li className={`pt-4  ${isHistoryPage ? "text-secondary" : ""}`}>
+          <li
+            className={`pt-4  ${isHistoryPage ? "text-secondary" : "hover:text-secondary"}`}
+          >
             HISTORIQUE
           </li>
         </Link>
         {isAdmin && (
           <Link to="/admin" onClick={onClose}>
-            <li className={`pt-4  ${isAdminPage ? "text-secondary" : ""}`}>
+            <li
+              className={`pt-4  ${isAdminPage ? "text-secondary" : "hover:text-secondary"}`}
+            >
               ADMIN
             </li>
           </Link>
